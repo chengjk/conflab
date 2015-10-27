@@ -1,11 +1,10 @@
 package com.jk.configer.repository;
 
 import com.jk.configer.model.Config;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by jacky.cheng on 2015/10/27.
  */
-public interface ConfigRepository extends Repository<Config,Long> {
-    Config findOne(Long id);
+public interface ConfigRepository extends CrudRepository<Config,Long> {
 }
