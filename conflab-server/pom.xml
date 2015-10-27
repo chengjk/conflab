@@ -9,4 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>conflab-server</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.4.0.RELEASE</version>
+        </dependency>
+    </dependencies>
 </project>
