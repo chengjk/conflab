@@ -1,6 +1,6 @@
 package com.jk.configer.repository;
 
-import com.jk.configer.po.Config;
+import com.jk.configer.model.Config;
 import org.springframework.data.repository.Repository;
 
 /**

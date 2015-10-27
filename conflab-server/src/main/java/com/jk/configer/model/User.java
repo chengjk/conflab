@@ -1,4 +1,4 @@
-package com.jk.configer.po;
+package com.jk.configer.model;
 
 /**
  * Created by jacky.cheng on 2015/10/26.

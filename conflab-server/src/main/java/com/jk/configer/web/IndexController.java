@@ -1,7 +1,7 @@
 package com.jk.configer.web;
 
 
-import com.jk.configer.po.User;
+import com.jk.configer.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

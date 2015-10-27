@@ -1,4 +1,4 @@
-package com.jk.configer.po;
+package com.jk.configer.model;
 
 import org.springframework.data.annotation.Id;
 

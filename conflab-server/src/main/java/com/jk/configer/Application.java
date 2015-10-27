@@ -1,6 +1,6 @@
 package com.jk.configer;
 
-import com.jk.configer.po.User;
+import com.jk.configer.model.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
