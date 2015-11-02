@@ -1,4 +1,4 @@
-package com.jk.configer;
+package com.jk.conflab;
 
 
 import org.springframework.boot.SpringApplication;
@@ -9,6 +9,6 @@ import org.springframework.boot.SpringApplication;
  */
 public class MainRunner {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class);
+        SpringApplication.run(Application.class,args);
     }
 }

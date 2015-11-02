@@ -1,15 +1,17 @@
-package com.jk.configer.model;
+package com.jk.conflab.model;
 
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * Created by jacky.cheng on 2015/10/27.
  */
 @Entity
+@Table(name = "config")
 public class Config implements Serializable {
 
     @Id

@@ -1,6 +1,6 @@
-package com.jk.configer.repository;
+package com.jk.conflab.repository;
 
-import com.jk.configer.model.Config;
+import com.jk.conflab.model.Config;
 import org.springframework.data.repository.CrudRepository;
 
 /**

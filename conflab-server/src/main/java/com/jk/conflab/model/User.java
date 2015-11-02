@@ -1,4 +1,4 @@
-package com.jk.configer.model;
+package com.jk.conflab.model;
 
 /**
  * Created by jacky.cheng on 2015/10/26.

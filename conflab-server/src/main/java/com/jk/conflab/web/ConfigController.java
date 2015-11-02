@@ -1,7 +1,7 @@
-package com.jk.configer.web;
+package com.jk.conflab.web;
 
-import com.jk.configer.model.Config;
-import com.jk.configer.service.ConfigService;
+import com.jk.conflab.model.Config;
+import com.jk.conflab.repository.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/conf")
 public class ConfigController {
     @Autowired
-    ConfigService configService;
+    ConfigRepository configService;
+
+    @RequestMapping("/all")
+     Iterable<Config> findAll(){
+        return configService.findAll();
+    }
 
     @RequestMapping("/save")
     String save() {

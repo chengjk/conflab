@@ -29,7 +29,6 @@ out/
 =/
 *.log
 rebel.xml
-*/application.properties
 *.DS_Store
 Auditors:sisi.chen
 .tags1
