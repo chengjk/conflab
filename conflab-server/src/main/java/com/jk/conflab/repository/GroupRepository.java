@@ -1,6 +1,5 @@
 package com.jk.conflab.repository;
 
-import com.jk.conflab.model.App;
 import com.jk.conflab.model.Group;
 import org.springframework.data.repository.CrudRepository;
 
