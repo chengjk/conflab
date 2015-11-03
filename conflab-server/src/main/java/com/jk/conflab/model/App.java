@@ -6,24 +6,15 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by jacky.cheng on 2015/10/26.
+ * Created by jacky.cheng on 2015/11/3.
  */
 @Entity
-public class User implements Serializable {
+public class App implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-    private String alias;
-    private String pw;
-
-    public User() {
-    }
-
-    public User(String name, String alias) {
-        this.name = name;
-        this.alias = alias;
-    }
+    private String desc;
 
     public Long getId() {
         return id;
@@ -41,19 +32,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public String getPw() {
-        return pw;
-    }
-
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

@@ -1,24 +1,20 @@
 package com.jk.conflab.model;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by jacky.cheng on 2015/10/27.
+ * Created by jacky.cheng on 2015/11/3.
  */
 @Entity
-public class Config implements Serializable {
-
+public class Group implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     private Long appId;
-    private Long groupId;
-    private String key;
-    private String value;
+    private String name;
     private String desc;
 
     public Long getId() {
@@ -37,28 +33,12 @@ public class Config implements Serializable {
         this.appId = appId;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public String getName() {
+        return name;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesc() {
