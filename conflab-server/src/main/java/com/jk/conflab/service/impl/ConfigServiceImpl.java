@@ -16,9 +16,11 @@ public class ConfigServiceImpl implements ConfigService {
     @Autowired
     private ConfigRepository repository;
     public void save(Config conf) {
+        System.out.println("test");
         repository.save(conf);
     }
 
+    @Override
     public List<Config> findByGroup(Long groupId) {
         return repository.findByGroupId(groupId);
     }

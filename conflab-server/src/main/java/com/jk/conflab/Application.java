@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Bean;
 public class Application {
     @Bean
     public User user() {
-        return new User("name", 123);
+        return new User("name", "123");
     }
 }
