@@ -20,7 +20,7 @@ public class IndexController {
     @Autowired
     private User user;
 
-    @RequestMapping("/")
+    @RequestMapping("/u")
     @ResponseBody
     User test() {
         logger.info("-------------------root-----------------");
