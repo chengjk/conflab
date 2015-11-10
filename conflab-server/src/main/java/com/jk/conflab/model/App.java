@@ -1,6 +1,5 @@
 package com.jk.conflab.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,8 +14,8 @@ public class App implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
-    @Column(name = "`desc`")
-    private String desc;
+
+    private String descp;
 
     public Long getId() {
         return id;
@@ -34,11 +33,11 @@ public class App implements Serializable {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescp() {
+        return descp;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescp(String descp) {
+        this.descp = descp;
     }
 }

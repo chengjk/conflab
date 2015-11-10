@@ -1,6 +1,5 @@
 package com.jk.conflab.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +15,7 @@ public class ConfGroup implements Serializable {
     private Long id;
     private Long appId;
     private String name;
-    @Column(name = "`desc`")
-    private String desc;
+    private String descp;
 
     public Long getId() {
         return id;
@@ -43,11 +41,11 @@ public class ConfGroup implements Serializable {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescp() {
+        return descp;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescp(String descp) {
+        this.descp = descp;
     }
 }
