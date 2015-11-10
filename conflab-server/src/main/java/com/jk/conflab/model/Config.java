@@ -1,6 +1,7 @@
 package com.jk.conflab.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,8 +18,11 @@ public class Config implements Serializable {
     private Long id;
     private Long appId;
     private Long groupId;
+    @Column(name = "`key`")
     private String key;
+    @Column(name = "`value`")
     private String value;
+    @Column(name = "`desc`")
     private String desc;
 
     public Long getId() {

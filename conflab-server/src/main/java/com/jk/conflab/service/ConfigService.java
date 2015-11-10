@@ -11,4 +11,6 @@ public interface ConfigService {
     void save(Config conf);
 
     List<Config> findByGroup(Long gId);
+
+    Iterable<Config> findAll();
 }

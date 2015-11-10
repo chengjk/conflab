@@ -16,15 +16,13 @@ public class ConfigController {
     ConfigService configService;
 
     @RequestMapping("/all")
-     Iterable<Config> findAll(){
-        System.out.println("aasfdsdafasdfasf");
-        configService.save(null);
-        return null;
+    Iterable<Config> findAll() {
+        return configService.findAll();
     }
 
     @RequestMapping("/save")
     String save() {
-        Config config=new Config();
+        Config config = new Config();
         config.setAppId(1L);
         config.setGroupId(1L);
         config.setKey("k");
