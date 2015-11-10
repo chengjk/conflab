@@ -27,7 +27,7 @@ public class ConfigController {
         config.setGroupId(1L);
         config.setKey("k");
         config.setValue("v");
-        config.setDesc("d");
+        config.setDescp("d");
         configService.save(config);
         return "ok";
     }
