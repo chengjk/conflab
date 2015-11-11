@@ -10,4 +10,8 @@ import java.util.List;
  */
 public interface ConfigRepository extends CrudRepository<Config,Long> {
     List<Config> findByGroupId(Long groupId);
+
+    Config findById(Long id);
+
+    Config findByAppId(Long appId);
 }

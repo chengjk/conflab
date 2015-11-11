@@ -1,28 +1,37 @@
 package com.jk.conflab.service.impl;
 
 import com.jk.conflab.Application;
+import com.jk.conflab.model.Config;
 import com.jk.conflab.service.ConfigService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Created by jacky.cheng on 2015/11/5.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class})
+@SpringApplicationConfiguration(classes = Application.class)
+@ContextConfiguration(classes = {ConfigServiceImpl.class})
 public class ConfigServiceImplTest {
-    @Autowired
-    private WebApplicationContext context;
     @Autowired
     private ConfigService configService;
 
     @Test
+    public void testName() throws Exception {
+        System.out.println("Asdf");
+
+    }
+
+    @Test
     public void testSave() throws Exception {
-        configService.save(null);
+        Config conf = new Config();
+        conf.setGroupId(1L);
+        configService.save(conf);
+        System.out.println("asdfasdf");
     }
 
     @Test
