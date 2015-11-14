@@ -13,5 +13,5 @@ public interface ConfigRepository extends CrudRepository<Config,Long> {
 
     Config findById(Long id);
 
-    Config findByAppId(Long appId);
+    List<Config> findByAppId(Long appId);
 }

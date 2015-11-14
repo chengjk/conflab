@@ -1,8 +1,11 @@
 package com.jk.conflab.web;
 
 import com.jk.conflab.model.App;
+import com.jk.conflab.repository.AppRepository;
 import com.jk.conflab.service.AppService;
+import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppController {
     @Autowired
     AppService appService;
+    @Autowired
+    AppRepository appRepository;
 
     @RequestMapping("/all")
     Iterable<App> findAll() {
         return appService.findAll();
     }
+
+    @RequestMapping("/{id}")
+    App findOne(@PathVariable Long id) {
+        return appRepository.findOne(id);
+    }
+      @RequestMapping("/cp")
+    App copy(Long srcId, String tarName) {
+        return appService.copy(srcId,tarName);
+    }
+
+
 }
