@@ -3,7 +3,6 @@ package com.jk.conflab.web;
 import com.jk.conflab.model.App;
 import com.jk.conflab.repository.AppRepository;
 import com.jk.conflab.service.AppService;
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
