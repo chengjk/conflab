@@ -2,9 +2,11 @@ package com.jk.conflab.service.impl;
 
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.repository.ConfGroupRepository;
+import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.ConfGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,9 +17,18 @@ import java.util.List;
 public class ConfGroupServiceImpl implements ConfGroupService {
     @Autowired
     ConfGroupRepository confGroupRepository;
-
+    @Autowired
+    ConfigRepository configRepository;
     @Override
     public List<ConfGroup> findByAppId(Long appId) {
         return confGroupRepository.findByAppId(appId);
+    }
+
+    @Override
+    @Transactional
+    public boolean del(Long id) {
+        confGroupRepository.delete(id);
+        configRepository.deleteByGroupId(id);
+        return true;
     }
 }

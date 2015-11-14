@@ -38,7 +38,7 @@ public class ConfigController {
 
     @RequestMapping("id/{id}")
     Config findById(@PathVariable Long id) {
-        return configRepository.findById(id);
+        return configRepository.findOne(id);
     }
 
     @RequestMapping("/group/{groupId}")
@@ -47,13 +47,19 @@ public class ConfigController {
     }
 
     @RequestMapping("/app/{appId}")
-    Config findByAppId(@PathVariable Long appId) {
+    List<Config>  findByAppId(@PathVariable Long appId) {
         return configRepository.findByAppId(appId);
     }
 
     @RequestMapping("/all")
     Iterable<Config> findAll() {
         return configService.findAll();
+    }
+
+    @RequestMapping("/del")
+    boolean del(Long id) {
+        configRepository.delete(id);
+        return true;
     }
 
 }

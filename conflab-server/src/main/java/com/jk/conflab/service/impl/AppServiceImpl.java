@@ -29,6 +29,8 @@ public class AppServiceImpl implements AppService {
         return appRepository.findAll();
     }
 
+
+
     @Override
     public App copy(Long srcId, String tarName) {
         App src = appRepository.findOne(srcId);
@@ -49,5 +51,18 @@ public class AppServiceImpl implements AppService {
         }
         confGroupRepository.save(groups);
         return tar;
+    }
+
+    @Override
+    public boolean del(Long id) {
+        appRepository.delete(id);
+        confGroupRepository.deleteByAppId(id);
+        confGroupRepository.deleteByAppId(id);
+        return false;
+    }
+
+    @Override
+    public boolean push(Long id) {
+        return false;
     }
 }

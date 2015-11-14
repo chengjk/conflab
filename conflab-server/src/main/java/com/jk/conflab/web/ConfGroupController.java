@@ -32,5 +32,10 @@ public class ConfGroupController {
         return confGroupRepository.findOne(id);
     }
 
+    @RequestMapping("/del")
+    boolean del(Long id) {
+        return confGroupService.del(id);
+    }
+
 
 }

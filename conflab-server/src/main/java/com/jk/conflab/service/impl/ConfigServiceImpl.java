@@ -32,8 +32,6 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public Config findById(Long id) {
-        //TODO impl.assign to jacky.cheng
-        throw new RuntimeException("没有实现!");
-
+        return repository.findOne(id);
     }
 }

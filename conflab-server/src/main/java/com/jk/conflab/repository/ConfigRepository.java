@@ -11,7 +11,7 @@ import java.util.List;
 public interface ConfigRepository extends CrudRepository<Config,Long> {
     List<Config> findByGroupId(Long groupId);
 
-    Config findById(Long id);
-
     List<Config> findByAppId(Long appId);
+
+    void deleteByGroupId(Long groupId);
 }

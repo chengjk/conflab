@@ -28,9 +28,20 @@ public class AppController {
     App findOne(@PathVariable Long id) {
         return appRepository.findOne(id);
     }
-      @RequestMapping("/cp")
+
+
+    @RequestMapping("/del")
+    boolean del(Long id){
+        return appService.del(id);
+    }
+
+    @RequestMapping("/cp")
     App copy(Long srcId, String tarName) {
         return appService.copy(srcId,tarName);
+    }
+    @RequestMapping("/push")
+    boolean push(Long id) {
+        return appService.push(id);
     }
 
 

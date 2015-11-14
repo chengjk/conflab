@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface ConfGroupService {
     List<ConfGroup> findByAppId(Long appId);
+
+    boolean del(Long id);
 }
