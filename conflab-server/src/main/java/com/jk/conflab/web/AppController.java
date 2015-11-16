@@ -40,8 +40,8 @@ public class AppController {
         return appService.copy(srcId,tarName);
     }
     @RequestMapping("/push")
-    boolean push(Long id) {
-        return appService.push(id);
+    boolean push(Long appId, String appName) {
+        return appService.push(appId, appName);
     }
 
 

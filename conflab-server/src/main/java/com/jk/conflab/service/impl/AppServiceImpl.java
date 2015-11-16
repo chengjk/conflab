@@ -1,5 +1,6 @@
 package com.jk.conflab.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.model.Config;
@@ -7,10 +8,13 @@ import com.jk.conflab.repository.AppRepository;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.AppService;
+import com.jk.conflab.service.ZkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jacky.cheng on 2015/11/10.
@@ -24,11 +28,13 @@ public class AppServiceImpl implements AppService {
     @Autowired
     ConfigRepository configRepository;
 
+    @Autowired
+    ZkService zkService;
+
     @Override
     public Iterable<App> findAll() {
         return appRepository.findAll();
     }
-
 
 
     @Override
@@ -62,7 +68,13 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public boolean push(Long id) {
+    public boolean push(Long appId, String appName) {
+        Map<String, String> publish = new HashMap<String, String>();
+        List<Config> configs = configRepository.findByAppId(appId);
+        for (Config config : configs) {
+            publish.put(config.getKey(), config.getValue());
+        }
+        zkService.publish(appName, JSON.toJSONString(publish));
         return false;
     }
 }

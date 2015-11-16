@@ -8,6 +8,7 @@ import com.jk.conflab.model.App;
 public interface AppService {
     Iterable<App> findAll();
     App copy(Long srcId, String tarName);
-    boolean push(Long id);
     boolean del(Long id);
+
+    boolean push(Long appId, String appName);
 }
