@@ -17,9 +17,7 @@ public class ZkServiceImpl implements ZkService {
     Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     ZkClient client;
-
-    @Autowired
-    String zkRootPath;
+    private String zkRootPath = "/test/config";
 
     @Override
     public boolean publish(String appId, String configData) {

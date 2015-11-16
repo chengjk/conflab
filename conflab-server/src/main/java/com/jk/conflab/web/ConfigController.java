@@ -21,21 +21,6 @@ public class ConfigController {
     @Autowired
     ConfigRepository configRepository;
 
-    ///---------------------------
-    @RequestMapping("/tsave")
-    String save() {
-        Config config = new Config();
-        config.setAppId(1L);
-        config.setGroupId(1L);
-        config.setKey("k");
-        config.setValue("v");
-        config.setDescp("d");
-        configService.save(config);
-        return "ok";
-    }
-    //---------------------------------
-
-
     @RequestMapping("id/{id}")
     Config findById(@PathVariable Long id) {
         return configRepository.findOne(id);
