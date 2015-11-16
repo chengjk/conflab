@@ -20,18 +20,18 @@ public class ZkServiceImpl implements ZkService {
     private String zkRootPath = "/test/config";
 
     @Override
-    public boolean publish(String appId, String configData) {
+    public boolean publish(String app, String configData) {
         try {
-            String path = ZkUtils.getPath(zkRootPath, appId);
+            String path = ZkUtils.getPath(zkRootPath, app);
             if (!client.exists(path)) {
                 client.create(path, configData, CreateMode.PERSISTENT);
-                logger.info("成功发布配置，{}", appId);
+                logger.info("成功发布配置，{}", app);
             } else {
                 client.writeData(path, configData);
-                logger.info("成功更新配置，{}", appId);
+                logger.info("成功更新配置，{}", app);
             }
         } catch (RuntimeException e) {
-            logger.error("成功配置失败：appId", e);
+            logger.error("发布配置失败：appId", e);
             return false;
         }
         return true;
