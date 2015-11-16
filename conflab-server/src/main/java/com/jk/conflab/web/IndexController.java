@@ -36,6 +36,7 @@ public class IndexController {
     }
 
     @RequestMapping("save")
+    @ResponseBody
     String save() {
         try {
             App app = new App();
