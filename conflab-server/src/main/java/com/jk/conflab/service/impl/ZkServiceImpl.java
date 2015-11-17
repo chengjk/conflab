@@ -3,7 +3,6 @@ package com.jk.conflab.service.impl;
 import com.jk.conflab.service.ZkService;
 import com.jk.conflab.utils.ZkUtils;
 import org.I0Itec.zkclient.ZkClient;
-import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,10 @@ public class ZkServiceImpl implements ZkService {
     public boolean publish(String app, String configData) {
         try {
             String path = ZkUtils.getPath(zkRootPath, app);
+            ZkUtils.mkPath(client, path);
             if (!client.exists(path)) {
-                client.create(path, configData, CreateMode.PERSISTENT);
+                client.createPersistent(path);
+                client.writeData(path, configData);
                 logger.info("成功发布配置，{}", app);
             } else {
                 client.writeData(path, configData);

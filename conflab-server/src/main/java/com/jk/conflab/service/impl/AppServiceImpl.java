@@ -69,12 +69,15 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public boolean push(Long appId, String appName) {
+        if (appName == null) {
+            App app = appRepository.findOne(appId);
+            appName = app.getName();
+        }
         Map<String, String> publish = new HashMap<String, String>();
         List<Config> configs = configRepository.findByAppId(appId);
         for (Config config : configs) {
             publish.put(config.getKey(), config.getValue());
         }
-        zkService.publish(appName, JSON.toJSONString(publish));
-        return false;
+        return zkService.publish(appName, JSON.toJSONString(publish));
     }
 }
