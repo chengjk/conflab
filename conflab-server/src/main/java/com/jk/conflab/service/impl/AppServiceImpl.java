@@ -80,4 +80,20 @@ public class AppServiceImpl implements AppService {
         }
         return zkService.publish(appName, JSON.toJSONString(publish));
     }
+
+    @Override
+    public boolean pushAll(String key) {
+        Iterable<App> apps;
+        if (key != null) {
+            apps = appRepository.findAll();
+        } else {
+            apps = appRepository.findByNameLike(key);
+        }
+        for (App app : apps) {
+            if (!push(app.getId(), app.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

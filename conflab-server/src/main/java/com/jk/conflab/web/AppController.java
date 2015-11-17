@@ -29,19 +29,30 @@ public class AppController {
         return appRepository.findOne(id);
     }
 
+    @RequestMapping("/key/{key}")
+    Iterable<App> findOne(@PathVariable String key) {
+        return appRepository.findByNameLike(key);
+    }
+
 
     @RequestMapping("/del")
-    boolean del(Long id){
+    boolean del(Long id) {
         return appService.del(id);
     }
 
     @RequestMapping("/cp")
     App copy(Long srcId, String tarName) {
-        return appService.copy(srcId,tarName);
+        return appService.copy(srcId, tarName);
     }
+
     @RequestMapping("/push")
     boolean push(Long appId, String appName) {
         return appService.push(appId, appName);
+    }
+
+    @RequestMapping("/pushAll")
+    boolean pushAll(String key) {
+        return appService.pushAll(key);
     }
 
 

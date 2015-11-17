@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by jacky.cheng on 2015/11/3.
  */
 public interface AppRepository extends CrudRepository<App, Long> {
+    Iterable<App> findByNameLike(String key);
 }

@@ -11,4 +11,6 @@ public interface AppService {
     boolean del(Long id);
 
     boolean push(Long appId, String appName);
+
+    boolean pushAll(String key);
 }
