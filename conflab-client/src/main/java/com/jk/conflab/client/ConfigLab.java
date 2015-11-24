@@ -54,6 +54,10 @@ public class ConfigLab {
         }
     }
 
+    public void addConfigChangeEvent(String appid, ConfigListenerAdapter listener) {
+        zkClient.subscribeDataChanges(zkConfigRoot + "/" + appid, listener);
+    }
+
     /**
      * 顺序取值：系统变量，环境变量，配置
      *
