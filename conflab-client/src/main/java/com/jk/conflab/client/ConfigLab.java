@@ -22,17 +22,36 @@ public class ConfigLab {
     private Map<String, String> configMap = new HashMap<String, String>();
 
     public String getString(String key) {
-        return configMap.get(key);
+        return getObject(key);
     }
 
     public Integer getInteger(String key) {
-        return Integer.valueOf(configMap.get(key));
+        return Integer.valueOf(getObject(key));
     }
 
     public Boolean getBoolean(String key) {
-        return Boolean.valueOf(configMap.get(key));
+        return Boolean.valueOf(getObject(key));
     }
 
+
+    /**
+     * 顺序取值：系统变量，环境变量，配置
+     *
+     * @param key
+     * @return
+     */
+    private String getObject(String key) {
+        String value = System.getProperty(key);
+        if (value != null) {
+            return value;
+        }
+        value = System.getenv(key);
+        if (value != null) {
+            return value;
+        }
+        value = configMap.get(key);
+        return value;
+    }
 
     public void register(String app) {
         List<String> children = zkClient.getChildren(zkConfigRoot);
