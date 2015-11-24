@@ -11,6 +11,7 @@
     <modules>
         <module>conflab-client</module>
         <module>conflab-server</module>
+        <module>conflab-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,6 +22,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.6</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

@@ -29,10 +29,19 @@ public class IndexController {
     ConfGroupRepository confGroupRepository;
     @Autowired
     ConfigRepository configRepository;
+    @Autowired
+    String test;
+
     @RequestMapping("hi")
     @ResponseBody
     String greet(@RequestParam String name) {
         return "hello " + name;
+    }
+
+    @RequestMapping("str")
+    @ResponseBody
+    String Str() {
+        return test;
     }
 
     @RequestMapping("save")
@@ -53,9 +62,9 @@ public class IndexController {
             Config config = new Config();
             config.setAppId(app.getId());
             config.setGroupId(group.getId());
-            config.setKey("k");
-            config.setValue("v");
-            config.setDescp("d");
+            config.setKey("testk");
+            config.setValue("testv");
+            config.setDescp("testd");
             configRepository.save(config);
         } catch (Exception e) {
             e.printStackTrace();

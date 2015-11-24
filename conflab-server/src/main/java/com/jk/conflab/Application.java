@@ -15,6 +15,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class Application extends WebMvcConfigurerAdapter {
     Logger logger = Logger.getLogger(getClass());
 
+    @Bean
+    public String test() {
+        return "StrBean";
+    }
 
     @Bean
     public ZkClient zkClient(String getZkAddress) {
