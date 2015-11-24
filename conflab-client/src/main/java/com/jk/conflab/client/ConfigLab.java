@@ -33,26 +33,6 @@ public class ConfigLab {
         return Boolean.valueOf(getObject(key));
     }
 
-
-    /**
-     * 顺序取值：系统变量，环境变量，配置
-     *
-     * @param key
-     * @return
-     */
-    private String getObject(String key) {
-        String value = System.getProperty(key);
-        if (value != null) {
-            return value;
-        }
-        value = System.getenv(key);
-        if (value != null) {
-            return value;
-        }
-        value = configMap.get(key);
-        return value;
-    }
-
     public void register(String app) {
         List<String> children = zkClient.getChildren(zkConfigRoot);
         if (children.contains(app)) {
@@ -74,6 +54,24 @@ public class ConfigLab {
         }
     }
 
+    /**
+     * 顺序取值：系统变量，环境变量，配置
+     *
+     * @param key
+     * @return
+     */
+    private String getObject(String key) {
+        String value = System.getProperty(key);
+        if (value != null) {
+            return value;
+        }
+        value = System.getenv(key);
+        if (value != null) {
+            return value;
+        }
+        value = configMap.get(key);
+        return value;
+    }
 
     private ZkClient zkClient() {
         ZkClient client = new ZkClient(getZkAddress(), 30000);
