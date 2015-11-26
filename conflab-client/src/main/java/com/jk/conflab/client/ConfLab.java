@@ -23,27 +23,52 @@ public class ConfLab {
     private static String zkConfigRoot = ConfConstants.ZkConfigRoot;
     private static Map<String, String> configMap = new HashMap<String, String>();
 
-
-
+    /**
+     * 获取一个String值
+     *
+     * @param key
+     * @return
+     */
     public static String getString(String key) {
         return getObject(key);
     }
 
+    /**
+     * 获取一个Int值
+     * @param key
+     * @return
+     */
     public static Integer getInteger(String key) {
-        return Integer.valueOf(getObject(key));
+        String data = getObject(key);
+        if (data != null) {
+            return Integer.valueOf(data);
+        }
+        return null;
     }
 
+    /**
+     * 获取一个Boolean值
+     * @param key
+     * @return
+     */
     public static Boolean getBoolean(String key) {
-        return Boolean.valueOf(getObject(key));
+        String data = getObject(key);
+        if (data != null) {
+            return Boolean.valueOf(data);
+        }
+        return null;
     }
 
+    /**
+     * 注册一个或多个app。
+     * @param apps
+     */
     public static void register(String... apps) {
-
         List<String> children = zkClient.getChildren(zkConfigRoot);
         for (String app : apps) {
             if (children.contains(app)) {
-                String datas = zkClient.readData(zkConfigRoot + "/" + app);
-                Map<String, String> appMap = JSON.parseObject(datas, new TypeReference<Map<String, String>>() {
+                String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
+                Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
                 });
                 configMap.putAll(appMap);
             } else {
@@ -53,8 +78,14 @@ public class ConfLab {
         }
     }
 
-    public static void addConfigChangeEvent(String appid, IZkDataListener listener) {
-        zkClient.subscribeDataChanges(zkConfigRoot + "/" + appid, listener);
+    /**
+     * 增加更新监控
+     *
+     * @param appId
+     * @param listener
+     */
+    public static void addConfigChangeEvent(String appId, IZkDataListener listener) {
+        zkClient.subscribeDataChanges(zkConfigRoot + "/" + appId, listener);
     }
 
     /**
@@ -64,6 +95,9 @@ public class ConfLab {
      * @return
      */
     private static String getObject(String key) {
+        if (key == null) {
+            return null;
+        }
         String value = System.getProperty(key);
         if (value != null) {
             return value;
@@ -73,15 +107,26 @@ public class ConfLab {
             return value;
         }
         value = configMap.get(key);
+        if (value == null) {
+            logger.warn("没有找到配置，key：{}", key);
+        }
         return value;
     }
 
+    /**
+     * 初始化zk客户端
+     * @return
+     */
     private static ZkClient zkClient(){
         ZkClient client = new ZkClient(getZkAddress(), 30000);
         client.setZkSerializer(new ZkUtils.StringSerializer("UTF-8"));
         return client;
     }
 
+    /**
+     * 环境变量中获取含端口的zk地址
+     * @return
+     */
     private static String getZkAddress(){
         String zkAddress = System.getenv("ZK_ADDRESS");
         if (!StringUtils.hasText(zkAddress)) {
