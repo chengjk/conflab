@@ -21,6 +21,11 @@ public class Application extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public String zkRootPath() {
+        return "/conflab/config";
+    }
+
+    @Bean
     public ZkClient zkClient(String getZkAddress) {
         ZkClient client = new ZkClient(getZkAddress, 30000);
         client.setZkSerializer(new ZkUtils.StringSerializer("UTF-8"));

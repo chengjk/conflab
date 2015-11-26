@@ -1,12 +1,14 @@
 package com.jk.conflab.client;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.jk.conflab.client.utils.ConfConstants;
+import com.jk.conflab.client.utils.StringUtils;
 import com.jk.conflab.client.utils.ZkUtils;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,10 +42,12 @@ public class ConfLab {
         List<String> children = zkClient.getChildren(zkConfigRoot);
         for (String app : apps) {
             if (children.contains(app)) {
-                Map<String, String> appMap = zkClient.readData(zkConfigRoot + app);
+                String datas = zkClient.readData(zkConfigRoot + "/" + app);
+                Map<String, String> appMap = JSON.parseObject(datas, new TypeReference<Map<String, String>>() {
+                });
                 configMap.putAll(appMap);
             } else {
-                logger.error("Zookeeper path is null:{}", zkConfigRoot + app);
+                logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
             }
             addConfigChangeEvent(app, new DefaultConfListenerAdapter());
         }

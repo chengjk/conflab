@@ -3,7 +3,6 @@ package com.jk.conflab.client.utils;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
-import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 
