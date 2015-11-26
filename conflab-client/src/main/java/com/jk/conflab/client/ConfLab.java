@@ -74,7 +74,7 @@ public class ConfLab {
             } else {
                 logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
             }
-            addConfigChangeEvent(app, new DefaultConfListenerAdapter());
+            addConfigChangeEvent(app, new DefaultConfListenerAdapter(app));
         }
     }
 
