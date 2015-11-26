@@ -15,15 +15,14 @@ public class Application {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @Bean
-    public MyConfLabInit myConfLabInit(){
+    public void myConfLabInit() {
         MyConfLabInit.isDev = false;
-        MyConfLabInit init=new MyConfLabInit();
-        return init;
+        new MyConfLabInit();
     }
 
     @Bean
-    public String getConfigData(){
-        //尝试获取一个配置
+    public void getConfigData() {
+        //测试
         System.setProperty("conflab", "conflab_value");
         String value = ConfLab.getString("conflab");
         if ("conflab_value".equals(value)) {
@@ -35,9 +34,8 @@ public class Application {
         if ("test_value".equals(test)) {
             logger.info("get data from zookeeper success!");
         }else {
-            logger.info("get data from zookeeper failed!");
+            logger.error("get data from zookeeper failed!");
         }
-        return "ok";
     }
 
 
