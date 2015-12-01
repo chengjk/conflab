@@ -26,6 +26,7 @@ deploy/
 # Additional for IntelliJ
 out/
 node_modules/
+libs/
 .idea_modules/
 =/
 *.log

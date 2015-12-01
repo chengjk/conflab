@@ -24,9 +24,9 @@ var CommentForm = React.createClass({
         );
     }
 });
-
 ReactDOM.render(
     <CommentForm  />,
     document.getElementById("appList")
     //jQuery.$("#appList")
 );
+
