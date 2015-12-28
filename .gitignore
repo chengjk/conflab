@@ -16,8 +16,6 @@ Servers/
 .settings/
 target/
 deploy/
-/webapp
-# File-based project format
 *.ipr
 *.iml
 *.iws
@@ -25,12 +23,8 @@ deploy/
 .idea/
 # Additional for IntelliJ
 out/
-node_modules/
 libs/
 .idea_modules/
 =/
 *.log
-rebel.xml
-*.DS_Store
-Auditors:sisi.chen
-.tags1
+conflab.db
