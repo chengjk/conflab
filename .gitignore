@@ -27,4 +27,5 @@ libs/
 .idea_modules/
 =/
 *.log
+node_modules
 conflab.db
