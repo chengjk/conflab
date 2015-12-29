@@ -77,11 +77,25 @@
         </div>
         <!-- /#nav -->
         <div id="content">
-            <div id="groupList">
-                <ul class="list-group">
-                    <a href="#" class="list-group-item">Cras justo odio</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
-                </ul>
+            <div>
+                <table id="tabGroup" class="table table-hover table-bordered">
+                    <thead>
+                    <th>Name</th>
+                    <th>Opt</th>
+                    </thead>
+                    <tr>
+                        <td>a</td>
+                        <th>
+                            <button class="btn btn-danger btn-xs">Del</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th>
+                            <button class="btn btn-danger btn-xs">del</button>
+                        </th>
+                    </tr>
+                </table>
                 <div class="form-inline">
                     <input type="text" class="form-control"
                            placeholder="add new "
@@ -92,8 +106,8 @@
                 </div>
             </div>
             <hr>
-            <div id="configTable" class="editable">
-                <table id="tabConfig" class="table table-hover table-bordered table-editable">
+            <div>
+                <table id="tabConfig" class="table table-hover table-bordered">
                     <thead>
                     <th>KEY</th>
                     <th>VALUE</th>
@@ -105,19 +119,25 @@
                         <td>1</td>
                         <td>a</td>
                         <td>b</td>
-                        <th><a href="#">edit</a></th>
+                        <th>
+                            <button class="btn btn-danger btn-xs">del</button>
+                        </th>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>z</td>
                         <td>c</td>
-                        <th><a href="#">edit</a></th>
+                        <th>
+                            <button class="btn btn-danger btn-xs">del</button>
+                        </th>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>y</td>
                         <td>h</td>
-                        <th><a href="#">edit</a></th>
+                        <th>
+                            <button class="btn btn-danger btn-xs">del</button>
+                        </th>
                     </tr>
                     </tbody>
                 </table>
@@ -142,6 +162,7 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="js/mindmup-editabletable.js"></script>
 <script>
+    $("#tabGroup").editableTableWidget();
     $("#tabConfig").editableTableWidget();
 </script>
 </body>
