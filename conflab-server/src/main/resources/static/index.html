@@ -93,27 +93,31 @@
             </div>
             <hr>
             <div id="configTable" class="editable">
-                <table class="table table-hover table-bordered">
+                <table id="tabConfig" class="table table-hover table-bordered table-editable">
                     <thead>
                     <th>KEY</th>
                     <th>VALUE</th>
                     <th>DESCRIPTION</th>
+                    <th>OPT</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>1</th>
+                        <td>1</td>
                         <td>a</td>
                         <td>b</td>
+                        <th><a href="#">edit</a></th>
                     </tr>
                     <tr>
-                        <th>2</th>
+                        <td>2</td>
                         <td>z</td>
                         <td>c</td>
+                        <th><a href="#">edit</a></th>
                     </tr>
                     <tr>
-                        <th>3</th>
+                        <td>3</td>
                         <td>y</td>
                         <td>h</td>
+                        <th><a href="#">edit</a></th>
                     </tr>
                     </tbody>
                 </table>
@@ -135,5 +139,10 @@
 
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="js/mindmup-editabletable.js"></script>
+<script>
+    $("#tabConfig").editableTableWidget();
+</script>
 </body>
 </html>
