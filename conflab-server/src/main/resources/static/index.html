@@ -38,6 +38,12 @@
                 </div>
                 <div class="btn-group pull-right" aria-label="...">
                     <button type="button" class="btn btn-default btn-sm">
+                        <span class=" glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm">
+                        <span class=" glyphicon glyphicon-paperclip"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm">
                         <span class=" glyphicon glyphicon-edit"></span>
                     </button>
                     <button type="button" class="btn btn-default btn-sm">
@@ -47,13 +53,19 @@
 
             </div>
             <ul class="list-group">
-                <a href="#" class="list-group-item">Dapibus ac facilisis in
-                    <span class=" glyphicon glyphicon-open" aria-hidden="true"></span>
-                </a>
-                <li class="list-group-item ">
+                <li class="list-group-item">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                     Cras justo odio
-                    <span class="glyphicon glyphicon-open pull-right" aria-hidden="true"></span>
+                    <a href="#" class="pull-right">
+                        <span class="glyphicon glyphicon-open " aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                    Cras justo odio
+                    <a href="#" class="pull-right">
+                        <span class="glyphicon glyphicon-open " aria-hidden="true"></span>
+                    </a>
                 </li>
                 <li class="list-group-item">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
@@ -63,18 +75,18 @@
                     </a>
                 </li>
             </ul>
-            <div class="form-inline">
-                <input type="text" class="form-control"
-                       placeholder="add new "
-                       aria-label="Amount (to the nearest dollar)">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
+            <!--<div class="form-inline">-->
+                <!--<input type="text" class="form-control"-->
+                       <!--placeholder="add new "-->
+                       <!--aria-label="Amount (to the nearest dollar)">-->
+                <!--<button type="submit" class="btn btn-default">-->
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                <!--</button>-->
+            <!--</div>-->
         </div>
     </div>
     <!-- /#leftPanel -->
-    <div id="rightPanel" class="col-md-9 hidden">
+    <div id="rightPanel" class="col-md-9 ">
         <div id="nav">
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
@@ -87,10 +99,12 @@
             <div class="">
                 <table id="tabGroup" class="table table-hover table-bordered">
                     <thead>
-                    <th>Name</th>
-                    <th>Opt</th>
+                    <th>GROUP</th>
+                    <th>DESC</th>
+                    <th>OPT</th>
                     </thead>
                     <tr>
+                        <td>a</td>
                         <td>a</td>
                         <th>
                             <button class="btn btn-primary btn-xs">edit</button>
@@ -98,6 +112,7 @@
                         </th>
                     </tr>
                     <tr>
+                        <td>b</td>
                         <td>b</td>
                         <th>
                             <button class="btn btn-primary btn-xs">edit</button>
@@ -120,7 +135,7 @@
                     <thead>
                     <th>KEY</th>
                     <th>VALUE</th>
-                    <th>DESCRIPTION</th>
+                    <th>DESC</th>
                     <th>OPT</th>
                     </thead>
                     <tbody>
