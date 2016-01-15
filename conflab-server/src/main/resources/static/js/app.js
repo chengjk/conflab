@@ -9,8 +9,10 @@ define(['jquery','_','mockdata'], function ($,_) {
             var url = "/app/all";
             $.getJSON(url, function (data) {
                 var fStr = "<% _.forEach(data, function(item) { %><li><%- item.name %></li><% }); %>";
-                var t = _.template(fStr);
-                var lr=t({"data":data});
+                //var t = _.template(fStr);
+                //var lr=t({"data":data});
+                var t = _.template(fStr,{ 'variable': 'data'});
+                var lr=t(data);
                 console.log(lr);
                 //$.each(data, function (i, item) {
                 //    var str="'hello <%= name %>!'"
