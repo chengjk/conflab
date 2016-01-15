@@ -1,4 +1,4 @@
-define(['jquery','mockdata'], function ($) {
+define(['jquery','_','mockdata'], function ($,_) {
     return {
         init: function () {
             this.initView();
@@ -9,7 +9,10 @@ define(['jquery','mockdata'], function ($) {
             var url = "/app/all";
             $.getJSON(url, function (data) {
                 $.each(data, function (i, item) {
-                    console.log(item);
+                    var str="'hello <%= name %>!'"
+                    var c=_.template(str);
+                    var r=c(item);
+                    console.log(r);
                 })
             });
         },

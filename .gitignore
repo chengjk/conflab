@@ -24,7 +24,7 @@ deploy/
 # Additional for IntelliJ
 out/
 libs/
-lib
+lib/*.js
 .idea_modules/
 rebel.xml
 =/
