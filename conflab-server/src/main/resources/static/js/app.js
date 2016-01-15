@@ -8,12 +8,17 @@ define(['jquery','_','mockdata'], function ($,_) {
             console.log("loadData");
             var url = "/app/all";
             $.getJSON(url, function (data) {
-                $.each(data, function (i, item) {
-                    var str="'hello <%= name %>!'"
-                    var c=_.template(str);
-                    var r=c(item);
-                    console.log(r);
-                })
+                var fStr = "<% _.forEach(data, function(item) { %><li><%- item.name %></li><% }); %>";
+                var t = _.template(fStr);
+                var lr=t({"data":data});
+                console.log(lr);
+                //$.each(data, function (i, item) {
+                //    var str="'hello <%= name %>!'"
+                //    var c=_.template(str);
+                //
+                //    var r=c(item);
+                //    console.log(r);
+                //})
             });
         },
         initView: function () {
