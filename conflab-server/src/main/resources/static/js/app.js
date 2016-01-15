@@ -1,10 +1,23 @@
-define(['jquery'], function ($) {
-    return{
-        init:function(){
-            $(".list-group a").on("click",function(e){
+define(['jquery','mockdata'], function ($) {
+    return {
+        init: function () {
+            this.initView();
+            this.loadData();
+        },
+        loadData: function () {
+            console.log("loadData");
+            var url = "/app/all";
+            $.getJSON(url, function (data) {
+                $.each(data, function (i, item) {
+                    console.log(item);
+                })
+            });
+        },
+        initView: function () {
+            $(".list-group a").on("click", function (e) {
                 alert("push item");
             });
-            $(".btn-toolbar button").on("click",function(e){
+            $(".btn-toolbar button").on("click", function (e) {
                 if ($(this).hasClass("btn-add")) {
                     alert("add");
                 }
@@ -21,8 +34,7 @@ define(['jquery'], function ($) {
                     alert("push all");
                 }
                 console.log($(this));
-            })
-
+            });
         }
-    }
+    };
 });
