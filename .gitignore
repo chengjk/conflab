@@ -24,7 +24,9 @@ deploy/
 # Additional for IntelliJ
 out/
 libs/
+lib
 .idea_modules/
+rebel.xml
 =/
 *.log
 node_modules
