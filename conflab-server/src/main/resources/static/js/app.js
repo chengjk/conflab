@@ -1,10 +1,10 @@
-define(['jquery','_','mockdata'], function ($,_) {
+define(['jquery','_','group','mockdata'], function ($,_,group) {
     var self;
     return {
-
         init: function () {
-            this.loadData();
             self=this;
+            group.init();
+            this.loadData();
         },
         loadData: function () {
             console.log("loadData");
@@ -24,8 +24,9 @@ define(['jquery','_','mockdata'], function ($,_) {
                 alert("push item");
             });
             $(".list-group-item").on("click", function (e) {
-                $(this).parent.find(".list-group-item").removeClass("active");
+                $(this).parent().find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
+                self.open($(this).data("appid"));
             });
             $(".btn-toolbar button").on("click", function (e) {
                 if ($(this).hasClass("btn-add")) {
@@ -45,6 +46,12 @@ define(['jquery','_','mockdata'], function ($,_) {
                 }
                 console.log($(this));
             });
+        },
+        open:function(appId){
+            group.loadData(appId);
+        },
+        add:function(){
+
         }
     };
 });

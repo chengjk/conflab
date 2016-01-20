@@ -1,0 +1,10 @@
+<% _.forEach(datas, function(data) { %>
+<tr>
+    <td><%- data.name %></td>
+    <td><%- data.descp %></td>
+    <th>
+        <button class="btn btn-primary btn-xs">edit</button>
+        <button class="btn btn-danger btn-xs">del</button>
+    </th>
+</tr>
+<% }); %>
