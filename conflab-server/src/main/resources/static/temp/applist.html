@@ -1,0 +1,9 @@
+<% _.forEach(apps, function(app) { %>
+<li class='list-group-item '>
+    <span class='glyphicon glyphicon-book' aria-hidden='true'></span>
+    <%- app.name %>
+    <a href='#' class='pull-right'>
+        <span class='glyphicon glyphicon-open ' aria-hidden='true'></span>
+    </a>
+</li>
+<% }); %>

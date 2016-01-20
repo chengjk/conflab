@@ -8,3 +8,7 @@ header {
 
 #leftPanel {
 }
+
+#leftPanel .list-group-item a {
+    color: black;
+}

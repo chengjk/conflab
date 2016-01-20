@@ -1,31 +1,31 @@
 define(['jquery','_','mockdata'], function ($,_) {
+    var self;
     return {
+
         init: function () {
-            this.initView();
             this.loadData();
+            self=this;
         },
         loadData: function () {
             console.log("loadData");
             var url = "/app/all";
-            $.getJSON(url, function (data) {
-                var fStr = "<% _.forEach(data, function(item) { %><li><%- item.name %></li><% }); %>";
-                //var t = _.template(fStr);
-                //var lr=t({"data":data});
-                var t = _.template(fStr,{ 'variable': 'data'});
-                var lr=t(data);
-                console.log(lr);
-                //$.each(data, function (i, item) {
-                //    var str="'hello <%= name %>!'"
-                //    var c=_.template(str);
-                //
-                //    var r=c(item);
-                //    console.log(r);
-                //})
+            $.getJSON(url, function (apps) {
+                console.log(apps);
+                $.get("temp/applist.html",function(temp){
+                    var t = _.template(temp,{ 'variable': 'apps'});
+                    var lr=t(apps);
+                    $(".list-group").html(lr);
+                    self.initView();
+                });
             });
         },
         initView: function () {
             $(".list-group a").on("click", function (e) {
                 alert("push item");
+            });
+            $(".list-group-item").on("click", function (e) {
+                $(this).parent.find(".list-group-item").removeClass("active");
+                $(this).addClass("active");
             });
             $(".btn-toolbar button").on("click", function (e) {
                 if ($(this).hasClass("btn-add")) {
