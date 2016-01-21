@@ -1,4 +1,4 @@
-define(['jquery','_','mockdata'], function ($,_) {
+define(['jquery','_','config','mockdata'], function ($,_,config) {
     var self;
     return {
         init: function () {
@@ -13,10 +13,21 @@ define(['jquery','_','mockdata'], function ($,_) {
                     console.log(temp);
                     var t = _.template(temp,{ 'variable': 'datas'});
                     var lr=t(datas);
-                    $("#tabGroup tbody").append(lr);
-                    //self.initView();
+                    $("#tabGroup tbody").empty().append(lr);
+                    self.initView();
                 });
             });
+        },
+        initView:function(){
+             $("#tabConfig").parent().addClass("hidden");
+             $("#tabGroup").parent().removeClass("hidden");
+             $("#tabGroup tr").on("click",function(e){
+                self.open($(this).data("id"))
+             });
+        },
+        open:function(id){
+            config.init();
+            config.open(id);
         }
     }
 });
