@@ -28,7 +28,7 @@
     </nav>
 </header>
 <div class="container-fluid">
-    <div id="leftPanel" class="col-md-3">
+    <div id="leftPanel" class="col-md-3 hidden">
         <div class="panel panel-default">
             <div class="panel-heading">Panel heading without title</div>
             <div class="btn-toolbar">
@@ -78,13 +78,14 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <div class="form-inline">
-                    <input type="text" class="form-control" placeholder="group name">
-                    <input type="text" class="form-control" placeholder="desc">
-                    <button type="submit" class="btn btn-default">
+                <form class="form-inline">
+                    <input type="hidden" name="appId" class="form-control">
+                    <input type="text" name="name" class="form-control" placeholder="name">
+                    <input type="text" name="descp" class="form-control" placeholder="desc">
+                    <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                </div>
+                </form>
             </div>
             <hr>
             <div class="hidden">
