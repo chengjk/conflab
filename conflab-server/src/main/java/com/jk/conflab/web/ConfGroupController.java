@@ -1,5 +1,6 @@
 package com.jk.conflab.web;
 
+import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.service.ConfGroupService;
@@ -30,6 +31,11 @@ public class ConfGroupController {
     @RequestMapping("/{id}")
     ConfGroup findId(@PathVariable Long id) {
         return confGroupRepository.findOne(id);
+    }
+
+    @RequestMapping("/add")
+    ConfGroup add(ConfGroup o) {
+        return confGroupRepository.save(o);
     }
 
     @RequestMapping("/del")

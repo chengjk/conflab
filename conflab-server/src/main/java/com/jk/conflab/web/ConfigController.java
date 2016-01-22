@@ -36,6 +36,11 @@ public class ConfigController {
         return configRepository.findByAppId(appId);
     }
 
+    @RequestMapping("/add")
+    Config add(Config o) {
+        return configRepository.save(o);
+    }
+
     @RequestMapping("/all")
     Iterable<Config> findAll() {
         return configService.findAll();

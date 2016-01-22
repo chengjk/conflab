@@ -34,6 +34,10 @@ public class AppController {
         return appRepository.findByNameLike(key);
     }
 
+    @RequestMapping("/add")
+    App add(App o) {
+        return appRepository.save(o);
+    }
 
     @RequestMapping("/del")
     boolean del(Long id) {
