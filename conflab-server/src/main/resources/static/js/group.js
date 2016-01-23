@@ -22,8 +22,6 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
         },
         initView:function(){
             console.log("group init")
-            $("#tabConfig").parent().addClass("hidden");
-            $("#tabGroup").parent().removeClass("hidden");
 
             $("#tabGroup tr").click(function(e){
                 Data.groupId=$(this).data("id");

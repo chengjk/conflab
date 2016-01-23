@@ -29,6 +29,8 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             $(".list-group-item").click( function (e) {
                 $(this).parent().find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
+                $("#tabConfig").parent().addClass("hidden");
+                $("#tabGroup").parent().removeClass("hidden");
                 self.open($(this).data("appid"));
             });
             $(".btn-toolbar button").click(function (e) {
