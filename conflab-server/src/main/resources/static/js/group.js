@@ -3,7 +3,6 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
     return {
         init: function () {
             self = this;
-            self.initView();
         },
         loadData:function(appId){
             console.log("loadGroup");
@@ -24,13 +23,13 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
             $("#tabConfig").parent().addClass("hidden");
             $("#tabGroup").parent().removeClass("hidden");
 
-            $("#tabGroup tr").on("click",function(e){
+            $("#tabGroup tr").click(function(e){
                 Data.groupId=$(this).data("id");
                 self.open(Data.groupId)
             });
             var form=$("#tabGroup").next(".form-inline");
             form.find("input[name=appId]").val(Data.appId);
-            form.find("button").on("click",function(){
+            form.find("button").off("click").click(function(){
                 self.add(form);
             })
         },

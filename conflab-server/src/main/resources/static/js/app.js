@@ -21,15 +21,15 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
         },
         initView: function () {
             console.log("app init");
-            $(".list-group a").on("click", function (e) {
+            $(".list-group a").click( function (e) {
                 alert("push item");
             });
-            $(".list-group-item").on("click", function (e) {
+            $(".list-group-item").click( function (e) {
                 $(this).parent().find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
                 self.open($(this).data("appid"));
             });
-            $(".btn-toolbar button").on("click", function (e) {
+            $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
                     alert("add");
                 }
