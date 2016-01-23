@@ -23,7 +23,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
              $("#tabGroup").parent().addClass("hidden");
              $("#tabConfig").editableTableWidget();
              $("#tabConfig tr").click(function(){
-//                alert($(this).data("id"))
+                alert($(this).data("id"))
              });
              $("#tabConfig button").click(function(e){
                  e.stopPropagation();

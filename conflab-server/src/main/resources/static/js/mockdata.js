@@ -1,5 +1,6 @@
 define(['jquery', 'mock'], function ($) {
     //$.mockjaxSettings.contentType = "application/json";
+    $.mockjaxSettings.responseTime = 1;
     $.mockjax({
         url: "/app/all",
         status: 200,
