@@ -5,6 +5,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
             self=this;
         },
         open:function(groupId){
+            $("#tabConfig tbody").empty()
             var url = "/conf/group/"+groupId;
             $.getJSON(url, function (datas) {
                 console.log(datas);
@@ -12,7 +13,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
                     console.log(temp);
                     var t = _.template(temp,{ 'variable': 'datas'});
                     var lr=t(datas);
-                    $("#tabConfig tbody").empty().append(lr);
+                    $("#tabConfig tbody").html(lr);
                     self.initView();
                 });
             });

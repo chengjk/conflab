@@ -84,7 +84,7 @@ public class AppServiceImpl implements AppService {
     @Override
     public boolean pushAll(String key) {
         Iterable<App> apps;
-        if (key != null) {
+        if (key == null) {
             apps = appRepository.findAll();
         } else {
             apps = appRepository.findByNameLike(key);

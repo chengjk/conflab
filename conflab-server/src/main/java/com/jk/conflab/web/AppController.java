@@ -40,8 +40,8 @@ public class AppController {
     }
 
     @RequestMapping("/del")
-    boolean del(Long id) {
-        return appService.del(id);
+    boolean del(Long appId) {
+        return appService.del(appId);
     }
 
     @RequestMapping("/cp")

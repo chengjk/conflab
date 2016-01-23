@@ -4,9 +4,9 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
         init: function () {
             self=this;
             group.init();
-            this.loadData();
+            this.loadApps();
         },
-        loadData: function () {
+        loadApps: function () {
             console.log("loadData");
             var url = "/app/all";
             $.getJSON(url, function (apps) {
@@ -21,7 +21,7 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
         },
         initView: function () {
             console.log("app init");
-            $(".list-group a").click( function (e) {
+            $(".list-group a").on("click", function (e) {
                 alert("push item");
             });
             $(".list-group-item").click( function (e) {
@@ -40,10 +40,10 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
                     alert("edit");
                 }
                 if ($(this).hasClass("btn-delete")) {
-                    alert("delete");
+                    self.del();
                 }
                 if ($(this).hasClass("btn-push")) {
-                    alert("push all");
+                    self.pushAll();
                 }
                 console.log($(this));
             });
@@ -54,6 +54,31 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
         },
         add:function(){
 
+        },
+        push:function(appId){
+            if(confirm("推送可能导致对应应用重启，确认要推送配置吗？")){
+                $.post("/app/push",{'appId':appId},function(e){
+                    alert("ok");
+                })
+            }
+        },
+        pushAll:function(){
+            if(confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")){
+                $.post("/app/pushAll",{'key':""},function(e){
+                     alert("ok");
+                 })
+            }
+        },
+        del:function(){
+            if( Data.appId==""){
+                alert("请选择要删除的应用。");
+                return false;
+            }
+            if(confirm("删除不可恢复，确认要删除吗？")){
+                $.post("/app/del",{'appId':Data.appId},function(e){
+                    alert("ok");
+                })
+            }
         }
     };
 });

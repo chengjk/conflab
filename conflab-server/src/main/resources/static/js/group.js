@@ -5,6 +5,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
             self = this;
         },
         loadData:function(appId){
+            $("#tabGroup tbody").empty();
             console.log("loadGroup");
             Data.appId=appId;
             var url = "/group/app/"+appId;
@@ -13,7 +14,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
                     console.log(temp);
                     var t = _.template(temp,{ 'variable': 'datas'});
                     var lr=t(datas);
-                    $("#tabGroup tbody").empty().append(lr);
+                    $("#tabGroup tbody").html(lr);
                     self.initView();
                 });
             });
