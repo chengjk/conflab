@@ -27,8 +27,8 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
              });
              $("#tabConfig button").click(function(e){
                  e.stopPropagation();
-                 var confId=$(this).closest("tr").data("id");
-                 self.del(confId);
+                 var tr=$(this).closest("tr");
+                 self.del(tr);
              })
 
              var form=$("#tabConfig").next(".form-inline");
@@ -45,8 +45,11 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
                 form.reset();
             })
         },
-        del:function(confId){
-            alert("del  "+confId);
+        del:function(tr){
+            var confId=tr.data("id");
+             $.post("/conf/del",{'id':confId},function(e){
+                tr.remove();
+             })
         }
     }
 });

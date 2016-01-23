@@ -1,4 +1,4 @@
-define(['jquery','_','group','mockdata'], function ($,_,group) {
+define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
     var self;
     return {
         init: function () {
@@ -72,13 +72,13 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
             }
         },
         del:function(){
-            if( Data.appId==""){
+            if(Data.appId==""){
                 alert("请选择要删除的应用。");
                 return false;
             }
             if(confirm("删除不可恢复，确认要删除吗？")){
                 $.post("/app/del",{'appId':Data.appId},function(e){
-                    alert("ok");
+                    $(".list-group .active").remove();
                 })
             }
         }

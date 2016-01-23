@@ -31,11 +31,11 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
             $("#tabGroup tr button").click(function(e){
                 e.stopPropagation();
                 var text=$(this).text();
-                var groupId=$(this).closest("tr").data("id");
+                var tr=$(this).closest("tr");
                 if("edit"==text){
-                    self.edit(groupId);
+                    self.edit(tr);
                 }else if("del"==text){
-                    self.del(groupId);
+                    self.del(tr);
                 }
             });
             var form=$("#tabGroup").next(".form-inline");
@@ -57,11 +57,12 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
         edit:function(groupId){
             alert("eidt:"+groupId);
         },
-        del:function(groupId){
+        del:function(tr){
+            var groupId=tr.data("id");
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){
                 $.post("/group/del",{'id':groupId},function(e){
                      alert("ok");
-                     form.reset();
+                     tr.remove();
                  })
             }
         }
