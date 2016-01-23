@@ -3,8 +3,9 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
     return {
         init: function () {
             self = this;
+            config.init();
         },
-        loadData:function(appId){
+        loadGroups:function(appId){
             $("#tabGroup tbody").empty();
             console.log("loadGroup");
             Data.appId=appId;
@@ -44,9 +45,9 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
                 self.add(form);
             })
         },
-        open:function(id){
+        open:function(groupId){
             config.init();
-            config.open(id);
+            config.loadConfigs(groupId);
         },
         add:function(form){
             $.post("/group/add",form.serialize(),function(e){
@@ -61,7 +62,6 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
             var groupId=tr.data("id");
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){
                 $.post("/group/del",{'id':groupId},function(e){
-                     alert("ok");
                      tr.remove();
                  })
             }

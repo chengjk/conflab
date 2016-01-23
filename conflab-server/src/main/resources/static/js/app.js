@@ -33,13 +33,13 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
-                    alert("add");
+                    self.add();
                 }
                 if ($(this).hasClass("btn-copy")) {
-                    alert("copy");
+                    self.copy();
                 }
                 if ($(this).hasClass("btn-edit")) {
-                    alert("edit");
+                    self.edit();
                 }
                 if ($(this).hasClass("btn-delete")) {
                     self.del();
@@ -52,17 +52,23 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             console.log("app init ok")
         },
         open:function(appId){
-            group.loadData(appId);
-        },
-        add:function(){
-
+            group.loadGroups(appId);
         },
         push:function(appId){
             if(confirm("推送可能导致对应应用重启，确认要推送配置吗？")){
                 $.post("/app/push",{'appId':appId},function(e){
-                    alert("ok");
+                    console.log("push success,"+appId);
                 })
             }
+        },
+        add:function(){
+            alert("add");
+        },
+        copy:function(){
+            alert("copy");
+        },
+        edit:function(){
+            alert("edit");
         },
         pushAll:function(){
             if(confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")){
