@@ -20,6 +20,7 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
             });
         },
         initView: function () {
+            console.log("app init");
             $(".list-group a").on("click", function (e) {
                 alert("push item");
             });
@@ -46,6 +47,7 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
                 }
                 console.log($(this));
             });
+            console.log("app init ok")
         },
         open:function(appId){
             group.loadData(appId);

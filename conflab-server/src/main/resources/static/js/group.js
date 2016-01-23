@@ -19,12 +19,16 @@ define(['jquery','_','config','mockdata'], function ($,_,config) {
             });
         },
         initView:function(){
+            console.log("group init")
             $("#tabConfig").parent().addClass("hidden");
             $("#tabGroup").parent().removeClass("hidden");
+            var appId;
             $("#tabGroup tr").on("click",function(e){
-               self.open($(this).data("id"))
+                appId=$(this).data("id");
+                self.open(appId)
             });
             var form=$("#tabGroup").next(".form-inline");
+            form.find("input[name=appId]").val(appId);
             form.find("button").on("click",function(){
                 self.add(form);
             })
@@ -34,10 +38,9 @@ define(['jquery','_','config','mockdata'], function ($,_,config) {
             config.open(id);
         },
         add:function(form){
-            form.find("input[name=appId]").val(1); //todo here
-            console.log(form.serialize());
             $.post("/group/add",form.serialize(),function(e){
-                console.log(e)
+                alert("ok");
+                form.reset();
             })
         }
     }
