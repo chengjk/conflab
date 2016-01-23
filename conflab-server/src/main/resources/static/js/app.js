@@ -22,7 +22,9 @@ define(['jquery','_','group','mockdata'], function ($,_,group) {
         initView: function () {
             console.log("app init");
             $(".list-group a").on("click", function (e) {
-                alert("push item");
+                e.stopPropagation();
+                var appId=$(this).parent().data("appid");
+                self.push(appId);
             });
             $(".list-group-item").click( function (e) {
                 $(this).parent().find(".list-group-item").removeClass("active");

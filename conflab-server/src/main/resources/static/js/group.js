@@ -28,6 +28,16 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
                 Data.groupId=$(this).data("id");
                 self.open(Data.groupId)
             });
+            $("#tabGroup tr button").click(function(e){
+                e.stopPropagation();
+                var text=$(this).text();
+                var groupId=$(this).closest("tr").data("id");
+                if("edit"==text){
+                    self.edit(groupId);
+                }else if("del"==text){
+                    self.del(groupId);
+                }
+            });
             var form=$("#tabGroup").next(".form-inline");
             form.find("input[name=appId]").val(Data.appId);
             form.find("button").off("click").click(function(){
@@ -43,6 +53,17 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
                 alert("ok");
                 form.reset();
             })
+        },
+        edit:function(groupId){
+            alert("eidt:"+groupId);
+        },
+        del:function(groupId){
+            if(confirm("删除不可恢复，确认要删除吗？"+groupId)){
+                $.post("/group/del",{'id':groupId},function(e){
+                     alert("ok");
+                     form.reset();
+                 })
+            }
         }
     }
 });
