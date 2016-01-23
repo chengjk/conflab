@@ -1,4 +1,4 @@
-define(['jquery','_','config','mockdata'], function ($,_,config) {
+define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
     var self;
     return {
         init: function () {
@@ -7,6 +7,7 @@ define(['jquery','_','config','mockdata'], function ($,_,config) {
         },
         loadData:function(appId){
             console.log("loadGroup");
+            Data.appId=appId;
             var url = "/group/app/"+appId;
             $.getJSON(url, function (datas) {
                 $.get("temp/grouptab.html",function(temp){
@@ -22,13 +23,13 @@ define(['jquery','_','config','mockdata'], function ($,_,config) {
             console.log("group init")
             $("#tabConfig").parent().addClass("hidden");
             $("#tabGroup").parent().removeClass("hidden");
-            var appId;
+
             $("#tabGroup tr").on("click",function(e){
-                appId=$(this).data("id");
-                self.open(appId)
+                Data.groupId=$(this).data("id");
+                self.open(Data.groupId)
             });
             var form=$("#tabGroup").next(".form-inline");
-            form.find("input[name=appId]").val(appId);
+            form.find("input[name=appId]").val(Data.appId);
             form.find("button").on("click",function(){
                 self.add(form);
             })

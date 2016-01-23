@@ -1,11 +1,11 @@
-define(['jquery','_','config','mockdata'], function ($,_,conf){
-var self;
+define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
+    var self;
     return {
         init:function(){
             self=this;
         },
-        open:function(id){
-            var url = "/conf/group/"+id;
+        open:function(groupId){
+            var url = "/conf/group/"+groupId;
             $.getJSON(url, function (datas) {
                 console.log(datas);
                 $.get("temp/conftab.html",function(temp){
@@ -20,10 +20,24 @@ var self;
         initView:function(){
              $("#tabConfig").parent().removeClass("hidden");
              $("#tabGroup").parent().addClass("hidden");
-
-             $("#tabConfig tr").on("click",function(e){
-                alert($(this).data("groupid"));
+             $("#tabConfig").editableTableWidget();
+             $("#tabConfig tr").click(function(){
+                alert($(this).data("id"))
              })
+
+             var form=$("#tabConfig").next(".form-inline");
+             form.find("input[name=appId]").val(Data.appId);
+             form.find("input[name=groupId]").val(Data.groupId);
+             form.find("button").click(function(){
+                 self.add(form);
+             })
+        },
+        add:function(form){
+            console.log("add config")
+            $.post("/conf/add",form.serialize(),function(e){
+                alert("ok");
+                form.reset();
+            })
         }
     }
 });

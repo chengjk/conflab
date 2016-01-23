@@ -69,7 +69,7 @@
         </div>
         <!-- /#nav -->
         <div id="content">
-            <div>
+            <div class="">
                 <table id="tabGroup" class="table table-hover table-bordered">
                     <thead>
                     <th>GROUP</th>
@@ -96,41 +96,18 @@
                     <th>DESC</th>
                     <th>OPT</th>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>a</td>
-                        <td>b</td>
-                        <th>
-                            <button class="btn btn-danger btn-xs">del</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>z</td>
-                        <td>c</td>
-                        <th>
-                            <button class="btn btn-danger btn-xs">del</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>y</td>
-                        <td>h</td>
-                        <th>
-                            <button class="btn btn-danger btn-xs">del</button>
-                        </th>
-                    </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <div class="form-inline">
-                    <input type="text" class="form-control" placeholder="key ">
-                    <input type="text" class="form-control" placeholder="value">
-                    <input type="text" class="form-control" placeholder="description">
-                    <button type="submit" class="btn btn-default">
+                <form class="form-inline">
+                    <input type="hidden" name="appId" class="form-control">
+                    <input type="hidden" name="groupId" class="form-control">
+                    <input type="text" name="key" class="form-control" placeholder="key">
+                    <input type="text" name="value" class="form-control" placeholder="value">
+                    <input type="text" name="descp" class="form-control" placeholder="description">
+                    <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                </div>
+                </form>
             </div>
 
         </div>
