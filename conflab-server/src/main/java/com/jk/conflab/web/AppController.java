@@ -30,7 +30,10 @@ public class AppController {
     }
 
     @RequestMapping("/key/{key}")
-    Iterable<App> findOne(@PathVariable String key) {
+    Iterable<App> findByKey(@PathVariable String key) {
+        if (key == null) {
+            return findAll();
+        }
         return appRepository.findByNameLike(key);
     }
 

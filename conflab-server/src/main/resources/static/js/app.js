@@ -6,9 +6,10 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             group.init();
             this.loadApps();
         },
-        loadApps: function () {
-            console.log("loadData");
-            var url = "/app/all";
+        loadApps: function (key) {
+            console.log("loadApp");
+            if(key==undefined)key=Data.urlKey;
+            var url = "/app/key/"+key;
             $.getJSON(url, function (apps) {
                 console.log(apps);
                 $.get("temp/applist.html",function(temp){
