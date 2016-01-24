@@ -80,12 +80,12 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             }
         },
         del:function(){
-            if(Data.appId==""){
+            if(Data.getAppId()==null){
                 alert("请选择要删除的应用。");
                 return false;
             }
             if(confirm("删除不可恢复，确认要删除吗？")){
-                $.post("/app/del",{'appId':Data.appId},function(e){
+                $.post("/app/del",{'appId':Data.getAppId()},function(e){
                     $(".list-group .active").remove();
                 })
             }

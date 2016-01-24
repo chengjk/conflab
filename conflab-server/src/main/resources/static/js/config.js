@@ -31,8 +31,8 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
                 self.del(tr);
             })
             var form=$("#tabConfig").next(".form-inline");
-            form.find("input[name=appId]").val(Data.appId);
-            form.find("input[name=groupId]").val(Data.groupId);
+            form.find("input[name=appId]").val(Data.getAppId());
+            form.find("input[name=groupId]").val(Data.getGroupId());
             form.find("button").off("click").click(function(){
                 self.add(form);
             })
