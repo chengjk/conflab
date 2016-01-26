@@ -2,29 +2,31 @@ define(function(){
 
     //当前选中的 app，group，config。
     //同时只能有一个。又因为关联关系，采用get set 方法。
-    var appId,groupId,confId;
+    var app=null;
+    var group=null;
+    var config=null;
     return{
         urlKey:null, //url 中的key参数
-        getAppId:function(){
-            return appId
+        getApp:function(){
+            return app;
         },
-        setAppId:function(id){
-           appId=id;
-           groupId=null;
-           confId=null;
+        setApp:function(o){
+           app=o;
+           group=null;
+           config=null;
         },
-        setGroupId:function(id){
-           groupId=id;
-           confId=null;
+        setGroup:function(o){
+           group=o;
+           config=null;
         },
-        getGroupId:function(){
-            return groupId;
+        getGroup:function(){
+            return group;
         },
-        setConfId:function(id){
-           confId=id;
+        setConfig:function(o){
+           config=o;
         },
-        getConfId:function(){
-            return confId;
+        getConfig:function(){
+            return config;
         }
     }
 })

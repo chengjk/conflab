@@ -1,4 +1,4 @@
-define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
+define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,config,Data,Breadcrumb) {
     var self;
     return {
         init: function () {
@@ -8,7 +8,6 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
         loadGroups:function(appId){
             $("#tabGroup tbody").empty();
             console.log("loadGroup");
-            Data.setAppId(appId);
             var url = "/group/app/"+appId;
             $.getJSON(url, function (datas) {
                 $.get("temp/grouptab.html",function(temp){
@@ -24,8 +23,12 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
             console.log("group init")
 
             $("#tabGroup tr").click(function(e){
-                Data.setGroupId($(this).data("id"));
-                self.open(Data.getGroupId())
+                var g={};
+                g.id=$(this).data("id");
+                g.name=$(this).data("name")
+                Data.setGroup(g);
+                self.open(g.id);
+                Breadcrumb.update();
             });
             $("#tabGroup tr button").click(function(e){
                 e.stopPropagation();
@@ -38,7 +41,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,config,Data) {
                 }
             });
             var form=$("#tabGroup").next(".form-inline");
-            form.find("input[name=appId]").val(Data.getAppId());
+            form.find("input[name=appId]").val(Data.getApp().id);
             form.find("button").off("click").click(function(){
                 self.add(form);
             })

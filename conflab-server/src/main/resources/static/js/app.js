@@ -1,4 +1,4 @@
-define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
+define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,group,Data,Breadcrumb) {
     var self;
     return {
         init: function () {
@@ -32,11 +32,17 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
                 $(this).addClass("active");
                 $("#tabConfig").parent().addClass("hidden");
                 $("#tabGroup").parent().removeClass("hidden");
-                self.open($(this).data("appid"));
+                var app={};
+                app.id=$(this).data("appid");
+                app.name=$(this).data("appname");
+                Data.setApp(app);
+                Breadcrumb.update();
+                self.open(app.id);
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
-                    self.add();
+                   var name= prompt("Add App","name");
+                   alert(name);
                 }
                 if ($(this).hasClass("btn-copy")) {
                     self.copy();
@@ -81,12 +87,12 @@ define(['jquery','_','group','Data','mockdata'], function ($,_,group,Data) {
             }
         },
         del:function(){
-            if(Data.getAppId()==null){
+            if(Data.getApp().id==null){
                 alert("请选择要删除的应用。");
                 return false;
             }
             if(confirm("删除不可恢复，确认要删除吗？")){
-                $.post("/app/del",{'appId':Data.getAppId()},function(e){
+                $.post("/app/del",{'appId':Data.getApp().id},function(e){
                     $(".list-group .active").remove();
                 })
             }

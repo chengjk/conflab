@@ -3,7 +3,7 @@ define(['jquery', 'mock'], function ($) {
     $.mockjaxSettings.responseTime = 1;
     //app start
     $.mockjax({
-        url: "/app/all",
+        url: "/app/key/*",
         status: 200,
         responseText: [{'id': 1, 'name': 'test', 'descp': 'test'},
         { 'id': 2, 'name': 'test', 'descp': 'test' },

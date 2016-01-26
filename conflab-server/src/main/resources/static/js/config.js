@@ -23,7 +23,10 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
         initView:function(){
             $("#tabConfig").editableTableWidget();
             $("#tabConfig tr").click(function(){
-               alert($(this).data("id"))
+                var c={};
+                c.id=$(this).data("id");
+                Data.setConfig(c);
+                alert(c.id)
             });
             $("#tabConfig button").click(function(e){
                 e.stopPropagation();
@@ -31,8 +34,8 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
                 self.del(tr);
             })
             var form=$("#tabConfig").next(".form-inline");
-            form.find("input[name=appId]").val(Data.getAppId());
-            form.find("input[name=groupId]").val(Data.getGroupId());
+            form.find("input[name=appId]").val(Data.getApp().id);
+            form.find("input[name=groupId]").val(Data.getGroup().id);
             form.find("button").off("click").click(function(){
                 self.add(form);
             })

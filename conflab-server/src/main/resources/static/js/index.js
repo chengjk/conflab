@@ -1,6 +1,7 @@
-define(['jquery',"app",'banner','Data',"etab"],function($,app,banner,Data){
+define(['jquery',"app",'banner','Data',"breadcrumb","etab"],function($,app,banner,Data,breadcrumb){
     app.init();
     banner.init();
+    breadcrumb.update();
     //获取url中的key参数
     function getUrlParam(name) {
          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
