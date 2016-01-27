@@ -4,7 +4,9 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
         init: function () {
             self=this;
             group.init();
-            this.loadApps();
+
+            self.initView();
+            self.loadApps();
         },
         loadApps: function (key) {
             console.log("loadApp");
@@ -16,19 +18,18 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                     var t = _.template(temp,{ 'variable': 'apps'});
                     var lr=t(apps);
                     $(".list-group").html(lr);
-                    self.initView();
                 });
             });
         },
         initView: function () {
             console.log("app init");
-            $(".list-group a").on("click", function (e) {
+            $(".list-group").delegate("a","click",function(e){
                 e.stopPropagation();
                 var appId=$(this).parent().data("appid");
                 self.push(appId);
             });
-            $(".list-group-item").click( function (e) {
-                $(this).parent().find(".list-group-item").removeClass("active");
+            $(".list-group").delegate(".list-group-item","click",function(){
+                $(".list-group li").removeClass("active");
                 $(this).addClass("active");
                 $("#tabConfig").parent().addClass("hidden");
                 $("#tabGroup").parent().removeClass("hidden");

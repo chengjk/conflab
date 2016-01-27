@@ -4,6 +4,7 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
         init: function () {
             self = this;
             config.init();
+            self.initView();
         },
         loadGroups:function(appId){
             $("#tabGroup tbody").empty();
@@ -15,14 +16,13 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                     var t = _.template(temp,{ 'variable': 'datas'});
                     var lr=t(datas);
                     $("#tabGroup tbody").html(lr);
-                    self.initView();
                 });
             });
         },
         initView:function(){
             console.log("group init")
-
-            $("#tabGroup tr").click(function(e){
+            $("#tabGroup").delegate("tr","click",function(){
+                console.log($(this));
                 var g={};
                 g.id=$(this).data("id");
                 g.name=$(this).data("name")
@@ -30,7 +30,7 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 self.open(g.id);
                 Breadcrumb.update();
             });
-            $("#tabGroup tr button").click(function(e){
+            $("#tabGroup").delegate("tr button","click",function(e){
                 e.stopPropagation();
                 var text=$(this).text();
                 var tr=$(this).closest("tr");
@@ -41,20 +41,23 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 }
             });
             var form=$("#tabGroup").next(".form-inline");
-            form.find("input[name=appId]").val(Data.getApp().id);
             form.find("button").off("click").click(function(){
                 self.add(form);
             })
         },
         open:function(groupId){
-            config.init();
             config.loadConfigs(groupId);
         },
         add:function(form){
-            $.post("/group/add",form.serialize(),function(e){
-                alert("ok");
-                form.reset();
-            })
+            if (Data.getApp() == null) {
+                alert("请先选择一个应用。");
+            }else {
+                form.find("input[name=appId]").val(Data.getApp().id);
+                $.post("/group/add",form.serialize(),function(e){
+                    alert("ok");
+                    form.reset();
+                })
+            }
         },
         edit:function(groupId){
             alert("eidt:"+groupId);
