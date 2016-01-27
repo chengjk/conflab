@@ -4,6 +4,8 @@ import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.service.ConfGroupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/group")
 public class ConfGroupController {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     ConfGroupService confGroupService;
 
@@ -36,6 +40,16 @@ public class ConfGroupController {
     @RequestMapping("/add")
     ConfGroup add(ConfGroup o) {
         return confGroupRepository.save(o);
+    }
+
+    @RequestMapping("/update")
+    ConfGroup update(ConfGroup o) {
+        if (o.getId() != null) {
+            return confGroupRepository.save(o);
+        }else {
+            logger.error("试图更新不正确的Group。");
+            return null;
+        }
     }
 
     @RequestMapping("/del")

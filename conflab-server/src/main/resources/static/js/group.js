@@ -35,9 +35,10 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 var text=$(this).text();
                 var tr=$(this).closest("tr");
                 if("edit"==text){
-                    self.edit(tr);
+                    self.edit(tr.data("name"));
                 }else if("del"==text){
-                    self.del(tr);
+                    var f=self.del(tr.data("id"));
+                    if (f)tr.remove();
                 }
             });
             var form=$("#tabGroup").next(".form-inline");
@@ -59,15 +60,19 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 })
             }
         },
-        edit:function(groupId){
-            alert("eidt:"+groupId);
+        edit:function(name){
+                $.post("/group/update",
+                {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name}
+                ,function(e){
+                    alert("ok");
+                    form.reset();
+                });
         },
-        del:function(tr){
-            var groupId=tr.data("id");
+        del:function(groupId){
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){
                 $.post("/group/del",{'id':groupId},function(e){
-                     tr.remove();
-                 })
+                    return true;
+                })
             }
         }
     }

@@ -42,14 +42,16 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
-                   var name= prompt("Add App","name");
-                   alert(name);
+                   var name= prompt("Input new app name","name");
+                   self.add(name);
                 }
                 if ($(this).hasClass("btn-copy")) {
-                    self.copy();
+                    var name= prompt("Input destination app name","name");
+                    self.copy(name);
                 }
                 if ($(this).hasClass("btn-edit")) {
-                    self.edit();
+                    var name= prompt("Input new name","name");
+                    self.edit(name);
                 }
                 if ($(this).hasClass("btn-delete")) {
                     self.del();
@@ -71,14 +73,44 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                 })
             }
         },
-        add:function(){
-            alert("add");
+        add:function(name){
+            console.log("add");
+            if(_.isNil(name)){
+                alert("Invalid name,try again!");
+            }else{
+                $.post("/app/add",{'name':name},function(e){
+                    alert("ok");
+                })
+            }
         },
-        copy:function(){
-            alert("copy");
+        copy:function(name){
+            console.log("cp")
+            if(_.isNil(name)){
+                alert("Invalid name,try again!");
+            }else{
+                if(Data.getApp()==null){
+                    alert("No valid app!");
+                    return;
+                }
+                $.post("/app/cp",{'srcId':Data.getApp().id,'tarName':name},function(e){
+                    alert("ok");
+                })
+            }
+
         },
-        edit:function(){
-            alert("edit");
+        edit:function(name){
+            console.log("edit");
+           if(_.isNil(name)){
+               alert("Invalid name,try again!");
+           }else{
+               if(Data.getApp()==null){
+                   alert("No valid app!");
+                   return;
+               }
+               $.post("/app/update",{'id':Data.getApp().id,'name':name},function(e){
+                   alert("ok");
+               })
+           }
         },
         pushAll:function(){
             if(confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")){

@@ -1,4 +1,4 @@
-define(['jquery','Data','mockdata'], function ($,Data) {
+define(['jquery','_','Data','app','mockdata'], function ($,_,Data,App) {
     var self;
     return{
         init:function(){
@@ -13,9 +13,9 @@ define(['jquery','Data','mockdata'], function ($,Data) {
             })
         },
         search:function(key){
-            //todo search app
-            //todo search conf
-            alert("search  "+key);
+            if(!_.isEmpty(key)){
+                App.loadApps(key);
+            }
         }
     }
 });

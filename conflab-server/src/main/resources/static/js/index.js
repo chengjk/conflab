@@ -9,4 +9,5 @@ define(['jquery',"app",'banner','Data',"breadcrumb","etab"],function($,app,banne
          if(r!=null)return  unescape(r[2]); return null;
     }
     Data.urlKey=getUrlParam();
+    $("#tabConfig").editableTableWidget();
 });

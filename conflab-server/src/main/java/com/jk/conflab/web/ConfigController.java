@@ -3,6 +3,8 @@ package com.jk.conflab.web;
 import com.jk.conflab.model.Config;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.ConfigService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/conf")
 public class ConfigController {
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     ConfigService configService;
     @Autowired
@@ -39,6 +42,16 @@ public class ConfigController {
     @RequestMapping("/add")
     Config add(Config o) {
         return configRepository.save(o);
+    }
+
+    @RequestMapping("/update")
+    Config update(Config o) {
+        if (o.getId() != null) {
+            return configRepository.save(o);
+        }else {
+            logger.error("试图更新不正确的 Config!");
+            return null;
+        }
     }
 
     @RequestMapping("/all")
