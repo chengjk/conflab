@@ -22,7 +22,7 @@ define(['jquery','_','config','Data','mockdata'], function ($,_,conf,Data){
         },
         initView:function(){
             $("#tabConfig").editableTableWidget();
-            $("#tabConfig").delegate("tr","click",function(){
+            $("#tabConfig").delegate("tbody tr","click",function(){
                 var c={};
                 c.id=$(this).data("id");
                 Data.setConfig(c);

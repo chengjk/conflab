@@ -21,7 +21,7 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
         },
         initView:function(){
             console.log("group init")
-            $("#tabGroup").delegate("tr","click",function(){
+            $("#tabGroup").delegate("tbody tr","click",function(){
                 console.log($(this));
                 var g={};
                 g.id=$(this).data("id");
