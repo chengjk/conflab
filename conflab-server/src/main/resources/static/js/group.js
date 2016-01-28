@@ -34,8 +34,14 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 e.stopPropagation();
                 var text=$(this).text();
                 var tr=$(this).closest("tr");
+                var g={};
+                g.id=tr.data("id");
+                g.name=tr.data("name")
+                Data.setGroup(g);
                 if("edit"==text){
-                    self.edit(tr.data("name"));
+                    var name=prompt("name","");
+                    var desc=prompt("desc","");
+                    self.edit(name,desc);
                 }else if("del"==text){
                     self.del(tr.data("id"));
                 }
@@ -55,13 +61,13 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 form.find("input[name=appId]").val(Data.getApp().id);
                 $.post("/group/add",form.serialize(),function(e){
                     alert("ok");
-                    form.reset();
+                    form.find("input").val("");
                 })
             }
         },
-        edit:function(name){
+        edit:function(name,desc){
                 $.post("/group/update",
-                {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name}
+                {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc}
                 ,function(e){
                     alert("ok");
                 });

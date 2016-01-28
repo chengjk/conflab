@@ -35,7 +35,7 @@ public class AppController {
 
     @RequestMapping("/key/{key}")
     Iterable<App> findByKey(@PathVariable String key) {
-        if (key == null) {
+        if (key == null|"".equals(key)||"null".equals(key)||"undefined".equals(key)) {
             return findAll();
         }
         return appRepository.findByNameLike(key);

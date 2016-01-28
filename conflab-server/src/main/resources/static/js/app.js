@@ -11,7 +11,6 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
         loadApps: function (key) {
             console.log("loadApp");
             if(key==undefined)key=Data.urlKey;
-            if(key==null)return;
             var url = "/app/key/"+key;
             $.getJSON(url, function (apps) {
                 console.log(apps);

@@ -22,23 +22,14 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
             });
         },
         initView:function(){
-            $("#tabConfig").delegate("tbody tr","click",function(){
-                var tr=$(this);
-                var confId=tr.data("id");
-                var key=_.trim(tr.find("td[name='key']").text());
-                var value=_.trim(tr.find("td[name='value']").text());
-                var descp=_.trim(tr.find("td[name='descp']").text());
-                var c={'id':confId,'key':key,'value':value,'descp':descp};
-                Data.setConfig(c);
-            });
-
             $("#tabConfig").delegate("tbody td","change",function(){
                 var tr=$(this).closest("tr");
                 var confId=tr.data("id");
                 var key=_.trim(tr.find("td[name='key']").html());
                 var value=_.trim(tr.find("td[name='value']").html());
                 var descp=_.trim(tr.find("td[name='descp']").html());
-                var c={'id':confId,'key':key,'value':value,'descp':descp};
+                var c={'id':confId,'appId':Data.getApp().id,'groupId':Data.getGroup().id,
+                'key':key,'value':value,'descp':descp};
                 self.edit(c);
             });
 
@@ -60,7 +51,7 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
                 form.find("input[name=groupId]").val(Data.getGroup().id);
                 $.post("/conf/add",form.serialize(),function(e){
                     alert("ok");
-                    form.reset();
+                    form.find("input").val("");
                 })
             }else {
                 alert("先选择应用和组。");
