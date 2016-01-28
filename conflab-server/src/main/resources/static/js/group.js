@@ -37,8 +37,7 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 if("edit"==text){
                     self.edit(tr.data("name"));
                 }else if("del"==text){
-                    var f=self.del(tr.data("id"));
-                    if (f)tr.remove();
+                    self.del(tr.data("id"));
                 }
             });
             var form=$("#tabGroup").next(".form-inline");
@@ -65,14 +64,13 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name}
                 ,function(e){
                     alert("ok");
-                    form.reset();
                 });
         },
         del:function(groupId){
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){
                 $.post("/group/del",{'id':groupId},function(e){
-                    return true;
-                })
+                    $("#tabGroup tr[data-id='"+groupId+"']").remove();
+                });
             }
         }
     }

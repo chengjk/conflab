@@ -46,15 +46,27 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                    self.add(name);
                 }
                 if ($(this).hasClass("btn-copy")) {
+                    if(Data.getApp()==null){
+                        alert("请选中要复制的对象!");
+                        return;
+                    }
                     var name= prompt("Input destination app name","name");
                     self.copy(name);
                 }
                 if ($(this).hasClass("btn-edit")) {
+                    if(Data.getApp()==null){
+                       alert("No valid app!");
+                       return;
+                    }
                     var name= prompt("Input new name","name");
                     self.edit(name);
                 }
                 if ($(this).hasClass("btn-delete")) {
-                    self.del();
+                    if(Data.getApp()==null){
+                       alert("请选择要删除的应用。");
+                       return;
+                    }
+                    self.del(Data.getApp());
                 }
                 if ($(this).hasClass("btn-push")) {
                     self.pushAll();
@@ -85,13 +97,10 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
         },
         copy:function(name){
             console.log("cp")
-            if(_.isNil(name)){
+            if(_.isEmpty(name)){
                 alert("Invalid name,try again!");
             }else{
-                if(Data.getApp()==null){
-                    alert("No valid app!");
-                    return;
-                }
+
                 $.post("/app/cp",{'srcId':Data.getApp().id,'tarName':name},function(e){
                     alert("ok");
                 })
@@ -99,14 +108,10 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
 
         },
         edit:function(name){
-            console.log("edit");
-           if(_.isNil(name)){
+           console.log("edit");
+           if(_.isEmpty(name)){
                alert("Invalid name,try again!");
            }else{
-               if(Data.getApp()==null){
-                   alert("No valid app!");
-                   return;
-               }
                $.post("/app/update",{'id':Data.getApp().id,'name':name},function(e){
                    alert("ok");
                })
@@ -119,13 +124,9 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                  })
             }
         },
-        del:function(){
-            if(Data.getApp().id==null){
-                alert("请选择要删除的应用。");
-                return false;
-            }
+        del:function(app){
             if(confirm("删除不可恢复，确认要删除吗？")){
-                $.post("/app/del",{'appId':Data.getApp().id},function(e){
+                $.post("/app/del",{'appId':app.id},function(e){
                     $(".list-group .active").remove();
                 })
             }

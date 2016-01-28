@@ -17,31 +17,30 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
                     var t = _.template(temp,{ 'variable': 'datas'});
                     var lr=t(datas);
                     $("#tabConfig tbody").html(lr);
+                    $("#tabConfig").editableTableWidget();
                 });
             });
         },
         initView:function(){
-            $("#tabConfig").editableTableWidget();
             $("#tabConfig").delegate("tbody tr","click",function(){
                 var tr=$(this);
                 var confId=tr.data("id");
-                var key=_.trim(tr.find("td [name='key']").text());
-                var value=_.trim(tr.find("td [name='value']").text());
-                var descp=_.trim(tr.find("td [name='descp']").html());
+                var key=_.trim(tr.find("td[name='key']").text());
+                var value=_.trim(tr.find("td[name='value']").text());
+                var descp=_.trim(tr.find("td[name='descp']").text());
                 var c={'id':confId,'key':key,'value':value,'descp':descp};
                 Data.setConfig(c);
             });
 
-//            $("#tabConfig").delegate("tbody tr","focusout",function(){
-//                var tr=$(this);
-//                var confId=tr.data("id");
-//                var key=_.trim(tr.find("td [name='key']").html());
-//                var value=_.trim(tr.find("td [name='value']").html());
-//                var descp=_.trim(tr.find("td [name='descp']").html());
-//                var c={'id':confId,'key':key,'value':value,'descp':descp};
-//                Data.setConfig(c);
-//                self.edit(c);
-//            });
+            $("#tabConfig").delegate("tbody td","change",function(){
+                var tr=$(this).closest("tr");
+                var confId=tr.data("id");
+                var key=_.trim(tr.find("td[name='key']").html());
+                var value=_.trim(tr.find("td[name='value']").html());
+                var descp=_.trim(tr.find("td[name='descp']").html());
+                var c={'id':confId,'key':key,'value':value,'descp':descp};
+                self.edit(c);
+            });
 
             $("#tabConfig").delegate("button","click",function(e){
                 e.stopPropagation();
@@ -76,8 +75,9 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
              }
         },
         edit:function(config){
+            Data.setConfig(config);
             $.post("/conf/update",config,function(e){
-                tr.remove();
+                alert("ok");
             })
         }
     }

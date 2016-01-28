@@ -1,10 +1,8 @@
 define(['jquery','Data'],function($,Data){
-return{
+return {
     update:function(){
         var node=$(".breadcrumb");
-        node.empty();
-        node.append("Root/");
-
+        node.empty().append('<li>Home</li>');;
         var app=Data.getApp();
         var group=Data.getGroup();
         if(app!=null){
@@ -15,5 +13,5 @@ return{
         }
         node.find("li").last().addClass("active");
     }
-    }
+}
 })
