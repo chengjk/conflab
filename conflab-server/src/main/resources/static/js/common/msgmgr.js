@@ -30,8 +30,8 @@ return{
         }
         var d='<div class="'+clazz+'"> <strong>'+_.toUpper(level)+': </strong>'+msg+'</div>';
         $("#alertList .pull-right").append(d);
-        $("#alertList .pull-right").find("div:last").delay(2000).hide(200).queue (function (){
-            $("#alertList .pull-right").find("div:last").remove();
+        $("#alertList .pull-right").find("div:last").delay(3000).slideUp(200).queue (function (){
+            $("#alertList .pull-right").find("div[style]").remove();
         });
     },
     test:function(){
