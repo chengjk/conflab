@@ -1,4 +1,4 @@
-define(['jquery','app','banner','Data','breadcrumb','msg'],function($,app,banner,Data,breadcrumb,msg){
+define(['jquery','app','banner','Data','breadcrumb','msg',"modal"],function($,app,banner,Data,breadcrumb,msg){
     app.init();
     banner.init();
     msg.init();

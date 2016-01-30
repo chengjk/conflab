@@ -41,7 +41,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
-                   var name= prompt("Input new app name","name");
+                   var name//= prompt("Input new app name","name");
                    self.add(name);
                 }
                 if ($(this).hasClass("btn-copy")) {
@@ -70,7 +70,6 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                 if ($(this).hasClass("btn-push")) {
                     self.pushAll();
                 }
-                console.log($(this));
             });
             console.log("app init ok")
         },

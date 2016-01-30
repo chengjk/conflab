@@ -17,6 +17,7 @@ require.config({
         '_':['jquery'],
         etab:['jquery'],
         alert:['jquery'],
+        modal:['jquery'],
         msg:['jquery']
     }
 });
