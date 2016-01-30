@@ -1,6 +1,7 @@
-define(['jquery',"app",'banner','Data',"breadcrumb","etab"],function($,app,banner,Data,breadcrumb){
+define(['jquery','app','banner','Data','breadcrumb','msg'],function($,app,banner,Data,breadcrumb,msg){
     app.init();
     banner.init();
+    msg.init();
     breadcrumb.update();
     //获取url中的key参数
     function getUrlParam(name) {
@@ -9,5 +10,4 @@ define(['jquery',"app",'banner','Data',"breadcrumb","etab"],function($,app,banne
          if(r!=null)return  unescape(r[2]); return null;
     }
     Data.urlKey=getUrlParam();
-    $("#tabConfig").editableTableWidget();
 });

@@ -12,3 +12,9 @@ header {
 #leftPanel .list-group-item a {
     color: black;
 }
+
+#alertList{
+    position: absolute;
+     left: 0px;
+     top: 20px;
+}

@@ -1,4 +1,4 @@
-define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,config,Data,Breadcrumb) {
+define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($,_,config,Data,Breadcrumb,msg) {
     var self;
     return {
         init: function () {
@@ -56,11 +56,11 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
         },
         add:function(form){
             if (Data.getApp() == null) {
-                alert("请先选择一个应用。");
+                msg.info("请先选择一个应用。");
             }else {
                 form.find("input[name=appId]").val(Data.getApp().id);
                 $.post("/group/add",form.serialize(),function(e){
-                    alert("ok");
+                    msg.success("add group success!");
                     form.find("input").val("");
                 })
             }
@@ -69,7 +69,7 @@ define(['jquery','_','config','Data','breadcrumb','mockdata'], function ($,_,con
                 $.post("/group/update",
                 {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc}
                 ,function(e){
-                    alert("ok");
+                    msg.success("edit group success!");
                 });
         },
         del:function(groupId){

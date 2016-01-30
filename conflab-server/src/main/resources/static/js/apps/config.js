@@ -1,4 +1,4 @@
-define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data){
+define(['jquery','_','config','Data','msg','mockdata',"etab"], function ($,_,conf,Data,msg){
     var self;
     return {
         init:function(){
@@ -50,11 +50,11 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
                 form.find("input[name=appId]").val(Data.getApp().id);
                 form.find("input[name=groupId]").val(Data.getGroup().id);
                 $.post("/conf/add",form.serialize(),function(e){
-                    alert("ok");
+                    msg.success("add config success!");
                     form.find("input").val("");
                 })
             }else {
-                alert("先选择应用和组。");
+                msg.info("先选择应用和组。");
             }
         },
         del:function(tr){
@@ -68,7 +68,7 @@ define(['jquery','_','config','Data','mockdata',"etab"], function ($,_,conf,Data
         edit:function(config){
             Data.setConfig(config);
             $.post("/conf/update",config,function(e){
-                alert("ok");
+               msg.success("edit config success!");
             })
         }
     }

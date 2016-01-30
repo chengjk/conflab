@@ -1,4 +1,4 @@
-define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,group,Data,Breadcrumb) {
+define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,_,group,Data,Breadcrumb,msg) {
     var self;
     return {
         init: function () {
@@ -13,7 +13,6 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
             if(key==undefined)key=Data.urlKey;
             var url = "/app/key/"+key;
             $.getJSON(url, function (apps) {
-                console.log(apps);
                 $.get("temp/applist.html",function(temp){
                     var t = _.template(temp,{ 'variable': 'apps'});
                     var lr=t(apps);
@@ -47,7 +46,7 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                 }
                 if ($(this).hasClass("btn-copy")) {
                     if(Data.getApp()==null){
-                        alert("请选中要复制的对象!");
+                        msg.info("请选中要复制的对象!");
                         return;
                     }
                     var name= prompt("Input destination app name","name");
@@ -55,7 +54,7 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                 }
                 if ($(this).hasClass("btn-edit")) {
                     if(Data.getApp()==null){
-                       alert("No valid app!");
+                       msg.error("No valid app!");
                        return;
                     }
                     var name= prompt("Input new name","name");
@@ -63,7 +62,7 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
                 }
                 if ($(this).hasClass("btn-delete")) {
                     if(Data.getApp()==null){
-                       alert("请选择要删除的应用。");
+                       msg.info("请选择要删除的应用。");
                        return;
                     }
                     self.del(Data.getApp());
@@ -88,21 +87,20 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
         add:function(name){
             console.log("add");
             if(_.isNil(name)){
-                alert("Invalid name,try again!");
+                msg.info("Invalid name,try again!");
             }else{
                 $.post("/app/add",{'name':name},function(e){
-                    alert("ok");
+                    msg.success("add app success!");
                 })
             }
         },
         copy:function(name){
             console.log("cp")
             if(_.isEmpty(name)){
-                alert("Invalid name,try again!");
+                msg.info("Invalid name,try again!");
             }else{
-
                 $.post("/app/cp",{'srcId':Data.getApp().id,'tarName':name},function(e){
-                    alert("ok");
+                    msg.success("copy app success!");
                 })
             }
 
@@ -110,17 +108,17 @@ define(['jquery','_','group','Data','breadcrumb','mockdata'], function ($,_,grou
         edit:function(name){
            console.log("edit");
            if(_.isEmpty(name)){
-               alert("Invalid name,try again!");
+               msg.info("Invalid name,try again!");
            }else{
                $.post("/app/update",{'id':Data.getApp().id,'name':name},function(e){
-                   alert("ok");
+                   msg.success("update app success!");
                })
            }
         },
         pushAll:function(){
             if(confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")){
                 $.post("/app/pushAll",{'key':""},function(e){
-                     alert("ok");
+                     msg.success("push all success!");
                  })
             }
         },
