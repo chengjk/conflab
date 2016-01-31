@@ -1,5 +1,7 @@
 <% _.forEach(datas, function(data) { %>
-<tr data-id='<%- data.id %>' data-name='<%- data.name %>' data-appid="<%- data.appId %>">
+<tr data-id='<%- data.id %>' data-name='<%- data.name %>'
+    data-desc="<%- data.descp %>"
+    data-appid="<%- data.appId %>">
     <td><%- data.name %></td>
     <td><%- data.descp %></td>
     <th>

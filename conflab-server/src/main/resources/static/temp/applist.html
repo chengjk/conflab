@@ -1,5 +1,6 @@
 <% _.forEach(apps, function(app) { %>
-<li class='list-group-item ' data-appid='<%- app.id %>' data-appname="<%- app.name %>">
+<li class='list-group-item ' data-appid='<%- app.id %>' data-appname="<%- app.name %>"
+    data-desc="<%- app.descp %>">
     <span class='glyphicon glyphicon-book' aria-hidden='true'></span>
     <%- app.name %>
     <a href='#' class='pull-right'>

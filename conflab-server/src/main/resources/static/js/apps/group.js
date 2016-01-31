@@ -26,6 +26,7 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                 var g={};
                 g.id=$(this).data("id");
                 g.name=$(this).data("name")
+                g.desc=$(this).data("desc")
                 Data.setGroup(g);
                 self.open(g.id);
                 Breadcrumb.update();
@@ -40,6 +41,8 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                 Data.setGroup(g);
                 if("edit"==text){
                     $("#addAppModal h4").html("Edit group");
+                    $("#addAppModal input[name='name']").val(Data.getApp().name);
+                    $("#addAppModal input[name='desc']").val(Data.getApp().desc);
                     $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
                         var name=$("#addAppModal input[name='name']").val();
                         if(_.isEmpty(name)){
@@ -64,6 +67,7 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                     return;
                 }
                 $("#addAppModal h4").html("Add group");
+                $("#addAppModal input").val("");
                 $("#addAppModal .btn-primary").html("Add").off("click").click(function(){
                     var name=$("#addAppModal input[name='name']").val();
                     if(_.isEmpty(name)){

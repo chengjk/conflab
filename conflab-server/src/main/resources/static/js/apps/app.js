@@ -35,6 +35,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                 var app={};
                 app.id=$(this).data("appid");
                 app.name=$(this).data("appname");
+                app.desc=$(this).data("desc");
                 Data.setApp(app);
                 Breadcrumb.update();
                 self.open(app.id);
@@ -42,6 +43,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
                     $("#addAppModal h4").html("Add app");
+                     $("#addAppModal input").val("");
                     $("#addAppModal .btn-primary").html("Add").off("click").click(function(){
                         var name=$("#addAppModal input[name='name']").val();
                         if(_.isEmpty(name)){
@@ -72,6 +74,8 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                        return;
                     }
                     $("#addAppModal h4").html("Edit app");
+                    $("#addAppModal input[name='name']").val(Data.getApp().name);
+                    $("#addAppModal input[name='desc']").val(Data.getApp().desc);
                     $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
                         var name=$("#addAppModal input[name='name']").val();
                         if(_.isEmpty(name)){
