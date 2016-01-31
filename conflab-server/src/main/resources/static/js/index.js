@@ -10,4 +10,9 @@ define(['jquery','app','banner','Data','breadcrumb','msg',"modal"],function($,ap
          if(r!=null)return  unescape(r[2]); return null;
     }
     Data.urlKey=getUrlParam();
+    $(".modal-dialog input").keypress(function(e){
+        if(e.keyCode==13){
+           $(".modal-dialog .btn-primary").trigger("click");
+        }
+    });
 });
