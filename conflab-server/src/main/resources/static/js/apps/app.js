@@ -41,8 +41,22 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
-                   var name//= prompt("Input new app name","name");
-                   self.add(name);
+                    $("#addAppModal h4").html("Add app");
+                    $("#addAppModal .btn-primary").html("Add").off("click").click(function(){
+                        var name=$("#addAppModal input[name='name']").val();
+                        if(_.isEmpty(name)){
+                            $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
+                        }else{
+                            $("#addAppModal input").closest(".form-group").removeClass("has-error");
+                            var desc=$("#addAppModal input[name='desc']").val();
+                            //clear input
+                            $("#addAppModal input").val("");
+                            self.add(name,desc);
+                            $("#addAppModal").modal("hide");
+                        }
+
+                    });
+                    $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-copy")) {
                     if(Data.getApp()==null){
@@ -57,8 +71,22 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                        msg.error("No valid app!");
                        return;
                     }
-                    var name= prompt("Input new name","name");
-                    self.edit(name);
+                    $("#addAppModal h4").html("Edit app");
+                    $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
+                        var name=$("#addAppModal input[name='name']").val();
+                        if(_.isEmpty(name)){
+                            $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
+                        }else{
+                            $("#addAppModal input").closest(".form-group").removeClass("has-error");
+                            var desc=$("#addAppModal input[name='desc']").val();
+                            //clear input
+                            $("#addAppModal input").val("");
+                            self.edit(name,desc);
+                            $("#addAppModal").modal('hide');
+                        }
+
+                    });
+                    $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-delete")) {
                     if(Data.getApp()==null){
@@ -83,12 +111,12 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                 })
             }
         },
-        add:function(name){
+        add:function(name,desc){
             console.log("add");
-            if(_.isNil(name)){
-                msg.info("Invalid name,try again!");
+            if(_.isEmpty(name)){
+                msg.warning("Invalid name,try again!");
             }else{
-                $.post("/app/add",{'name':name},function(e){
+                $.post("/app/add",{'name':name,'descp':desc},function(e){
                     msg.success("add app success!");
                 })
             }
@@ -104,12 +132,12 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             }
 
         },
-        edit:function(name){
+        edit:function(name,desc){
            console.log("edit");
            if(_.isEmpty(name)){
                msg.info("Invalid name,try again!");
            }else{
-               $.post("/app/update",{'id':Data.getApp().id,'name':name},function(e){
+               $.post("/app/update",{'id':Data.getApp().id,'name':name,'descp':desc},function(e){
                    msg.success("update app success!");
                })
            }

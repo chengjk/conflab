@@ -39,13 +39,47 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                 g.name=tr.data("name")
                 Data.setGroup(g);
                 if("edit"==text){
-                    var name=prompt("name","");
-                    var desc=prompt("desc","");
-                    self.edit(name,desc);
+                    $("#addAppModal h4").html("Edit group");
+                    $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
+                        var name=$("#addAppModal input[name='name']").val();
+                        if(_.isEmpty(name)){
+                            $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
+                        }else{
+                            $("#addAppModal input").closest(".form-group").removeClass("has-error");
+                            var desc=$("#addAppModal input[name='desc']").val();
+                            //clear input
+                            $("#addAppModal input").val("");
+                            self.edit(name,desc);
+                            $("#addAppModal").modal("hide");
+                        }
+                    });
+                    $("#addAppModal").modal();
                 }else if("del"==text){
                     self.del(tr.data("id"));
                 }
             });
+            $("#tabGroup thead button").click(function(){
+                if (Data.getApp() == null) {
+                    msg.info("请先选择一个应用。");
+                    return;
+                }
+                $("#addAppModal h4").html("Add group");
+                $("#addAppModal .btn-primary").html("Add").off("click").click(function(){
+                    var name=$("#addAppModal input[name='name']").val();
+                    if(_.isEmpty(name)){
+                        $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
+                    }else{
+                        $("#addAppModal input").closest(".form-group").removeClass("has-error");
+                        var desc=$("#addAppModal input[name='desc']").val();
+                        //clear input
+                        $("#addAppModal input").val("");
+                        self.add(name,desc);
+                        $("#addAppModal").modal("hide");
+                    }
+                });
+                $("#addAppModal").modal();
+            })
+            //add form
             var form=$("#tabGroup").next(".form-inline");
             form.find("button").off("click").click(function(){
                 self.add(form);
@@ -54,14 +88,12 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
         open:function(groupId){
             config.loadConfigs(groupId);
         },
-        add:function(form){
+        add:function(name,desc){
             if (Data.getApp() == null) {
                 msg.info("请先选择一个应用。");
             }else {
-                form.find("input[name=appId]").val(Data.getApp().id);
-                $.post("/group/add",form.serialize(),function(e){
+                $.post("/group/add",{'appId':Data.getApp().id,'name':name,'descp':desc},function(e){
                     msg.success("add group success!");
-                    form.find("input").val("");
                 })
             }
         },
