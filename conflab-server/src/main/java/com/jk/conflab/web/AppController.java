@@ -66,6 +66,16 @@ public class AppController {
         return appService.copy(srcId, tarName);
     }
 
+    @RequestMapping("/export/{id}")
+    App export(@PathVariable Long id) {
+        return appService.exportOne(id);
+    }
+
+    @RequestMapping("/export/key/{key}")
+    Iterable<App> export(@PathVariable String key) {
+        return appService.exportByKey(key);
+    }
+
     @RequestMapping("/push")
     boolean push(Long appId, String appName) {
         return appService.push(appId, appName);

@@ -1,9 +1,8 @@
 package com.jk.conflab.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by jacky.cheng on 2015/11/3.
@@ -16,6 +15,8 @@ public class App implements Serializable {
     private String name;
 
     private String descp;
+    @Transient
+    private List<ConfGroup> groups;
 
     public Long getId() {
         return id;
@@ -39,5 +40,13 @@ public class App implements Serializable {
 
     public void setDescp(String descp) {
         this.descp = descp;
+    }
+
+    public List<ConfGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<ConfGroup> groups) {
+        this.groups = groups;
     }
 }

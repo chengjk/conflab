@@ -96,4 +96,32 @@ public class AppServiceImpl implements AppService {
         }
         return true;
     }
+
+    @Override
+    public App exportOne(Long id) {
+        App one = appRepository.findOne(id);
+        one.setGroups(buildSascas(id));
+        return one;
+    }
+
+
+
+    @Override
+    public Iterable<App> exportByKey(String key) {
+        Iterable<App> apps = appRepository.findByNameLike(key);
+        for (App app : apps) {
+            app.setGroups(buildSascas(app.getId()));
+        }
+        return apps;
+    }
+
+
+    private  List<ConfGroup> buildSascas(Long appId) {
+        List<ConfGroup> groups = confGroupRepository.findByAppId(appId);
+        for (ConfGroup group : groups) {
+            List<Config> configs = configRepository.findByGroupId(group.getId());
+            group.setConfigs(configs);
+        }
+        return groups;
+    }
 }

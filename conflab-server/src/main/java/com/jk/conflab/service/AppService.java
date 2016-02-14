@@ -13,4 +13,8 @@ public interface AppService {
     boolean push(Long appId, String appName);
 
     boolean pushAll(String key);
+
+    App exportOne(Long id);
+
+    Iterable<App> exportByKey(String key);
 }
