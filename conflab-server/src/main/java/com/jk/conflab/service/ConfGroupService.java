@@ -11,4 +11,6 @@ public interface ConfGroupService {
     List<ConfGroup> findByAppId(Long appId);
 
     boolean del(Long id);
+
+    ConfGroup exportOne(Long id);
 }

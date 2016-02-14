@@ -29,9 +29,4 @@ public class ConfigServiceImpl implements ConfigService {
     public Iterable<Config> findAll() {
         return repository.findAll();
     }
-
-    @Override
-    public Config findById(Long id) {
-        return repository.findOne(id);
-    }
 }

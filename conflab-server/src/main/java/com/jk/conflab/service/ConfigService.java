@@ -13,6 +13,4 @@ public interface ConfigService {
     List<Config> findByGroup(Long gId);
 
     Iterable<Config> findAll();
-
-    Config findById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.jk.conflab.service.impl;
 
 import com.jk.conflab.model.ConfGroup;
+import com.jk.conflab.model.Config;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.ConfGroupService;
@@ -30,5 +31,13 @@ public class ConfGroupServiceImpl implements ConfGroupService {
         confGroupRepository.delete(id);
         configRepository.deleteByGroupId(id);
         return true;
+    }
+
+    @Override
+    public ConfGroup exportOne(Long id) {
+        ConfGroup one = confGroupRepository.findOne(id);
+        List<Config> configs = configRepository.findByGroupId(id);
+        one.setConfigs(configs);
+        return one;
     }
 }

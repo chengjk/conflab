@@ -42,6 +42,11 @@ public class ConfGroupController {
         return confGroupRepository.save(o);
     }
 
+
+    @RequestMapping("/export/{id}")
+    ConfGroup export(@PathVariable Long id) {
+        return confGroupService.exportOne(id);
+    }
     @RequestMapping("/update")
     ConfGroup update(ConfGroup o) {
         if (o.getId() != null) {
