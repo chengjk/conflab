@@ -40,4 +40,20 @@ public class ConfGroupServiceImpl implements ConfGroupService {
         one.setConfigs(configs);
         return one;
     }
+
+    @Override
+    public boolean importGroups(Long appId, List<ConfGroup> groups) {
+        for (ConfGroup group : groups) {
+            group.setId(null);
+            group.setAppId(appId);
+            ConfGroup rGroup = confGroupRepository.save(group);
+            for (Config config : group.getConfigs()) {
+                config.setId(null);
+                config.setAppId(rGroup.getAppId());
+                config.setGroupId(rGroup.getId());
+                configRepository.save(config);
+            }
+        }
+        return true;
+    }
 }

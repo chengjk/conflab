@@ -13,4 +13,6 @@ public interface ConfGroupService {
     boolean del(Long id);
 
     ConfGroup exportOne(Long id);
+
+    boolean importGroups(Long appId, List<ConfGroup> groups);
 }

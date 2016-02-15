@@ -124,4 +124,30 @@ public class AppServiceImpl implements AppService {
         }
         return groups;
     }
+
+    @Override
+    public boolean importApps(List<App> apps) {
+        for (App app : apps) {
+            importApp(app);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean importApp(App app) {
+        app.setId(null);
+        App rApp = appRepository.save(app);
+        for (ConfGroup group : app.getGroups()) {
+            group.setId(null);
+            group.setAppId(rApp.getId());
+            ConfGroup rGroup = confGroupRepository.save(group);
+            for (Config config : group.getConfigs()) {
+                config.setId(null);
+                config.setAppId(rGroup.getAppId());
+                config.setGroupId(rGroup.getId());
+                configRepository.save(config);
+            }
+        }
+        return true;
+    }
 }

@@ -2,6 +2,8 @@ package com.jk.conflab.service;
 
 import com.jk.conflab.model.App;
 
+import java.util.List;
+
 /**
  * Created by jacky.cheng on 2015/11/10.
  */
@@ -17,4 +19,8 @@ public interface AppService {
     App exportOne(Long id);
 
     Iterable<App> exportByKey(String key);
+
+    boolean importApps(List<App> apps);
+    boolean importApp(App app);
+
 }

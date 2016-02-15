@@ -47,6 +47,12 @@ public class ConfGroupController {
     ConfGroup export(@PathVariable Long id) {
         return confGroupService.exportOne(id);
     }
+
+
+    @RequestMapping("/import")
+    boolean importGroup(Long appId,List<ConfGroup> groups){
+        return confGroupService.importGroups(appId,groups);
+    }
     @RequestMapping("/update")
     ConfGroup update(ConfGroup o) {
         if (o.getId() != null) {

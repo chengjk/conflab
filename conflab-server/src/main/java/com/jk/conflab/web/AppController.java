@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by jacky.cheng on 2015/11/11.
  */
@@ -74,6 +76,11 @@ public class AppController {
     @RequestMapping("/export/key/{key}")
     Iterable<App> export(@PathVariable String key) {
         return appService.exportByKey(key);
+    }
+
+    @RequestMapping("/import")
+    boolean importApp(List<App> apps) {
+        return appService.importApps(apps);
     }
 
     @RequestMapping("/push")
