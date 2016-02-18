@@ -5,8 +5,8 @@ require.config({
         '_':"../../lib/lodash.min",
         mock:"../../lib/jquery.mockjax",
         etab:'../../lib/mindmup-editabletable',
-        alert:'../../lib/bootstrap/alert',
-        modal:'../../lib/bootstrap/modal',
+        alert:'../../lib/bootstrap/js/alert',
+        modal:'../../lib/bootstrap/js/modal',
         Data:'../common/Data',
         mockdata:'../common/mockdata',
         msg:'../common/msgmgr'
