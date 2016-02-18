@@ -39,10 +39,10 @@
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <!-- 控制资源文件的拷贝 -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <targetPath>${project.build.directory}</targetPath>
-            </resource>
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<targetPath>${project.build.directory}</targetPath>-->
+            <!--</resource>-->
         </resources>
         <plugins>
             <!-- 设置源文件编码方式 -->
@@ -93,7 +93,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>utf-8</encoding>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
