@@ -6,7 +6,7 @@
         </encoder>
     </appender>
     <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.data" level="DEBUG"/>
+    <logger name="org.hibernate" level="WARN"/>
     <logger name="sun.net" level="WARN"/>
     <root level="DEBUG">
         <appender-ref ref="console"/>
