@@ -38,7 +38,6 @@
         <!--<finalName>Conflab</finalName>-->
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
-             <!--控制资源文件的拷贝-->
             <!--<resource>-->
                 <!--<directory>src/main/resources</directory>-->
                 <!--<targetPath>${project.build.directory}/dist</targetPath>-->
@@ -73,7 +72,7 @@
                         <exclude>bin/*</exclude>
                         <exclude>static/**/*</exclude>
                         <exclude>application.properties</exclude>
-                        <exclude>logback.xml</exclude>
+                        <!--<exclude>logback.xml</exclude>-->
                     </excludes>
                 </configuration>
             </plugin>
