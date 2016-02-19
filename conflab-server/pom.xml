@@ -38,10 +38,10 @@
         <!--<finalName>Conflab</finalName>-->
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
-            <!-- 控制资源文件的拷贝 -->
+             <!--控制资源文件的拷贝-->
             <!--<resource>-->
                 <!--<directory>src/main/resources</directory>-->
-                <!--<targetPath>${project.build.directory}</targetPath>-->
+                <!--<targetPath>${project.build.directory}/dist</targetPath>-->
             <!--</resource>-->
         </resources>
         <plugins>
@@ -68,6 +68,13 @@
                             <mainClass>com.jk.conflab.MainRunner</mainClass>
                         </manifest>
                     </archive>
+                    <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                    <excludes>
+                        <exclude>bin/*</exclude>
+                        <exclude>static/**/*</exclude>
+                        <exclude>application.properties</exclude>
+                        <exclude>logback.xml</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <!-- 拷贝依赖的jar包到lib目录 -->
@@ -83,7 +90,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                ${project.build.directory}/lib
+                                ${project.build.directory}/dist/lib
                             </outputDirectory>
                         </configuration>
                     </execution>
@@ -103,7 +110,7 @@
                         </goals>
                         <configuration>
                             <encoding>utf-8</encoding>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/dist</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
