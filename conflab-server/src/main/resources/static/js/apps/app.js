@@ -10,8 +10,10 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
         },
         loadApps: function (key) {
             console.log("loadApp");
+            console.log(Data.urlKey);
             if(key==undefined)key=Data.urlKey;
             var url = "/app/key/"+key;
+
             $.getJSON(url, function (apps) {
                 $.get("temp/applist.html",function(temp){
                     var t = _.template(temp,{ 'variable': 'apps'});
@@ -122,6 +124,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             }else{
                 $.post("/app/add",{'name':name,'descp':desc},function(e){
                     msg.success("add app success!");
+                    self.loadApps();
                 })
             }
         },

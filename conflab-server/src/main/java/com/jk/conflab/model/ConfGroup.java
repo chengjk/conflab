@@ -1,9 +1,6 @@
 package com.jk.conflab.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
  * Created by jacky.cheng on 2015/11/3.
  */
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"appId", "name"}))
 public class ConfGroup implements Serializable {
     @Id
     @GeneratedValue
@@ -20,6 +18,8 @@ public class ConfGroup implements Serializable {
     private String descp;
     @Transient
     private List<Config> configs;
+    public ConfGroup() {
+    }
 
     public Long getId() {
         return id;

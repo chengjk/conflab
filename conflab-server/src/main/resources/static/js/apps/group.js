@@ -98,6 +98,7 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
             }else {
                 $.post("/group/add",{'appId':Data.getApp().id,'name':name,'descp':desc},function(e){
                     msg.success("add group success!");
+                    self.loadGroups(Data.getApp().id);
                 })
             }
         },

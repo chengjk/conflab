@@ -52,6 +52,7 @@ define(['jquery','_','config','Data','msg','mockdata',"etab"], function ($,_,con
                 $.post("/conf/add",form.serialize(),function(e){
                     msg.success("add config success!");
                     form.find("input").val("");
+                    self.loadConfigs(Data.getGroup().id);
                 })
             }else {
                 msg.info("先选择应用和组。");

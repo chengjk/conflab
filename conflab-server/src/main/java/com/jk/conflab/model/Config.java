@@ -1,16 +1,14 @@
 package com.jk.conflab.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by jacky.cheng on 2015/10/27.
  */
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"groupId", "`key`"}))
 public class Config implements Serializable {
 
     @Id
