@@ -26,8 +26,13 @@ public class ConfGroupServiceImpl implements ConfGroupService {
     }
 
     @Override
-    public ConfGroup save(ConfGroup g) {
-        return null;
+    public ConfGroup save(ConfGroup g) throws Exception {
+        Iterable<ConfGroup> groups=confGroupRepository.findByAppIdAndName(g.getAppId(), g.getName());
+        if (groups.iterator().hasNext()) {
+            throw new Exception("already exist! please try another.");
+        }else {
+            return confGroupRepository.save(g);
+        }
     }
 
     @Override
@@ -51,7 +56,7 @@ public class ConfGroupServiceImpl implements ConfGroupService {
         for (ConfGroup group : groups) {
             group.setId(null);
             group.setAppId(appId);
-            ConfGroup rGroup = confGroupRepository.save(group);
+            ConfGroup rGroup = confGroupRepository.save(group);// FIXME: 2016/2/21  唯一约束
             for (Config config : group.getConfigs()) {
                 config.setId(null);
                 config.setAppId(rGroup.getAppId());

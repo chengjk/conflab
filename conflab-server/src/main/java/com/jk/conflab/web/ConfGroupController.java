@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -38,8 +40,13 @@ public class ConfGroupController {
     }
 
     @RequestMapping("/add")
-    ConfGroup add(ConfGroup o) {
-        return confGroupRepository.save(o);
+    ConfGroup add(ConfGroup o, HttpServletResponse resp) throws IOException {
+        try {
+            return confGroupService.save(o);
+        } catch (Exception e) {
+            resp.sendError(500,e.getMessage());
+            return null;
+        }
     }
 
 
@@ -54,9 +61,14 @@ public class ConfGroupController {
         return confGroupService.importGroups(appId,groups);
     }
     @RequestMapping("/update")
-    ConfGroup update(ConfGroup o) {
+    ConfGroup update(ConfGroup o,HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
-            return confGroupRepository.save(o);
+            try {
+                return confGroupService.save(o);
+            } catch (Exception e) {
+                resp.sendError(500,e.getMessage());
+                return null;
+            }
         }else {
             logger.error("试图更新不正确的Group。");
             return null;

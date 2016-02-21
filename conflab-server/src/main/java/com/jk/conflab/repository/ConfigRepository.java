@@ -14,4 +14,6 @@ public interface ConfigRepository extends CrudRepository<Config,Long> {
     List<Config> findByAppId(Long appId);
 
     void deleteByGroupId(Long groupId);
+
+    Iterable<Config> findByAppIdAndKey(Long appId, String key);
 }

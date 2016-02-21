@@ -1,6 +1,7 @@
 package com.jk.conflab.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.BeanProperty;
 import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.model.Config;
@@ -9,9 +10,11 @@ import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.AppService;
 import com.jk.conflab.service.ZkService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,20 +57,31 @@ public class AppServiceImpl implements AppService {
     @Override
     public App copy(Long srcId, String tarName) throws Exception {
         App src = appRepository.findOne(srcId);
-        src.setId(null);
-        src.setName(tarName);
-        App tar =save(src);
+        App tar=new App();
+        BeanUtils.copyProperties(src,tar);
+        tar.setId(null);
+        tar.setName(tarName);
+        tar =save(tar);
         List<ConfGroup> groups = confGroupRepository.findByAppId(srcId);
+        List<ConfGroup> tarGroups=new ArrayList<>();
         for (ConfGroup group : groups) {
-            group.setId(null);
-            group.setAppId(tar.getId());
+            ConfGroup tarGroup=new ConfGroup();
+            BeanUtils.copyProperties(group,tarGroup);
+            tarGroup.setId(null);
+            tarGroup.setAppId(tar.getId());
+            tarGroups.add(tarGroup);
+
             List<Config> configs = configRepository.findByGroupId(group.getId());
+            List<Config> tarConfigs=new ArrayList<>();
             for (Config config : configs) {
-                config.setId(null);
-                config.setAppId(tar.getId());
-                config.setGroupId(group.getId());
+                Config tarConfig=new Config();
+                BeanUtils.copyProperties(config,tarConfig);
+                tarConfig.setId(null);
+                tarConfig.setAppId(tar.getId());
+                tarConfig.setGroupId(group.getId());
+                tarConfigs.add(tarConfig);
             }
-            configRepository.save(configs);
+            configRepository.save(tarConfigs);
         }
         confGroupRepository.save(groups);
         return tar;

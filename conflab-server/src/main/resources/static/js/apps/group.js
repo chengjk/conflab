@@ -96,18 +96,31 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
             if (Data.getApp() == null) {
                 msg.info("请先选择一个应用。");
             }else {
-                $.post("/group/add",{'appId':Data.getApp().id,'name':name,'descp':desc},function(e){
-                    msg.success("add group success!");
-                    self.loadGroups(Data.getApp().id);
+                $.ajax({
+                    url:"/group/add",
+                    data:{'appId':Data.getApp().id,'name':name,'descp':desc},
+                    success:function(){
+                        msg.success("add group success!");
+                        self.loadGroups(Data.getApp().id);
+                    },
+                    error:function(req,status,err){
+                        msg.error(req.responseJSON.message);
+                    }
                 })
             }
         },
         edit:function(name,desc){
-                $.post("/group/update",
-                {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc}
-                ,function(e){
-                    msg.success("edit group success!");
-                });
+            $.ajax({
+               url:"/group/update",
+               data:{'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc},
+               success:function(){
+                   msg.success("edit group success!");
+                   self.loadGroups(Data.getApp().id);
+               },
+               error:function(req,status,err){
+                   msg.error(req.responseJSON.message);
+               }
+            })
         },
         del:function(groupId){
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){

@@ -16,8 +16,13 @@ public class ConfigServiceImpl implements ConfigService {
     @Autowired
     private ConfigRepository repository;
 
-    public void save(Config conf) {
-        repository.save(conf);
+    public Config save(Config conf) throws Exception {
+        Iterable<Config> configs = repository.findByAppIdAndKey(conf.getAppId(), conf.getKey());
+        if (configs.iterator().hasNext()) {
+            throw new Exception("already exist! please try another.");
+        }else {
+            return repository.save(conf);
+        }
     }
 
     @Override
