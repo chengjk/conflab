@@ -36,13 +36,27 @@ public class AppServiceImpl implements AppService {
         return appRepository.findAll();
     }
 
+    @Override
+    public Iterable<App> findByName(String name) {
+        return appRepository.findByName(name);
+    }
 
     @Override
-    public App copy(Long srcId, String tarName) {
+    public App save(App app) throws Exception {
+        Iterable<App> byName = findByName(app.getName());
+        if (byName.iterator().hasNext()) {
+            throw new Exception("already exist! please try another.");
+        }else {
+            return appRepository.save(app);
+        }
+    }
+
+    @Override
+    public App copy(Long srcId, String tarName) throws Exception {
         App src = appRepository.findOne(srcId);
         src.setId(null);
         src.setName(tarName);
-        App tar = appRepository.save(src);
+        App tar =save(src);
         List<ConfGroup> groups = confGroupRepository.findByAppId(srcId);
         for (ConfGroup group : groups) {
             group.setId(null);
@@ -136,7 +150,7 @@ public class AppServiceImpl implements AppService {
     @Override
     public boolean importApp(App app) {
         app.setId(null);
-        App rApp = appRepository.save(app);
+        App rApp = appRepository.save(app); // FIXME: 2016/2/21 唯一约束
         for (ConfGroup group : app.getGroups()) {
             group.setId(null);
             group.setAppId(rApp.getId());

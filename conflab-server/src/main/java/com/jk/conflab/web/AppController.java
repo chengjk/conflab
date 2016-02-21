@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -44,14 +46,24 @@ public class AppController {
     }
 
     @RequestMapping("/add")
-    App add(App o) {
-        return appRepository.save(o);
+    App add(App o, HttpServletResponse resp) throws IOException {
+        try {
+            return appService.save(o);
+        } catch (Exception e) {
+            resp.sendError(500,e.getMessage());
+            return null;
+        }
     }
 
     @RequestMapping("/update")
-    App update(App o) {
+    App update(App o,HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
-            return appRepository.save(o);
+            try {
+                return appService.save(o);
+            } catch (Exception e) {
+                resp.sendError(500,e.getMessage());
+                return null;
+            }
         }else {
             logger.error("试图更新不正确的App。");
             return null;
@@ -64,7 +76,7 @@ public class AppController {
     }
 
     @RequestMapping("/cp")
-    App copy(Long srcId, String tarName) {
+    App copy(Long srcId, String tarName) throws Exception {
         return appService.copy(srcId, tarName);
     }
 

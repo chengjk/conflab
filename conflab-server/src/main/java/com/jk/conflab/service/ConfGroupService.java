@@ -10,6 +10,7 @@ import java.util.List;
 public interface ConfGroupService {
     List<ConfGroup> findByAppId(Long appId);
 
+    ConfGroup save(ConfGroup g);
     boolean del(Long id);
 
     ConfGroup exportOne(Long id);

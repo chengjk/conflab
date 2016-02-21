@@ -10,4 +10,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface AppRepository extends CrudRepository<App, Long> {
     @Query("select a from App a where a.name like %?1%")
     Iterable<App> findByNameLike(String key);
+    Iterable<App> findByName(String name);
 }

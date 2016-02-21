@@ -26,6 +26,11 @@ public class ConfGroupServiceImpl implements ConfGroupService {
     }
 
     @Override
+    public ConfGroup save(ConfGroup g) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public boolean del(Long id) {
         confGroupRepository.delete(id);

@@ -2,6 +2,7 @@ package com.jk.conflab.service;
 
 import com.jk.conflab.model.App;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.List;
 
 /**
@@ -9,7 +10,10 @@ import java.util.List;
  */
 public interface AppService {
     Iterable<App> findAll();
-    App copy(Long srcId, String tarName);
+    Iterable<App> findByName(String name);
+    App copy(Long srcId, String tarName) throws Exception;
+
+    App save(App app) throws Exception;
     boolean del(Long id);
 
     boolean push(Long appId, String appName);
