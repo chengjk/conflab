@@ -37,12 +37,13 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                 var tr=$(this).closest("tr");
                 var g={};
                 g.id=tr.data("id");
-                g.name=tr.data("name")
+                g.name=tr.data("name");
+                g.desc=tr.data("desc");
                 Data.setGroup(g);
                 if("edit"==text){
                     $("#addAppModal h4").html("Edit group");
-                    $("#addAppModal input[name='name']").val(Data.getApp().name);
-                    $("#addAppModal input[name='desc']").val(Data.getApp().desc);
+                    $("#addAppModal input[name='name']").val(Data.getGroup().name);
+                    $("#addAppModal input[name='desc']").val(Data.getGroup().desc);
                     $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
                         var name=$("#addAppModal input[name='name']").val();
                         if(_.isEmpty(name)){
