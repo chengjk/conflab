@@ -16,7 +16,23 @@ mvn clean package -DskipTests=true
 ```
 client端编译结果个jar包。server端编译完是一个可以解压运行的zip，目录：
 
-`//todo tree`
+```tree
+.
+├── application.properties
+├── bin
+│   ├── start.cmd
+│   └── start.sh
+├── conflab-server-1.0-SNAPSHOT.jar
+├── conflab-server-1.0-SNAPSHOT-sources.jar
+├── lib
+└── static
+    ├── css
+    ├── index.html
+    ├── js
+    ├── lib
+    ├── package.json
+    └── temp
+```
 
 - 启动服务端
 `bin/start.sh` or `bin/start.cmd`。
@@ -28,7 +44,9 @@ client端编译结果个jar包。server端编译完是一个可以解压运行�
 > 测试用url：/t/save
 
 ##结构图
-`//todo `
+
+![`系统结构图`](./assets/chart.jpg)
+
 ## 服务端 conflab-server
 
 

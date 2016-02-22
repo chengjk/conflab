@@ -11,4 +11,5 @@ import java.util.List;
 public interface ConfGroupRepository extends CrudRepository<ConfGroup, Long> {
     List<ConfGroup> findByAppId(Long appId);
     void deleteByAppId(Long appId);
+    Iterable<ConfGroup> findByAppIdAndName(Long appId, String name);
 }

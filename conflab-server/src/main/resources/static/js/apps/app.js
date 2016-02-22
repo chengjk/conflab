@@ -122,9 +122,16 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             if(_.isEmpty(name)){
                 msg.warning("Invalid name,try again!");
             }else{
-                $.post("/app/add",{'name':name,'descp':desc},function(e){
-                    msg.success("add app success!");
-                    self.loadApps();
+                $.ajax({
+                    url:"/app/add",
+                    data:{'name':name,'descp':desc},
+                    success:function(){
+                        msg.success("add app success!");
+                        self.loadApps();
+                    },
+                    error:function(req,status,err){
+                        msg.error(req.responseJSON.message);
+                    }
                 })
             }
         },
@@ -135,6 +142,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             }else{
                 $.post("/app/cp",{'srcId':Data.getApp().id,'tarName':name},function(e){
                     msg.success("copy app success!");
+                    self.loadApps();
                 })
             }
 
@@ -144,8 +152,16 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
            if(_.isEmpty(name)){
                msg.info("Invalid name,try again!");
            }else{
-               $.post("/app/update",{'id':Data.getApp().id,'name':name,'descp':desc},function(e){
-                   msg.success("update app success!");
+               $.ajax({
+                   url:"/app/update",
+                   data:{'id':Data.getApp().id,'name':name,'descp':desc},
+                   success:function(){
+                       msg.success("update app success!");
+                       self.loadApps();
+                   },
+                   error:function(req,status,err){
+                       msg.error(req.responseJSON.message);
+                   }
                })
            }
         },

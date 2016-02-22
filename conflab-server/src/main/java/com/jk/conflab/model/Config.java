@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by jacky.cheng on 2015/10/27.
  */
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"groupId", "`key`"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"appId", "`key`"}))
 public class Config implements Serializable {
 
     @Id

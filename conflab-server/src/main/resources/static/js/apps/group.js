@@ -37,12 +37,13 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
                 var tr=$(this).closest("tr");
                 var g={};
                 g.id=tr.data("id");
-                g.name=tr.data("name")
+                g.name=tr.data("name");
+                g.desc=tr.data("desc");
                 Data.setGroup(g);
                 if("edit"==text){
                     $("#addAppModal h4").html("Edit group");
-                    $("#addAppModal input[name='name']").val(Data.getApp().name);
-                    $("#addAppModal input[name='desc']").val(Data.getApp().desc);
+                    $("#addAppModal input[name='name']").val(Data.getGroup().name);
+                    $("#addAppModal input[name='desc']").val(Data.getGroup().desc);
                     $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
                         var name=$("#addAppModal input[name='name']").val();
                         if(_.isEmpty(name)){
@@ -96,18 +97,31 @@ define(['jquery','_','config','Data','breadcrumb','msg','mockdata'], function ($
             if (Data.getApp() == null) {
                 msg.info("请先选择一个应用。");
             }else {
-                $.post("/group/add",{'appId':Data.getApp().id,'name':name,'descp':desc},function(e){
-                    msg.success("add group success!");
-                    self.loadGroups(Data.getApp().id);
+                $.ajax({
+                    url:"/group/add",
+                    data:{'appId':Data.getApp().id,'name':name,'descp':desc},
+                    success:function(){
+                        msg.success("add group success!");
+                        self.loadGroups(Data.getApp().id);
+                    },
+                    error:function(req,status,err){
+                        msg.error(req.responseJSON.message);
+                    }
                 })
             }
         },
         edit:function(name,desc){
-                $.post("/group/update",
-                {'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc}
-                ,function(e){
-                    msg.success("edit group success!");
-                });
+            $.ajax({
+               url:"/group/update",
+               data:{'id':Data.getGroup().id, 'appId':Data.getApp().id,'name':name,'descp':desc},
+               success:function(){
+                   msg.success("edit group success!");
+                   self.loadGroups(Data.getApp().id);
+               },
+               error:function(req,status,err){
+                   msg.error(req.responseJSON.message);
+               }
+            })
         },
         del:function(groupId){
             if(confirm("删除不可恢复，确认要删除吗？"+groupId)){

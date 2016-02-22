@@ -49,11 +49,20 @@ define(['jquery','_','config','Data','msg','mockdata',"etab"], function ($,_,con
             if (Data.getApp() != null && Data.getGroup()!=null) {
                 form.find("input[name=appId]").val(Data.getApp().id);
                 form.find("input[name=groupId]").val(Data.getGroup().id);
-                $.post("/conf/add",form.serialize(),function(e){
-                    msg.success("add config success!");
-                    form.find("input").val("");
-                    self.loadConfigs(Data.getGroup().id);
+
+                $.ajax({
+                   url:"/conf/add",
+                   data:form.serialize(),
+                   success:function(){
+                      msg.success("add config success!");
+                      form.find("input").val("");
+                      self.loadConfigs(Data.getGroup().id);
+                   },
+                   error:function(req,status,err){
+                       msg.error(req.responseJSON.message);
+                   }
                 })
+
             }else {
                 msg.info("先选择应用和组。");
             }
@@ -68,8 +77,14 @@ define(['jquery','_','config','Data','msg','mockdata',"etab"], function ($,_,con
         },
         edit:function(config){
             Data.setConfig(config);
-            $.post("/conf/update",config,function(e){
-               msg.success("edit config success!");
+            $.ajax({
+               url:"/conf/update",
+               data:config,
+               success:function(){
+               },
+               error:function(req,status,err){
+                   msg.error(req.responseJSON.message);
+               }
             })
         }
     }
