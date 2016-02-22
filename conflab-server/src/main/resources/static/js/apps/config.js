@@ -64,7 +64,7 @@ define(['jquery','_','config','Data','msg','mockdata',"etab"], function ($,_,con
                 })
 
             }else {
-                msg.info("先选择应用和组。");
+                msg.info("请选择应用和组。");
             }
         },
         del:function(tr){
