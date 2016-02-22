@@ -72,7 +72,7 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                 }
                 if ($(this).hasClass("btn-edit")) {
                     if(Data.getApp()==null){
-                       msg.error("No valid app!");
+                       msg.info("请选中要编辑的对象!");
                        return;
                     }
                     $("#addAppModal h4").html("Edit app");
@@ -132,7 +132,8 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                     error:function(req,status,err){
                         msg.error(req.responseJSON.message);
                     }
-                })
+                });
+                Data.setApp(null);
             }
         },
         copy:function(name){
