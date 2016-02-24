@@ -16,7 +16,8 @@ public class ConfLabTest {
 
     @Before
     public void myConfLabInit() {
-        MyConfLabInit.isDev = false;
+        MyConfLabInit.isDev=true;
+        MyConfLabInit.appId="ConflabDemo";
         new MyConfLabInit();
     }
 
@@ -26,6 +27,6 @@ public class ConfLabTest {
         String value = ConfLab.getString("conflab"); // 读取
         assertEquals("get data from system properties failed!", "conflab_value", value);
         String test = ConfLab.getString("test");
-        assertEquals("get data from zookeeper failed!", "test_value", test);
+        assertEquals("get data from zookeeper failed!", "testv", test);
     }
 }

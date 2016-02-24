@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2015/11/25.
@@ -20,29 +19,35 @@ public abstract class DefaultConfLabInit {
     public DefaultConfLabInit() {
         if (isDev) {
             logger.info( "is dev");
-            Set<Object> devAppIds = getDevAppIds();
+            ConfLab.register(getDevAppId());
         }else{
             logger.info( "not dev,appId:{}" + getAppId());
-            //注册当前应用  。
+            //注册当前应用
             ConfLab.register(getAppId());
         }
     }
 
-    private Set<Object> getDevAppIds() {
+    /**
+     * 获取需要注册的appIds
+     * @return
+     */
+    private String getDevAppId() {
         String config_home = System.getenv("CONFIG_HOME");
         if (!StringUtils.hasText(config_home)) {
             config_home = System.getProperty("user.home");
             System.err.println("DEV MODEL Read EVN VAR 'CONFIG_HOME' IS NULL,USE HOME " + config_home);
         }
-        String path = config_home + ConfConstants.DevConfigFileName;
+        String path = config_home +"/"+ ConfConstants.DevConfigFileName;
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(path));
+            return  properties.getProperty(getAppId());
         } catch (IOException e) {
             logger.error("开发环境，读取配置id文件错误。" + e.getMessage(), e);
             e.printStackTrace();
+            System.exit(0);
         }
-        return properties.keySet();
+        return null;
     }
 
     protected abstract String getAppId();
