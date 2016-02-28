@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jacky.cheng on 2015/11/26.
@@ -16,8 +16,8 @@ public class ConfLabTest {
 
     @Before
     public void myConfLabInit() {
-        MyConfLabInit.isDev=true;
         MyConfLabInit.appId="ConflabDemo";
+        MyConfLabInit.isDev=true;
         new MyConfLabInit();
     }
 

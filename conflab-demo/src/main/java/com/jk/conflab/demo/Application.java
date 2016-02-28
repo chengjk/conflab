@@ -15,9 +15,9 @@ public class Application {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @Bean
-    public void myConfLabInit() {
+    public MyConfLabInit myConfLabInit() {
         MyConfLabInit.isDev = false;
-        new MyConfLabInit();
+        return new MyConfLabInit();
     }
 
     @Bean

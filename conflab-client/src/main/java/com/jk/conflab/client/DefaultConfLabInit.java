@@ -19,11 +19,11 @@ public abstract class DefaultConfLabInit {
     public DefaultConfLabInit() {
         if (isDev) {
             logger.info( "is dev");
-            ConfLab.register(getDevAppId());
+            ConfLab.register(getDevAppId(),getListener());
         }else{
             logger.info( "not dev,appId:{}" + getAppId());
             //注册当前应用
-            ConfLab.register(getAppId());
+            ConfLab.register(getAppId(),getListener());
         }
     }
 
@@ -51,4 +51,5 @@ public abstract class DefaultConfLabInit {
     }
 
     protected abstract String getAppId();
+    protected abstract DefaultConfListener getListener();
 }

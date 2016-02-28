@@ -9,4 +9,10 @@ public class MyConfLabInit extends DefaultConfLabInit {
     protected String getAppId() {
         return appId;
     }
+
+    @Override
+    protected DefaultConfListener getListener() {
+        return new DefaultConfListener(getAppId());
+    }
+
 }
