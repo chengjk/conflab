@@ -13,4 +13,6 @@ public interface ConfigService {
     List<Config> findByGroup(Long gId);
 
     Iterable<Config> findAll();
+
+    Config update(Config o);
 }

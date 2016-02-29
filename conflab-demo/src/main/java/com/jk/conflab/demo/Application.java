@@ -21,7 +21,7 @@ public class Application {
     }
 
     @Bean
-    public void getConfigData() {
+    public String getConfigData() {
         //测试
         System.setProperty("conflab", "conflab_value");
         String value = ConfLab.getString("conflab");
@@ -30,12 +30,13 @@ public class Application {
         }else {
             logger.error("get data from system properties failed!");
         }
-        String test = ConfLab.getString("test");
-        if ("test_value".equals(test)) {
+        String test = ConfLab.getString("testk");
+        if ("testv".equals(test)) {
             logger.info("get data from zookeeper success!");
         }else {
             logger.error("get data from zookeeper failed!");
         }
+        return  test;
     }
 
 

@@ -34,4 +34,9 @@ public class ConfigServiceImpl implements ConfigService {
     public Iterable<Config> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Config update(Config o) {
+        return repository.save(o);
+    }
 }

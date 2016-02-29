@@ -16,4 +16,7 @@ public interface ConfGroupService {
     ConfGroup exportOne(Long id);
 
     boolean importGroups(Long appId, List<ConfGroup> groups);
+
+    ConfGroup update(ConfGroup o);
+
 }

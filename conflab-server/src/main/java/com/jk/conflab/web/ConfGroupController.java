@@ -64,7 +64,7 @@ public class ConfGroupController {
     ConfGroup update(ConfGroup o,HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return confGroupService.save(o);
+                return confGroupService.update(o);
             } catch (Exception e) {
                 resp.sendError(500,e.getMessage());
                 return null;

@@ -66,4 +66,9 @@ public class ConfGroupServiceImpl implements ConfGroupService {
         }
         return true;
     }
+
+    @Override
+    public ConfGroup update(ConfGroup o) {
+        return confGroupRepository.save(o);
+    }
 }

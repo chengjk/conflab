@@ -59,7 +59,7 @@ public class AppController {
     App update(App o,HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return appService.save(o);
+                return appService.update(o);
             } catch (Exception e) {
                 resp.sendError(500,e.getMessage());
                 return null;

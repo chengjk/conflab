@@ -10,7 +10,7 @@ public class MyConfLabInit extends DefaultConfLabInit {
 
     @Override
     protected String getAppId() {
-        return "app_demo";
+        return "ConflabDemo";
     }
 
     @Override

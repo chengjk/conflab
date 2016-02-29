@@ -27,4 +27,5 @@ public interface AppService {
     boolean importApps(List<App> apps);
     boolean importApp(App app);
 
+    App update(App o);
 }

@@ -178,4 +178,9 @@ public class AppServiceImpl implements AppService {
         }
         return true;
     }
+
+    @Override
+    public App update(App o) {
+        return appRepository.save(o);
+    }
 }

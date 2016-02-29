@@ -55,7 +55,7 @@ public class ConfigController {
     Config update(Config o, HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return configService.save(o);
+                return configService.update(o);
             } catch (Exception e) {
                 resp.sendError(500,e.getMessage());
                 return null;

@@ -26,7 +26,7 @@ public class ConfLabTest {
         System.setProperty("conflab", "conflab_value"); //设置
         String value = ConfLab.getString("conflab"); // 读取
         assertEquals("get data from system properties failed!", "conflab_value", value);
-        String test = ConfLab.getString("test");
+        String test = ConfLab.getString("testk");
         assertEquals("get data from zookeeper failed!", "testv", test);
     }
 }
