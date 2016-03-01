@@ -89,10 +89,13 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public boolean del(Long id) {
+        boolean flag;
+        ConfGroup one = confGroupRepository.findOne(id);
+        flag=zkService.delete(one.getName());
         appRepository.delete(id);
         confGroupRepository.deleteByAppId(id);
-        confGroupRepository.deleteByAppId(id);
-        return false;
+        configRepository.deleteByAppId(id);
+        return flag;
     }
 
     @Override
