@@ -19,4 +19,5 @@ public interface ConfGroupService {
 
     ConfGroup update(ConfGroup o);
 
+    void copyByAppId(Long srcId,Long tarId);
 }
