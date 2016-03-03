@@ -47,7 +47,7 @@ public class ZkServiceImpl implements ZkService {
             client.delete(path);
             logger.info("delete path success!");
             flag = true;
-        }else {
+        } else {
             logger.info("path is not exist,can not delete.");
         }
         return flag;

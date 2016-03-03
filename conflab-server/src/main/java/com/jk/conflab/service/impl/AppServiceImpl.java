@@ -74,7 +74,7 @@ public class AppServiceImpl implements AppService {
     @Transactional
     public boolean del(Long id) {
         boolean flag;
-        ConfGroup one = confGroupRepository.findOne(id);
+        App one = appRepository.findOne(id);
         flag=zkService.delete(one.getName());
         appRepository.delete(id);
         confGroupRepository.deleteByAppId(id);

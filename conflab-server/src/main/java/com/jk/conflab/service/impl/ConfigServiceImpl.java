@@ -22,7 +22,7 @@ public class ConfigServiceImpl implements ConfigService {
         Iterable<Config> configs = repository.findByAppIdAndKey(conf.getAppId(), conf.getKey());
         if (configs.iterator().hasNext()) {
             throw new Exception("already exist! please try another.");
-        }else {
+        } else {
             return repository.save(conf);
         }
     }
@@ -41,13 +41,14 @@ public class ConfigServiceImpl implements ConfigService {
     public Config update(Config o) {
         return repository.save(o);
     }
+
     @Override
     public void copy(Long srcId, Long tarId) {
         List<Config> configs = repository.findByGroupId(srcId);
-        List<Config> tarConfigs=new ArrayList<>();
+        List<Config> tarConfigs = new ArrayList<>();
         for (Config config : configs) {
-            Config tarConfig=new Config();
-            BeanUtils.copyProperties(config,tarConfig);
+            Config tarConfig = new Config();
+            BeanUtils.copyProperties(config, tarConfig);
             tarConfig.setId(null);
             tarConfig.setAppId(config.getAppId());
             tarConfig.setGroupId(tarId);

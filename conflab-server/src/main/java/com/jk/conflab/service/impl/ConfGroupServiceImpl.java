@@ -25,6 +25,7 @@ public class ConfGroupServiceImpl implements ConfGroupService {
     ConfigRepository configRepository;
     @Autowired
     ConfigService configService;
+
     @Override
     public List<ConfGroup> findByAppId(Long appId) {
         return confGroupRepository.findByAppId(appId);
@@ -32,10 +33,10 @@ public class ConfGroupServiceImpl implements ConfGroupService {
 
     @Override
     public ConfGroup save(ConfGroup g) throws Exception {
-        Iterable<ConfGroup> groups=confGroupRepository.findByAppIdAndName(g.getAppId(), g.getName());
+        Iterable<ConfGroup> groups = confGroupRepository.findByAppIdAndName(g.getAppId(), g.getName());
         if (groups.iterator().hasNext()) {
             throw new Exception("already exist! please try another.");
-        }else {
+        } else {
             return confGroupRepository.save(g);
         }
     }
@@ -78,11 +79,11 @@ public class ConfGroupServiceImpl implements ConfGroupService {
     }
 
     @Override
-    public void copyByAppId(Long srcId,Long tarId) {
+    public void copyByAppId(Long srcId, Long tarId) {
         List<ConfGroup> srcGroups = confGroupRepository.findByAppId(srcId);
         for (ConfGroup srcGroup : srcGroups) {
-            ConfGroup tarGroup=new ConfGroup();
-            BeanUtils.copyProperties(srcGroup,tarGroup);
+            ConfGroup tarGroup = new ConfGroup();
+            BeanUtils.copyProperties(srcGroup, tarGroup);
             tarGroup.setId(null);
             tarGroup.setAppId(tarId);
             tarGroup = confGroupRepository.save(tarGroup);

@@ -44,7 +44,7 @@
                     <button class=" btn-copy btn btn-default btn-sm" title="duplicate">
                         <span class="glyphicon glyphicon-duplicate"></span>
                     </button>
-                    <button  class="btn-edit btn btn-default btn-sm" title="edit">
+                    <button class="btn-edit btn btn-default btn-sm" title="edit">
                         <span class="glyphicon glyphicon-edit"></span>
                     </button>
                     <button class="btn-delete btn btn-default btn-sm" title="delete">
@@ -72,7 +72,9 @@
                     <thead>
                     <th>GROUP</th>
                     <th>DESC</th>
-                    <th><button class="btn btn-success btn-xs">add</button></th>
+                    <th>
+                        <button class="btn btn-success btn-xs">add</button>
+                    </th>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -108,21 +110,24 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Add new app</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label  class="col-sm-2 control-label">Name</label>
+                            <label class="col-sm-2 control-label">Name</label>
+
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control"  placeholder="name">
+                                <input type="text" name="name" class="form-control" placeholder="name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Desc</label>
+
                             <div class="col-sm-10">
-                                <input type="text" name="desc" class="form-control"  placeholder="description">
+                                <input type="text" name="desc" class="form-control" placeholder="description">
                             </div>
                         </div>
                     </form>
