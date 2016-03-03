@@ -9,6 +9,6 @@ import org.springframework.boot.SpringApplication;
  */
 public class MainRunner {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class,args);
+        SpringApplication.run(Application.class, args);
     }
 }

@@ -37,16 +37,16 @@ public class ConfigController {
     }
 
     @RequestMapping("/app/{appId}")
-    List<Config>  findByAppId(@PathVariable Long appId) {
+    List<Config> findByAppId(@PathVariable Long appId) {
         return configRepository.findByAppId(appId);
     }
 
     @RequestMapping("/add")
-    Config add(Config o,HttpServletResponse resp) throws IOException {
+    Config add(Config o, HttpServletResponse resp) throws IOException {
         try {
             return configService.save(o);
         } catch (Exception e) {
-            resp.sendError(500,e.getMessage());
+            resp.sendError(500, e.getMessage());
             return null;
         }
     }
@@ -55,12 +55,12 @@ public class ConfigController {
     Config update(Config o, HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return configService.save(o);
+                return configService.update(o);
             } catch (Exception e) {
-                resp.sendError(500,e.getMessage());
+                resp.sendError(500, e.getMessage());
                 return null;
             }
-        }else {
+        } else {
             logger.error("试图更新不正确的 Config!");
             return null;
         }

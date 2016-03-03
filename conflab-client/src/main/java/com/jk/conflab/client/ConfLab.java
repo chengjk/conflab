@@ -22,7 +22,6 @@ public class ConfLab {
     private static ZkClient zkClient = zkClient();
     private static String zkConfigRoot = ConfConstants.ZkConfigRoot;
     private static Map<String, String> configMap = new HashMap<String, String>();
-
     /**
      * 获取一个String值
      *
@@ -60,24 +59,40 @@ public class ConfLab {
     }
 
     /**
-     * 注册一个或多个app。
-     * @param apps
+     * 注册app。
+     * @param app
+     * @param listener
      */
-    public static void register(String... apps) {
+    public static void register(String app,IConfigListener listener) {
         List<String> children = zkClient.getChildren(zkConfigRoot);
-        for (String app : apps) {
-            if (children.contains(app)) {
-                String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
-                Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
-                });
-                configMap.putAll(appMap);
-            } else {
-                logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
-            }
-            addConfigChangeEvent(app, new DefaultConfListenerAdapter(app));
+        if (children.contains(app)) {
+            String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
+            Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
+            });
+            configMap.putAll(appMap);
+        } else {
+            logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
+            System.exit(0);
+        }
+        addConfigChangeEvent(app, listener);
+    }
+
+    public static void update(String app) {
+        List<String> children = zkClient.getChildren(zkConfigRoot);
+        if (children.contains(app)) {
+            String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
+            Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
+            });
+            configMap.putAll(appMap);
+        } else {
+            logger.error(" update failed ,ZK path is null:{}", zkConfigRoot + "/" + app);
         }
     }
 
+    public static void delete() {
+        configMap.clear();
+        logger.info("clear config!");
+    }
     /**
      * 增加更新监控
      *

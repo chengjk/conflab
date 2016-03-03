@@ -1,8 +1,8 @@
-define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,_,group,Data,Breadcrumb,msg) {
+define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], function ($, _, group, Data, Breadcrumb, msg) {
     var self;
     return {
         init: function () {
-            self=this;
+            self = this;
             group.init();
 
             self.initView();
@@ -11,33 +11,33 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
         loadApps: function (key) {
             console.log("loadApp");
             console.log(Data.urlKey);
-            if(key==undefined)key=Data.urlKey;
-            var url = "/app/key/"+key;
+            if (key == undefined)key = Data.urlKey;
+            var url = "/app/key/" + key;
 
             $.getJSON(url, function (apps) {
-                $.get("temp/applist.html",function(temp){
-                    var t = _.template(temp,{ 'variable': 'apps'});
-                    var lr=t(apps);
+                $.get("temp/applist.html", function (temp) {
+                    var t = _.template(temp, {'variable': 'apps'});
+                    var lr = t(apps);
                     $(".list-group").html(lr);
                 });
             });
         },
         initView: function () {
             console.log("app init");
-            $(".list-group").delegate("a","click",function(e){
+            $(".list-group").delegate("a", "click", function (e) {
                 e.stopPropagation();
-                var appId=$(this).parent().data("appid");
+                var appId = $(this).parent().data("appid");
                 self.push(appId);
             });
-            $(".list-group").delegate(".list-group-item","click",function(){
+            $(".list-group").delegate(".list-group-item", "click", function () {
                 $(".list-group li").removeClass("active");
                 $(this).addClass("active");
                 $("#tabConfig").parent().addClass("hidden");
                 $("#tabGroup").parent().removeClass("hidden");
-                var app={};
-                app.id=$(this).data("appid");
-                app.name=$(this).data("appname");
-                app.desc=$(this).data("desc");
+                var app = {};
+                app.id = $(this).data("appid");
+                app.name = $(this).data("appname");
+                app.desc = $(this).data("desc");
                 Data.setApp(app);
                 Breadcrumb.update();
                 self.open(app.id);
@@ -45,17 +45,17 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
                     $("#addAppModal h4").html("Add app");
-                     $("#addAppModal input").val("");
-                    $("#addAppModal .btn-primary").html("Add").off("click").click(function(){
-                        var name=$("#addAppModal input[name='name']").val();
-                        if(_.isEmpty(name)){
+                    $("#addAppModal input").val("");
+                    $("#addAppModal .btn-primary").html("Add").off("click").click(function () {
+                        var name = $("#addAppModal input[name='name']").val();
+                        if (_.isEmpty(name)) {
                             $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
-                        }else{
+                        } else {
                             $("#addAppModal input").closest(".form-group").removeClass("has-error");
-                            var desc=$("#addAppModal input[name='desc']").val();
+                            var desc = $("#addAppModal input[name='desc']").val();
                             //clear input
                             $("#addAppModal input").val("");
-                            self.add(name,desc);
+                            self.add(name, desc);
                             $("#addAppModal").modal("hide");
                         }
 
@@ -63,31 +63,31 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                     $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-copy")) {
-                    if(Data.getApp()==null){
+                    if (Data.getApp() == null) {
                         msg.info("请选中要复制的对象!");
                         return;
                     }
-                    var name= prompt("Input destination app name","name");
+                    var name = prompt("Input destination app name", "name");
                     self.copy(name);
                 }
                 if ($(this).hasClass("btn-edit")) {
-                    if(Data.getApp()==null){
-                       msg.info("请选中要编辑的对象!");
-                       return;
+                    if (Data.getApp() == null) {
+                        msg.info("请选中要编辑的对象!");
+                        return;
                     }
                     $("#addAppModal h4").html("Edit app");
                     $("#addAppModal input[name='name']").val(Data.getApp().name);
                     $("#addAppModal input[name='desc']").val(Data.getApp().desc);
-                    $("#addAppModal .btn-primary").html("Submit").off("click").click(function(){
-                        var name=$("#addAppModal input[name='name']").val();
-                        if(_.isEmpty(name)){
+                    $("#addAppModal .btn-primary").html("Submit").off("click").click(function () {
+                        var name = $("#addAppModal input[name='name']").val();
+                        if (_.isEmpty(name)) {
                             $("#addAppModal input[name='name']").closest(".form-group").addClass("has-error");
-                        }else{
+                        } else {
                             $("#addAppModal input").closest(".form-group").removeClass("has-error");
-                            var desc=$("#addAppModal input[name='desc']").val();
+                            var desc = $("#addAppModal input[name='desc']").val();
                             //clear input
                             $("#addAppModal input").val("");
-                            self.edit(name,desc);
+                            self.edit(name, desc);
                             $("#addAppModal").modal('hide');
                         }
 
@@ -95,9 +95,9 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
                     $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-delete")) {
-                    if(Data.getApp()==null){
-                       msg.info("请选择要删除的应用。");
-                       return;
+                    if (Data.getApp() == null) {
+                        msg.info("请选择要删除的应用。");
+                        return;
                     }
                     self.del(Data.getApp());
                 }
@@ -107,75 +107,75 @@ define(['jquery','_','group','Data','breadcrumb','msg','mockdata'], function ($,
             });
             console.log("app init ok")
         },
-        open:function(appId){
+        open: function (appId) {
             group.loadGroups(appId);
         },
-        push:function(appId){
-            if(confirm("推送可能导致对应应用重启，确认要推送配置吗？")){
-                $.post("/app/push",{'appId':appId},function(e){
-                    console.log("push success,"+appId);
+        push: function (appId) {
+            if (confirm("推送可能导致对应应用重启，确认要推送配置吗？")) {
+                $.post("/app/push", {'appId': appId}, function (e) {
+                    console.log("push success," + appId);
                 })
             }
         },
-        add:function(name,desc){
+        add: function (name, desc) {
             console.log("add");
-            if(_.isEmpty(name)){
+            if (_.isEmpty(name)) {
                 msg.warning("Invalid name,try again!");
-            }else{
+            } else {
                 $.ajax({
-                    url:"/app/add",
-                    data:{'name':name,'descp':desc},
-                    success:function(){
+                    url: "/app/add",
+                    data: {'name': name, 'descp': desc},
+                    success: function () {
                         msg.success("add app success!");
                         self.loadApps();
                     },
-                    error:function(req,status,err){
+                    error: function (req, status, err) {
                         msg.error(req.responseJSON.message);
                     }
                 });
                 Data.setApp(null);
             }
         },
-        copy:function(name){
+        copy: function (name) {
             console.log("cp")
-            if(_.isEmpty(name)){
+            if (_.isEmpty(name)) {
                 msg.info("Invalid name,try again!");
-            }else{
-                $.post("/app/cp",{'srcId':Data.getApp().id,'tarName':name},function(e){
+            } else {
+                $.post("/app/cp", {'srcId': Data.getApp().id, 'tarName': name}, function (e) {
                     msg.success("copy app success!");
                     self.loadApps();
                 })
             }
 
         },
-        edit:function(name,desc){
-           console.log("edit");
-           if(_.isEmpty(name)){
-               msg.info("Invalid name,try again!");
-           }else{
-               $.ajax({
-                   url:"/app/update",
-                   data:{'id':Data.getApp().id,'name':name,'descp':desc},
-                   success:function(){
-                       msg.success("update app success!");
-                       self.loadApps();
-                   },
-                   error:function(req,status,err){
-                       msg.error(req.responseJSON.message);
-                   }
-               })
-           }
-        },
-        pushAll:function(){
-            if(confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")){
-                $.post("/app/pushAll",{'key':""},function(e){
-                     msg.success("push all success!");
-                 })
+        edit: function (name, desc) {
+            console.log("edit");
+            if (_.isEmpty(name)) {
+                msg.info("Invalid name,try again!");
+            } else {
+                $.ajax({
+                    url: "/app/update",
+                    data: {'id': Data.getApp().id, 'name': name, 'descp': desc},
+                    success: function () {
+                        msg.success("update app success!");
+                        self.loadApps();
+                    },
+                    error: function (req, status, err) {
+                        msg.error(req.responseJSON.message);
+                    }
+                })
             }
         },
-        del:function(app){
-            if(confirm("删除不可恢复，确认要删除吗？")){
-                $.post("/app/del",{'appId':app.id},function(e){
+        pushAll: function () {
+            if (confirm("推送可能导致对应应用重启，确认要推送全部配置吗？")) {
+                $.post("/app/pushAll", {'key': ""}, function (e) {
+                    msg.success("push all success!");
+                })
+            }
+        },
+        del: function (app) {
+            if (confirm("删除不可恢复，确认要删除吗？")) {
+                $.post("/app/del", {'appId': app.id}, function (e) {
                     $(".list-group .active").remove();
                 })
             }

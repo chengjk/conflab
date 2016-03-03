@@ -1,6 +1,5 @@
 package com.jk.conflab.web;
 
-import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.service.ConfGroupService;
@@ -39,12 +38,17 @@ public class ConfGroupController {
         return confGroupRepository.findOne(id);
     }
 
+    @RequestMapping("/all")
+    Iterable<ConfGroup> findAll() {
+        return confGroupRepository.findAll();
+    }
+
     @RequestMapping("/add")
     ConfGroup add(ConfGroup o, HttpServletResponse resp) throws IOException {
         try {
             return confGroupService.save(o);
         } catch (Exception e) {
-            resp.sendError(500,e.getMessage());
+            resp.sendError(500, e.getMessage());
             return null;
         }
     }
@@ -57,19 +61,20 @@ public class ConfGroupController {
 
 
     @RequestMapping("/import")
-    boolean importGroup(Long appId,List<ConfGroup> groups){
-        return confGroupService.importGroups(appId,groups);
+    boolean importGroup(Long appId, List<ConfGroup> groups) {
+        return confGroupService.importGroups(appId, groups);
     }
+
     @RequestMapping("/update")
-    ConfGroup update(ConfGroup o,HttpServletResponse resp) throws IOException {
+    ConfGroup update(ConfGroup o, HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return confGroupService.save(o);
+                return confGroupService.update(o);
             } catch (Exception e) {
-                resp.sendError(500,e.getMessage());
+                resp.sendError(500, e.getMessage());
                 return null;
             }
-        }else {
+        } else {
             logger.error("试图更新不正确的Group。");
             return null;
         }

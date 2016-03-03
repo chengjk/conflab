@@ -39,7 +39,7 @@ public class AppController {
 
     @RequestMapping("/key/{key}")
     Iterable<App> findByKey(@PathVariable String key) {
-        if (key == null|"".equals(key)||"null".equals(key)||"undefined".equals(key)) {
+        if (key == null | "".equals(key) || "null".equals(key) || "undefined".equals(key)) {
             return findAll();
         }
         return appRepository.findByNameLike(key);
@@ -50,21 +50,21 @@ public class AppController {
         try {
             return appService.save(o);
         } catch (Exception e) {
-            resp.sendError(500,e.getMessage());
+            resp.sendError(500, e.getMessage());
             return null;
         }
     }
 
     @RequestMapping("/update")
-    App update(App o,HttpServletResponse resp) throws IOException {
+    App update(App o, HttpServletResponse resp) throws IOException {
         if (o.getId() != null) {
             try {
-                return appService.save(o);
+                return appService.update(o);
             } catch (Exception e) {
-                resp.sendError(500,e.getMessage());
+                resp.sendError(500, e.getMessage());
                 return null;
             }
-        }else {
+        } else {
             logger.error("试图更新不正确的App。");
             return null;
         }

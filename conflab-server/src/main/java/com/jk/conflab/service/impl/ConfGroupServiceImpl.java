@@ -5,10 +5,13 @@ import com.jk.conflab.model.Config;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.ConfGroupService;
+import com.jk.conflab.service.ConfigService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ public class ConfGroupServiceImpl implements ConfGroupService {
     ConfGroupRepository confGroupRepository;
     @Autowired
     ConfigRepository configRepository;
+    @Autowired
+    ConfigService configService;
+
     @Override
     public List<ConfGroup> findByAppId(Long appId) {
         return confGroupRepository.findByAppId(appId);
@@ -27,10 +33,10 @@ public class ConfGroupServiceImpl implements ConfGroupService {
 
     @Override
     public ConfGroup save(ConfGroup g) throws Exception {
-        Iterable<ConfGroup> groups=confGroupRepository.findByAppIdAndName(g.getAppId(), g.getName());
+        Iterable<ConfGroup> groups = confGroupRepository.findByAppIdAndName(g.getAppId(), g.getName());
         if (groups.iterator().hasNext()) {
             throw new Exception("already exist! please try another.");
-        }else {
+        } else {
             return confGroupRepository.save(g);
         }
     }
@@ -65,5 +71,23 @@ public class ConfGroupServiceImpl implements ConfGroupService {
             }
         }
         return true;
+    }
+
+    @Override
+    public ConfGroup update(ConfGroup o) {
+        return confGroupRepository.save(o);
+    }
+
+    @Override
+    public void copyByAppId(Long srcId, Long tarId) {
+        List<ConfGroup> srcGroups = confGroupRepository.findByAppId(srcId);
+        for (ConfGroup srcGroup : srcGroups) {
+            ConfGroup tarGroup = new ConfGroup();
+            BeanUtils.copyProperties(srcGroup, tarGroup);
+            tarGroup.setId(null);
+            tarGroup.setAppId(tarId);
+            tarGroup = confGroupRepository.save(tarGroup);
+            configService.copy(srcGroup.getId(), tarGroup.getId());
+        }
     }
 }
