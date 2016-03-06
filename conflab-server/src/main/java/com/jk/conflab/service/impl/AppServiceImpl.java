@@ -9,10 +9,12 @@ import com.jk.conflab.repository.AppRepository;
 import com.jk.conflab.repository.ConfGroupRepository;
 import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.AppService;
+import com.jk.conflab.service.ConfGroupService;
 import com.jk.conflab.service.ZkService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,8 @@ public class AppServiceImpl implements AppService {
     AppRepository appRepository;
     @Autowired
     ConfGroupRepository confGroupRepository;
+    @Autowired
+    ConfGroupService confGroupService;
     @Autowired
     ConfigRepository configRepository;
 
@@ -62,37 +66,20 @@ public class AppServiceImpl implements AppService {
         tar.setId(null);
         tar.setName(tarName);
         tar =save(tar);
-        List<ConfGroup> groups = confGroupRepository.findByAppId(srcId);
-        List<ConfGroup> tarGroups=new ArrayList<>();
-        for (ConfGroup group : groups) {
-            ConfGroup tarGroup=new ConfGroup();
-            BeanUtils.copyProperties(group,tarGroup);
-            tarGroup.setId(null);
-            tarGroup.setAppId(tar.getId());
-            tarGroups.add(tarGroup);
-
-            List<Config> configs = configRepository.findByGroupId(group.getId());
-            List<Config> tarConfigs=new ArrayList<>();
-            for (Config config : configs) {
-                Config tarConfig=new Config();
-                BeanUtils.copyProperties(config,tarConfig);
-                tarConfig.setId(null);
-                tarConfig.setAppId(tar.getId());
-                tarConfig.setGroupId(group.getId());
-                tarConfigs.add(tarConfig);
-            }
-            configRepository.save(tarConfigs);
-        }
-        confGroupRepository.save(groups);
+        confGroupService.copyByAppId(srcId,tar.getId());
         return tar;
     }
 
     @Override
+    @Transactional
     public boolean del(Long id) {
+        boolean flag;
+        App one = appRepository.findOne(id);
+        flag=zkService.delete(one.getName());
         appRepository.delete(id);
         confGroupRepository.deleteByAppId(id);
-        confGroupRepository.deleteByAppId(id);
-        return false;
+        configRepository.deleteByAppId(id);
+        return flag;
     }
 
     @Override

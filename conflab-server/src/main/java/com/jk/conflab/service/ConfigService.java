@@ -15,4 +15,6 @@ public interface ConfigService {
     Iterable<Config> findAll();
 
     Config update(Config o);
+
+    void copy(Long srcId, Long tarId);
 }

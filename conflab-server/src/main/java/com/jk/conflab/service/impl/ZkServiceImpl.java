@@ -38,4 +38,18 @@ public class ZkServiceImpl implements ZkService {
         }
         return true;
     }
+
+    @Override
+    public boolean delete(String app) {
+        String path = ZkUtils.getPath(zkRootPath, app);
+        boolean flag = false;
+        if (client.exists(path)) {
+            client.delete(path);
+            logger.info("delete path success!");
+            flag = true;
+        } else {
+            logger.info("path is not exist,can not delete.");
+        }
+        return flag;
+    }
 }
