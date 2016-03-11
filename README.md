@@ -1,9 +1,12 @@
 #Conflab
 
-当前版本v1.0.0,详细见[RELEASE.md][1]。
-Conflab，一个集群式配置中心。实现了多个业务系统配置项的统一管理，配置数据存于zookeeper，配置更新时消息通知对应客户端。
 
-配置通过服务端conflab-sever进行管理并推送更新zookeeper，业务系统则通过客户端conflab-client端从zookeeper上获取和接收更新消息。演示模块conflab-demo是业务系统使用client的一个示例。
+当前版本v1.0.0,详细见[RELEASE.md][1]。
+
+
+Conflab，一个集群式配置中心，实现了业务系统配置项的统一管理。配置项存于`zookeeper`，更新时消息通知对应客户端。客户端需要设置ZK地址，我们把它写入环境变量即可做到零配置。
+
+服务端conflab-sever管理配置项并推送更新zookeeper，业务系统则通过客户端conflab-client端从zookeeper上获取和接收更新消息。演示模块conflab-demo是业务系统使用client的一个示例。
 
 ## Getting start
 - 配置zookeeper环境变量
@@ -80,7 +83,18 @@ bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启
 ```java
 String value=Conflab.getString("key");
 ```
-客户端有一个类用来监听zookeeper更新，默认实现了更新本地配置缓存。在回调函数里可以实现相关业务需要。
+客户端有一个类用来监听Zookeeper的更新事件，默认实现了更新本地配置缓存。其他业务需要可以在回调函数里实现。
+
+客户端对app（对应zookeeper目录）的监听有两种模式：开发模式和生产模式。
+
+- 生产模式比较简单，监听对象固定不变，使用常量即可，例如`server`。
+- 团队开发模式中，源码都是一样的，每个人却需要各自的配置，配置不能加入版本管理。需要在主机的`CONFLAB_HOME`目录或用户目录下`conflab.properties`文件中配置一个或多个对应，如：
+    
+    ```code
+    server=jacky-server
+    demo=jacky-demo
+    ```
+    这样开发环境下server使用jacky-server配置，demo同理。
 
 客户端只是一个jar包，引入到业务系统中即可。使用办法可以参考范例conflab-demo。client也是特别轻，只依赖了logback和zk客户端。简单。
 
