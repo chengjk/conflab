@@ -1,19 +1,23 @@
 #Conflab
 
-
+当前版本v1.0.0,详细见[RELEASE.md][1]。
 Conflab，一个集群式配置中心。实现了多个业务系统配置项的统一管理，配置数据存于zookeeper，配置更新时消息通知对应客户端。
 
 配置通过服务端conflab-sever进行管理并推送更新zookeeper，业务系统则通过客户端conflab-client端从zookeeper上获取和接收更新消息。演示模块conflab-demo是业务系统使用client的一个示例。
 
 ## Getting start
 - 配置zookeeper环境变量
+
 ```shell
 ZK_ADDRESS=127.0.0.1:2181
 ```
+
 - 编译工程
+
 ```shell
 mvn clean package -DskipTests=true
 ```
+
 client端编译结果个jar包。server端编译完是一个可以解压运行的zip，目录：
 
 ```tree
@@ -37,7 +41,7 @@ client端编译结果个jar包。server端编译完是一个可以解压运行�
 - 启动服务端
 `bin/start.sh` or `bin/start.cmd`。
 - 访问服务端主页
-[http://localhost:8080/index.html][1]
+[http://localhost:8080/index.html][2]
 - 增删改查推送
 通过界面增加配置并推送。
 
@@ -53,7 +57,7 @@ client端编译结果个jar包。server端编译完是一个可以解压运行�
 
 
 ###启动
-bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启动之后访问[http://localhost:8080/index.html][1]就进入了服务端的管理页面。
+bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启动之后访问[http://localhost:8080/index.html][2]就进入了服务端的管理页面。
 
 > 主页后增加url参数key`?key=my`等同于在主页搜索框中搜索关键字‘my’。
 
@@ -67,7 +71,7 @@ bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启
 
 
 ###工程介绍
-工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc,spring data jpa，maven打包。数据库支持mysql和SQLite，默认使用SQLite，默认不要做任何配置。简单。
+工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc,spring data jpa，maven打包。数据库可用SpringDataJpa支持的所有类型，提供了mysql和SQLite配置，大型项目建议用mysql。默认使用SQLite，不用做任何配置。简单。
 
 系统实现了对配置内容分应用分组管理。支持多系统，系统内按业务分组。以应用为单位更新到zookeeper，与该应用相关的客户端会都收到更新消息。
 
@@ -81,6 +85,5 @@ String value=Conflab.getString("key");
 客户端只是一个jar包，引入到业务系统中即可。使用办法可以参考范例conflab-demo。client也是特别轻，只依赖了logback和zk客户端。简单。
 
 
-
-
-  [1]: http://localhost:8080/index.html
+  [1]: ./RELEASE.md
+  [2]: http://localhost:8080/index.html
