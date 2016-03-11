@@ -20,7 +20,7 @@ import java.util.Map;
 public class ConfLab {
     private static Logger logger = LoggerFactory.getLogger(ConfLab.class);
     private static ZkClient zkClient = zkClient();
-    private static String zkConfigRoot = ConfConstants.ZkConfigRoot;
+    private static String zkConfigRoot = ConfConstants.ZK_CONFIG_ROOT;
     private static Map<String, String> configMap = new HashMap<String, String>();
     /**
      * 获取一个String值

@@ -7,9 +7,9 @@ public class ConfConstants {
     /**
      * 配置存放的zookeeper跟目录
      */
-    public static final String ZkConfigRoot = "/conflab/config";
+    public static final String ZK_CONFIG_ROOT = "/conflab/config";
     /**
      * 开发环境下，appIds保存文件
      */
-    public static final String DevConfigFileName = "conflab.properties";
+    public static final String DEV_CONFIG_FILE_NAME = "conflab.properties";
 }

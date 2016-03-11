@@ -37,14 +37,13 @@ public abstract class DefaultConfLabInit {
             config_home = System.getProperty("user.home");
             System.err.println("DEV MODEL Read EVN VAR 'CONFIG_HOME' IS NULL,USE HOME " + config_home);
         }
-        String path = config_home +"/"+ ConfConstants.DevConfigFileName;
+        String path = config_home +"/"+ ConfConstants.DEV_CONFIG_FILE_NAME;
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(path));
             return  properties.getProperty(getAppId());
         } catch (IOException e) {
             logger.error("开发环境，读取配置id文件错误。" + e.getMessage(), e);
-            e.printStackTrace();
             System.exit(0);
         }
         return null;
