@@ -72,6 +72,10 @@ public class ConfLab {
         addConfigChangeEvent(app, listener);
     }
 
+    /**
+     * 更新配置
+     * @param app
+     */
     public static void update(String app) {
         List<String> children = zkClient.getChildren(zkConfigRoot);
         if (children.contains(app)) {
@@ -84,6 +88,9 @@ public class ConfLab {
         }
     }
 
+    /**
+     * 删除配置
+     */
     public static void delete() {
         configMap.clear();
         logger.info("clear config!");
