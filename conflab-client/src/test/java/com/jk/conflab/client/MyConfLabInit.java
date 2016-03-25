@@ -12,7 +12,7 @@ public class MyConfLabInit extends DefaultConfLabInit {
 
     @Override
     protected DefaultConfListener getListener() {
-        return new DefaultConfListener(getAppId());
+        return new DefaultConfListener();
     }
 
 }
