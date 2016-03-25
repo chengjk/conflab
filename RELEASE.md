@@ -1,6 +1,7 @@
 #Release Note
 ##TODO
 - [ ] App支持导入导出。
+- [ ] App支持通用配置，作用域为全部子项目。
 - [ ] 全局查询支持查找config（目前只查App）。
 - [ ] 支持打包成war。
 

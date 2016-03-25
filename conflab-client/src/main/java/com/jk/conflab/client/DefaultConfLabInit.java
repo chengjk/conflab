@@ -24,6 +24,8 @@ public abstract class DefaultConfLabInit {
             logger.info( "not dev,appId:{}" + getAppId());
             //注册当前应用
             ConfLab.register(getAppId(),getListener());
+            ConfLab.register("host",getListener());
+
         }
     }
 

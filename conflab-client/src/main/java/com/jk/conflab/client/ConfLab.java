@@ -68,16 +68,17 @@ public class ConfLab {
      * @param listener
      */
     public static void register(String app,IConfigListener listener) {
-        List<String> children = zkClient.getChildren(zkConfigRoot);
-        if (children.contains(app)) {
-            String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
-            Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
-            });
-            configMap.putAll(appMap);
-        } else {
-            logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
-            System.exit(0);
-        }
+//        List<String> children = zkClient.getChildren(zkConfigRoot);
+        update(app);
+//        if (children.contains(app)) {
+//            String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
+//            Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
+//            });
+//            configMap.putAll(appMap);
+//        } else {
+//            logger.error("Zookeeper path is null:{}", zkConfigRoot + "/" + app);
+////            System.exit(0);
+//        }
         addConfigChangeEvent(app, listener);
     }
 
