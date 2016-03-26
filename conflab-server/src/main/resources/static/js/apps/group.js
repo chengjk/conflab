@@ -20,6 +20,7 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
             });
         },
         initView: function () {
+            $("#tabGroup tbody").html("");
             console.log("group init")
             $("#tabGroup").delegate("tbody tr", "click", function () {
                 console.log($(this));
@@ -89,6 +90,9 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
             form.find("button").off("click").click(function () {
                 self.add(form);
             })
+        },
+        clear:function(){
+            $("#tabGroup tbody").html("");
         },
         open: function (groupId) {
             config.loadConfigs(groupId);

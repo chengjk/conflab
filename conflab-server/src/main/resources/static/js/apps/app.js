@@ -4,7 +4,6 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
         init: function () {
             self = this;
             group.init();
-
             self.initView();
             self.loadApps();
         },
@@ -114,6 +113,8 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             if (confirm("推送可能导致对应应用重启，确认要推送配置吗？")) {
                 $.post("/app/push", {'appId': appId}, function (e) {
                     console.log("push success," + appId);
+                    msg.success("push "+Data.getApp().name+" success!");
+
                 })
             }
         },
@@ -134,6 +135,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                     }
                 });
                 Data.setApp(null);
+                group.clear();
             }
         },
         copy: function (name) {
@@ -177,6 +179,8 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             if (confirm("删除不可恢复，确认要删除吗？")) {
                 $.post("/app/del", {'appId': app.id}, function (e) {
                     $(".list-group .active").remove();
+                     Data.setApp(null);
+                      group.clear();
                 })
             }
         }

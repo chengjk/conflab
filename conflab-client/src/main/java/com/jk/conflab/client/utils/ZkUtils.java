@@ -26,7 +26,7 @@ public class ZkUtils {
 
         public byte[] serialize(Object obj) throws ZkMarshallingError {
             if (obj == null) {
-                return null;
+                return new byte[0];
             }
 
             if (!(obj instanceof String)) {

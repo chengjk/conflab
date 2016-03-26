@@ -48,9 +48,10 @@ public class ConfGroupController {
         try {
             return confGroupService.save(o);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             resp.sendError(500, e.getMessage());
-            return null;
         }
+        return null;
     }
 
 
@@ -71,6 +72,7 @@ public class ConfGroupController {
             try {
                 return confGroupService.update(o);
             } catch (Exception e) {
+                logger.error(e.getMessage(), e);
                 resp.sendError(500, e.getMessage());
                 return null;
             }

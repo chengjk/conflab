@@ -38,12 +38,6 @@ public class IndexController {
         return "hello " + name;
     }
 
-    @RequestMapping("str")
-    @ResponseBody
-    String Str() {
-        return test;
-    }
-
     @RequestMapping("save")
     @ResponseBody
     String save() {
@@ -67,7 +61,7 @@ public class IndexController {
             config.setDescp("testd");
             configRepository.save(config);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
             return e.getMessage();
         }
         return "ok";

@@ -11,6 +11,9 @@ import java.io.UnsupportedEncodingException;
  * Created by jacky.cheng on 2015/11/16.
  */
 public class ZkUtils {
+    private ZkUtils() {
+    }
+
     public static String getPath(String rootNode, String key) {
         if (StringUtils.hasText(rootNode)) {
             if (key.startsWith("/")) {
@@ -55,7 +58,7 @@ public class ZkUtils {
 
         public byte[] serialize(Object obj) throws ZkMarshallingError {
             if (obj == null) {
-                return null;
+               return new byte[0];
             }
 
             if (!(obj instanceof String)) {

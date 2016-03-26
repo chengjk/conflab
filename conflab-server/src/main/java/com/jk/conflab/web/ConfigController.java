@@ -46,9 +46,10 @@ public class ConfigController {
         try {
             return configService.save(o);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             resp.sendError(500, e.getMessage());
-            return null;
         }
+        return null;
     }
 
     @RequestMapping("/update")

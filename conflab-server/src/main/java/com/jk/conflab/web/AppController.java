@@ -50,9 +50,10 @@ public class AppController {
         try {
             return appService.save(o);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             resp.sendError(500, e.getMessage());
-            return null;
         }
+        return null;
     }
 
     @RequestMapping("/update")
@@ -62,12 +63,11 @@ public class AppController {
                 return appService.update(o);
             } catch (Exception e) {
                 resp.sendError(500, e.getMessage());
-                return null;
             }
         } else {
             logger.error("试图更新不正确的App。");
-            return null;
         }
+        return  null;
     }
 
     @RequestMapping("/del")
