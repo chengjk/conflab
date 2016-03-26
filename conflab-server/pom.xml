@@ -63,7 +63,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.jk.conflab.MainRunner</mainClass>
+                            <mainClass>com.jk.conflab.ConflabServer</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>${project.build.directory}</outputDirectory>
