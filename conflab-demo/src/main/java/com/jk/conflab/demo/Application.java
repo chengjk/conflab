@@ -1,6 +1,5 @@
 package com.jk.conflab.demo;
 
-import com.jk.conflab.client.ConfLab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +15,7 @@ public class Application {
 
     @Bean
     public MyConfLabInit myConfLabInit() {
-        MyConfLabInit.isDev = false;
+        MyConfLabInit.isDev = true;
         return new MyConfLabInit();
     }
 

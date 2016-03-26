@@ -37,11 +37,11 @@ public abstract class DefaultConfLabInit {
     }
 
     protected Properties getDevSetting() {
-        String config_home = System.getenv(ConfConstants.DEV_CONFIG_PATHNAME);
+        String config_home = System.getenv(ConfConstants.DEV_CONFIG_ENV_VAR);
         if (!StringUtils.hasText(config_home)) {
             config_home = System.getProperty("user.home");
-            logger.error("DEV MODEL Read EVN VAR 'CONFIG_HOME' IS NULL,USE HOME " + config_home);
-            System.err.println("DEV MODEL Read EVN VAR 'CONFIG_HOME' IS NULL,USE HOME " + config_home);
+            logger.error("DEV MODEL Read EVN VAR '{}' IS NULL,USE HOME " + config_home,ConfConstants.DEV_CONFIG_ENV_VAR);
+            System.err.println("DEV MODEL Read EVN VAR '"+ConfConstants.DEV_CONFIG_ENV_VAR +"' IS NULL,USE HOME " + config_home);
         }
         String path = config_home +"/"+ ConfConstants.DEV_CONFIG_FILE_NAME;
         Properties properties = new Properties();

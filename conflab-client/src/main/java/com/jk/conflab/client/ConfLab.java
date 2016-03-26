@@ -152,9 +152,9 @@ public class ConfLab {
      * @return
      */
     private static String getZkAddress(){
-        String zkAddress = System.getenv(ConfConstants.DEV_ZK_PATHNAME);
+        String zkAddress = System.getenv(ConfConstants.DEV_ZK_ENV_VAR);
         if (!StringUtils.hasText(zkAddress)) {
-            logger.error("没有找到环境变量：{}，请配置后重试。",ConfConstants.DEV_ZK_PATHNAME);
+            logger.error("没有找到环境变量：{}，请配置后重试。",ConfConstants.DEV_ZK_ENV_VAR);
             System.exit(-1);
             return null;
         }

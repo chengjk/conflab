@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 public abstract class WithCommonConfLabInit extends DefaultConfLabInit {
     //通用配置AppId
-    private String COMMON_CONFIG_ID="common";
+    private final String COMMON_CONFIG_ID="common";
     public WithCommonConfLabInit() {
         super();
         if (isDev) {

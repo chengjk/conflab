@@ -18,11 +18,11 @@ public class ConfConstants {
     /**
      * 开发环境下，配置中心环境变量名,用于查找conflab.properties 文件。
      */
-    public static final String DEV_CONFIG_PATHNAME = "CONFIG_HOME";
+    public static final String DEV_CONFIG_ENV_VAR = "CONFIG_HOME";
 
     /**
      * 开发环境下,ZK环境变量名。
      */
-    public static final String DEV_ZK_PATHNAME = "ZK_ADDRESS";
+    public static final String DEV_ZK_ENV_VAR = "ZK_ADDRESS";
 
 }
