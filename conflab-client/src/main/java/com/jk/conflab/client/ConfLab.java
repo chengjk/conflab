@@ -24,8 +24,7 @@ public class ConfLab {
     // app ,key:value
     private static Map<String, Map<String, String>> appMap = new HashMap<String, Map<String, String>>();
 
-    private ConfLab() {
-    }
+    private ConfLab() { }
 
     /**
      * 获取一个String值
@@ -153,9 +152,9 @@ public class ConfLab {
      * @return
      */
     private static String getZkAddress(){
-        String zkAddress = System.getenv("ZK_ADDRESS");
+        String zkAddress = System.getenv(ConfConstants.DEV_ZK_PATHNAME);
         if (!StringUtils.hasText(zkAddress)) {
-            logger.error("没有找到环境变量：ZK_ADDRESS，请配置后重试。");
+            logger.error("没有找到环境变量：{}，请配置后重试。",ConfConstants.DEV_ZK_PATHNAME);
             System.exit(-1);
             return null;
         }

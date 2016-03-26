@@ -37,7 +37,7 @@ public abstract class DefaultConfLabInit {
     }
 
     protected Properties getDevSetting() {
-        String config_home = System.getenv("CONFIG_HOME");
+        String config_home = System.getenv(ConfConstants.DEV_CONFIG_PATHNAME);
         if (!StringUtils.hasText(config_home)) {
             config_home = System.getProperty("user.home");
             logger.error("DEV MODEL Read EVN VAR 'CONFIG_HOME' IS NULL,USE HOME " + config_home);
@@ -54,6 +54,15 @@ public abstract class DefaultConfLabInit {
         return properties;
     }
 
+    /**
+     * 应用id
+     * @return
+     */
     protected abstract String getAppId();
+
+    /**
+     * 监听器
+     * @return
+     */
     protected abstract IZkDataListener getListener();
 }
