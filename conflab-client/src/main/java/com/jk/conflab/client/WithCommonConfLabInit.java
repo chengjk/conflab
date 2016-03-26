@@ -7,7 +7,7 @@ import org.I0Itec.zkclient.IZkDataListener;
 import java.util.Properties;
 
 /**
- * 含有通用配置的初始化对象
+ * 含有通用配置的初始化对象。所有的客户端都会监听通用配置，通常通用配置只需要一组。
  * Created by Administrator on 2015/11/25.
  */
 public abstract class WithCommonConfLabInit extends DefaultConfLabInit {

@@ -28,8 +28,8 @@ public class DefaultConfListener implements IZkDataListener {
      */
     @Override
     public void handleDataDeleted(String dataPath) throws Exception {
-        ConfLab.delete();
-        String appId = dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length()+1);
+        String appId= dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length()+1);
+        ConfLab.delete(appId);
         logger.info("app:{},config data has bean deleted", appId);
     }
 }

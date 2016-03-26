@@ -21,7 +21,8 @@ public class ConfLab {
     private static Logger logger = LoggerFactory.getLogger(ConfLab.class);
     private static ZkClient zkClient = zkClient();
     private static String zkConfigRoot = ConfConstants.ZK_CONFIG_ROOT;
-    private static Map<String, String> configMap = new HashMap<String, String>();
+    // app ,key:value
+    private static Map<String, Map<String, String>> appMap = new HashMap<String, Map<String, String>>();
 
     private ConfLab() {
     }
@@ -77,12 +78,13 @@ public class ConfLab {
      * @param app
      */
     public static void update(String app) {
+        ConfLab.appMap.remove(app);// clear
         List<String> children = zkClient.getChildren(zkConfigRoot);
         if (children.contains(app)) {
             String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
             Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
             });
-            configMap.putAll(appMap);
+            ConfLab.appMap.put(app,appMap);
         } else {
             logger.error(" update failed ,ZK path is null:{}", zkConfigRoot + "/" + app);
         }
@@ -91,9 +93,9 @@ public class ConfLab {
     /**
      * 删除配置
      */
-    public static void delete() {
-        configMap.clear();
-        logger.info("clear config!");
+    public static void delete(String app) {
+        appMap.remove(app);
+        logger.info("delete config! appId:{}", app);
     }
     /**
      * 增加更新监控
@@ -115,15 +117,21 @@ public class ConfLab {
         if (key == null) {
             return null;
         }
+        //jvm环境变量
         String value = System.getProperty(key);
         if (value != null) {
             return value;
         }
+        //系统环境变量
         value = System.getenv(key);
         if (value != null) {
             return value;
         }
-        value = configMap.get(key);
+        //配置中心
+        for (Map<String, String> configMap : appMap.values()) {
+            value = configMap.get(key);
+            if (value != null) break;
+        }
         if (value == null) {
             logger.warn("没有找到配置，key：{}", key);
         }
