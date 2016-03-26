@@ -84,6 +84,7 @@ public class ConfLab {
             Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
             });
             ConfLab.appMap.put(app,appMap);
+            logger.info("update success, appId:{};{}", app, JSON.toJSONString(appMap));
         } else {
             logger.error(" update failed ,ZK path is null:{}", zkConfigRoot + "/" + app);
         }

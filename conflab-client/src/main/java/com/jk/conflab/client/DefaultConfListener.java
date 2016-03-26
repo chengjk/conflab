@@ -10,25 +10,27 @@ public class DefaultConfListener implements IZkDataListener {
 
     /**
      * 更新回调
+     *
      * @param dataPath
      * @param data
      * @throws Exception
      */
     @Override
     public void handleDataChange(String dataPath, Object data) throws Exception {
-        String appId= dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length()+1);
+        String appId = dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length() + 1);
         ConfLab.update(appId);
         logger.info("app:{},config data has bean changed! reload success.", appId);
     }
 
     /**
      * 删除回调
+     *
      * @param dataPath
      * @throws Exception
      */
     @Override
     public void handleDataDeleted(String dataPath) throws Exception {
-        String appId= dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length()+1);
+        String appId = dataPath.substring(ConfConstants.ZK_CONFIG_ROOT.length() + 1);
         ConfLab.delete(appId);
         logger.info("app:{},config data has bean deleted", appId);
     }

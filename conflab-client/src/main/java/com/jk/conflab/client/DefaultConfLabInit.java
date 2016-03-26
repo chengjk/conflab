@@ -17,22 +17,23 @@ import java.util.Properties;
  */
 public abstract class DefaultConfLabInit {
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    public static Boolean isDev=true;
+    public static Boolean isDev = true;
+
     public DefaultConfLabInit() {
         if (isDev) {
-            logger.info( "is dev, appId:{}",getAppId());
+            logger.info("is dev, appId:{}", getAppId());
             Properties properties = getDevSetting();
             //注册开发环境配置
             String devAppId = properties.getProperty(getAppId());
             if (StringUtils.hasText(devAppId)) {
                 ConfLab.register(devAppId, getListener());
-            }else {
-                logger.error("can not found dev app id :{}",getAppId());
+            } else {
+                logger.error("can not found dev app id :{}", getAppId());
             }
-        }else{
-            logger.info( "not dev,appId:{}", getAppId());
+        } else {
+            logger.info("not dev,appId:{}", getAppId());
             //注册当前应用
-            ConfLab.register(getAppId(),getListener());
+            ConfLab.register(getAppId(), getListener());
         }
     }
 
@@ -40,10 +41,10 @@ public abstract class DefaultConfLabInit {
         String config_home = System.getenv(ConfConstants.DEV_CONFIG_ENV_VAR);
         if (!StringUtils.hasText(config_home)) {
             config_home = System.getProperty("user.home");
-            logger.error("DEV MODEL Read EVN VAR '{}' IS NULL,USE HOME " + config_home,ConfConstants.DEV_CONFIG_ENV_VAR);
-            System.err.println("DEV MODEL Read EVN VAR '"+ConfConstants.DEV_CONFIG_ENV_VAR +"' IS NULL,USE HOME " + config_home);
+            logger.error("DEV MODEL Read EVN VAR '{}' IS NULL,USE HOME " + config_home, ConfConstants.DEV_CONFIG_ENV_VAR);
+            System.err.println("DEV MODEL Read EVN VAR '" + ConfConstants.DEV_CONFIG_ENV_VAR + "' IS NULL,USE HOME " + config_home);
         }
-        String path = config_home +"/"+ ConfConstants.DEV_CONFIG_FILE_NAME;
+        String path = config_home + "/" + ConfConstants.DEV_CONFIG_FILE_NAME;
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(path));
@@ -56,12 +57,14 @@ public abstract class DefaultConfLabInit {
 
     /**
      * 应用id
+     *
      * @return
      */
     protected abstract String getAppId();
 
     /**
      * 监听器
+     *
      * @return
      */
     protected abstract IZkDataListener getListener();
