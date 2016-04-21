@@ -19,16 +19,19 @@ define(['jquery', '_'], function ($, _) {
         error: function (msg) {
             this.danger(msg);
         },
-        show: function (level, msg) {
-            if (_.isEmpty(level) || _.isEmpty(msg)) {
-                console.log("error, level or msg is empty.");
-                return;
-            }
-            var clazz;
-            if (level == "success" || level == "info" || level == "warning" || level == "danger") {
+        show: function (level="info", msg='') {
+            let levels = ["success", "info", "warning", "danger"];
+            let clazz;
+            if (_.contains(levels, level)) {
                 clazz = "alert alert-" + level;
+            }else {
+                let errMsg = "msg level error.must one of below :success,info,warning，danger";
+                console.log();
+                clazz= "alert alert-danger";
+                msg = errMsg;
             }
-            var d = '<div class="' + clazz + '"> <strong>' + _.toUpper(level) + ': </strong>' + msg + '</div>';
+
+            let d = '<div class="' + clazz + '"> <strong>' + _.toUpper(level) + ': </strong>' + msg + '</div>';
             $("#alertList .pull-right").append(d);
             $("#alertList .pull-right").find("div:last").delay(3000).slideUp(200).queue (function () {
                 $("#alertList .pull-right").find("div[style]").remove();
