@@ -1,5 +1,9 @@
 package com.jk.conflab.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -7,6 +11,9 @@ import java.util.List;
 /**
  * Created by jacky.cheng on 2015/11/3.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"appId", "name"}))
 public class ConfGroup implements Serializable {
@@ -18,46 +25,4 @@ public class ConfGroup implements Serializable {
     private String descp;
     @Transient
     private List<Config> configs;
-    public ConfGroup() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescp() {
-        return descp;
-    }
-
-    public void setDescp(String descp) {
-        this.descp = descp;
-    }
-
-    public List<Config> getConfigs() {
-        return configs;
-    }
-
-    public void setConfigs(List<Config> configs) {
-        this.configs = configs;
-    }
 }
