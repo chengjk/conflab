@@ -1,7 +1,7 @@
 require.config({
     baseUrl: 'js/apps/',
     paths: {
-        jquery: '../../lib/jquery.min',
+        jquery: '../../lib/jquery-2.2.4.min',
         '_': "../../lib/lodash.min",
         mock: "../../lib/jquery.mockjax",
         etab: '../../lib/mindmup-editabletable',

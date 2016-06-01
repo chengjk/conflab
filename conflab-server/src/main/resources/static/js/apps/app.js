@@ -200,13 +200,13 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
         doImport: function (appJsonStr) {
             var json =JSON.parse(appJsonStr)
             console.log(appJsonStr);
-            $.post("/app/import",json,function (flag) {
+            $.post("/app/import",appJsonStr,function (flag) {
                 if (flag) {
                     msg.success("import success!");
                 }else {
                     msg.error("import failed!");
                 }
-            })
+            },"json")
         },
         isValidApp: function (errmsg) {
             if (errmsg == undefined) {
