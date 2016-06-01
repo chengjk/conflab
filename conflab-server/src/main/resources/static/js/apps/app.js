@@ -103,11 +103,14 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                     }
                 }
                 if ($(this).hasClass("btn-import")) {
-                    if (self.isValidApp()) {
-                        self.doImport();
-                    }
+                    $("#modalImport").modal("show");
                 }
             });
+            $("#modalImport .modal-footer .btn-primary").off("click").on("click",function(){
+                var json=$("#modalImport textarea").val();
+                self.doImport(json);
+            });
+            
             console.log("app init ok")
         },
         open: function (appId) {
@@ -188,14 +191,15 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                 })
             }
         },
-        doExport:function(){
-            $.get("/app/export/"+Data.getApp().id, function (d) {
-                console.log(d); //todo show
+        doExport: function () {
+            $.get("/app/export/" + Data.getApp().id, function (d) {
+                $("#modalExport .modal-body textarea").val(JSON.stringify(d));
+                $("#modalExport").modal("show");
             })
         },
-        doImport:function(){
-            var json = "{}";//todo get from ui
-            $.post("/app/import",{"app":json},function (flag) {
+        doImport: function (appJsonStr) {
+            console.log(appJsonStr);
+            $.post("/app/import",appJsonStr,function (flag) {
                 if (flag) {
                     msg.success("import success!");
                 }else {

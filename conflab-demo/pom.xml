@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.jk</groupId>
             <artifactId>conflab-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>v1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
