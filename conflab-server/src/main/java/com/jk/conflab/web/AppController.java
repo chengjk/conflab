@@ -90,9 +90,14 @@ public class AppController {
         return appService.exportByKey(key);
     }
 
-    @RequestMapping("/import")
-    boolean importApp(List<App> apps) {
+    @RequestMapping("/importAll")
+    boolean importApps(List<App> apps) {
         return appService.importApps(apps);
+    }
+
+    @RequestMapping("/import")
+    boolean importApp(App app) {
+        return appService.importApp(app);
     }
 
     @RequestMapping("/push")

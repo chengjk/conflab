@@ -62,18 +62,13 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                     $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-copy")) {
-                    if (Data.getApp() == null) {
-                        msg.info("请选中要复制的对象!");
-                        return;
+                    if (self.isValidApp()) {
+                        var name = prompt("Input destination app name", "name");
+                        self.copy(name);
                     }
-                    var name = prompt("Input destination app name", "name");
-                    self.copy(name);
                 }
                 if ($(this).hasClass("btn-edit")) {
-                    if (Data.getApp() == null) {
-                        msg.info("请选中要编辑的对象!");
-                        return;
-                    }
+                    if (!self.isValidApp()) return;
                     $("#addAppModal h4").html("Edit app");
                     $("#addAppModal input[name='name']").val(Data.getApp().name);
                     $("#addAppModal input[name='desc']").val(Data.getApp().desc);
@@ -94,14 +89,23 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                     $("#addAppModal").modal();
                 }
                 if ($(this).hasClass("btn-delete")) {
-                    if (Data.getApp() == null) {
-                        msg.info("请选择要删除的应用。");
-                        return;
+                    if (self.isValidApp()) {
+                        self.del(Data.getApp());
                     }
-                    self.del(Data.getApp());
                 }
                 if ($(this).hasClass("btn-push")) {
                     self.pushAll();
+                }
+
+                if ($(this).hasClass("btn-export")) {
+                    if (self.isValidApp()) {
+                        self.doExport()
+                    }
+                }
+                if ($(this).hasClass("btn-import")) {
+                    if (self.isValidApp()) {
+                        self.doImport();
+                    }
                 }
             });
             console.log("app init ok")
@@ -113,7 +117,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             if (confirm("推送可能导致对应应用重启，确认要推送配置吗？")) {
                 $.post("/app/push", {'appId': appId}, function (e) {
                     console.log("push success," + appId);
-                    msg.success("push "+Data.getApp().name+" success!");
+                    msg.success("push " + Data.getApp().name + " success!");
 
                 })
             }
@@ -179,10 +183,35 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             if (confirm("删除不可恢复，确认要删除吗？")) {
                 $.post("/app/del", {'appId': app.id}, function (e) {
                     $(".list-group .active").remove();
-                     Data.setApp(null);
-                      group.clear();
+                    Data.setApp(null);
+                    group.clear();
                 })
             }
+        },
+        doExport:function(){
+            $.get("/app/export/"+Data.getApp().id, function (d) {
+                console.log(d); //todo show
+            })
+        },
+        doImport:function(){
+            var json = "{}";//todo get from ui
+            $.post("/app/import",{"app":json},function (flag) {
+                if (flag) {
+                    msg.success("import success!");
+                }else {
+                    msg.error("import failed!");
+                }
+            })
+        },
+        isValidApp: function (errmsg) {
+            if (errmsg == undefined) {
+                errmsg = "请选择要操作的目标。";
+            }
+            if (Data.getApp() == null) {
+                msg.error(errmsg)
+                return false;
+            }
+            return true;
         }
     };
 });

@@ -22,7 +22,7 @@ define(['jquery', '_'], function ($, _) {
         show: function (level="info", msg='') {
             let levels = ["success", "info", "warning", "danger"];
             let clazz;
-            if (_.contains(levels, level)) {
+            if (_.includes(levels, level)) {
                 clazz = "alert alert-" + level;
             }else {
                 let errMsg = "msg level error.must one of below :success,info,warning，danger";
