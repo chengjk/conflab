@@ -159,20 +159,23 @@ public class AppServiceImpl implements AppService {
         } catch (Exception e) {
             throw  new Exception("Duplicate entry for key name.");
         }
-        if (rApp != null) {
+        if (rApp == null) {
+            throw  new Exception("app save failed.");
+        }
+        if (app.getGroups()!=null) {
             for (ConfGroup group : app.getGroups()) {
                 group.setId(null);
                 group.setAppId(rApp.getId());
                 ConfGroup rGroup = confGroupRepository.save(group);
-                group.getConfigs().forEach(g->{
-                    g.setId(null);
-                    g.setAppId(rGroup.getAppId());
-                    g.setGroupId(rGroup.getId());
-                    configRepository.save(g);
-                });
+                if (group.getConfigs() != null) {
+                    group.getConfigs().forEach(g->{
+                        g.setId(null);
+                        g.setAppId(rGroup.getAppId());
+                        g.setGroupId(rGroup.getId());
+                        configRepository.save(g);
+                    });
+                }
             }
-        }else {
-            throw  new Exception("app save failed , break.");
         }
         return true;
     }

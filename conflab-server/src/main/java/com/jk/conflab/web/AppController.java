@@ -104,7 +104,7 @@ public class AppController {
                 return appService.importApp(app);
             }
         }
-        return false;
+        throw new Exception("App对象解析失败。");
     }
 
     @RequestMapping("/push")

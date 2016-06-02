@@ -199,7 +199,12 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             })
         },
         doImport: function (appJsonStr) {
-            var json = JSON.parse(appJsonStr)
+            try{
+                var json = JSON.parse(appJsonStr);
+            }catch (e){
+                msg.error("parse JSON failed .")
+                return ;
+            }
             console.log(appJsonStr);
             $.ajax({
                 headers: {
