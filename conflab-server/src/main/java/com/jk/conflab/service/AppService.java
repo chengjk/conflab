@@ -24,8 +24,8 @@ public interface AppService {
 
     Iterable<App> exportByKey(String key);
 
-    boolean importApps(List<App> apps);
-    boolean importApp(App app);
+    boolean importApps(List<App> apps) throws Exception;
+    boolean importApp(App app) throws Exception;
 
     App update(App o);
 }

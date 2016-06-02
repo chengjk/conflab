@@ -11,11 +11,13 @@ import com.jk.conflab.repository.ConfigRepository;
 import com.jk.conflab.service.AppService;
 import com.jk.conflab.service.ConfGroupService;
 import com.jk.conflab.service.ZkService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -141,7 +143,7 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public boolean importApps(List<App> apps) {
+    public boolean importApps(List<App> apps) throws Exception {
         for (App app : apps) {
             importApp(app);
         }
@@ -149,19 +151,28 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public boolean importApp(App app) {
+    public boolean importApp(App app) throws Exception {
         app.setId(null);
-        App rApp = appRepository.save(app); // FIXME: 2016/2/21 唯一约束
-        for (ConfGroup group : app.getGroups()) {
-            group.setId(null);
-            group.setAppId(rApp.getId());
-            ConfGroup rGroup = confGroupRepository.save(group);
-            for (Config config : group.getConfigs()) {
-                config.setId(null);
-                config.setAppId(rGroup.getAppId());
-                config.setGroupId(rGroup.getId());
-                configRepository.save(config);
+        App rApp;
+        try {
+            rApp = appRepository.save(app);
+        } catch (Exception e) {
+            throw  new Exception("Duplicate entry for key name.");
+        }
+        if (rApp != null) {
+            for (ConfGroup group : app.getGroups()) {
+                group.setId(null);
+                group.setAppId(rApp.getId());
+                ConfGroup rGroup = confGroupRepository.save(group);
+                group.getConfigs().forEach(g->{
+                    g.setId(null);
+                    g.setAppId(rGroup.getAppId());
+                    g.setGroupId(rGroup.getId());
+                    configRepository.save(g);
+                });
             }
+        }else {
+            throw  new Exception("app save failed , break.");
         }
         return true;
     }

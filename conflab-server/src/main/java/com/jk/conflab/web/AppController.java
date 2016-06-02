@@ -6,6 +6,7 @@ import com.jk.conflab.service.AppService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,13 +93,18 @@ public class AppController {
     }
 
     @RequestMapping("/importAll")
-    boolean importApps(List<App> apps) {
+    boolean importApps(List<App> apps) throws Exception {
         return appService.importApps(apps);
     }
 
     @RequestMapping("/import")
-    boolean importApp(@RequestBody App app) {
-        return appService.importApp(app);
+    boolean importApp(@RequestBody App app) throws Exception {
+        if (app != null) {
+            if (StringUtils.hasText(app.getName())) {
+                return appService.importApp(app);
+            }
+        }
+        return false;
     }
 
     @RequestMapping("/push")

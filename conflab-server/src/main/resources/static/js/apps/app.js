@@ -106,11 +106,12 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                     $("#modalImport").modal("show");
                 }
             });
-            $("#modalImport .modal-footer .btn-primary").off("click").on("click",function(){
-                var json=$("#modalImport textarea").val();
+            $("#modalImport .modal-footer .btn-primary").off("click").on("click", function () {
+                var json = $("#modalImport textarea").val();
+                $("#modalImport").modal("hide");
                 self.doImport(json);
             });
-            
+
             console.log("app init ok")
         },
         open: function (appId) {
@@ -198,7 +199,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             })
         },
         doImport: function (appJsonStr) {
-            var json =JSON.parse(appJsonStr)
+            var json = JSON.parse(appJsonStr)
             console.log(appJsonStr);
             $.ajax({
                 headers: {
@@ -212,9 +213,12 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                 'success': function (flag) {
                     if (flag) {
                         msg.success("import success!");
-                    }else {
+                    } else {
                         msg.error("import failed!");
                     }
+                },
+                'error': function (err, textStatus) {
+                    msg.error(err.responseJSON.message);
                 }
             });
         },

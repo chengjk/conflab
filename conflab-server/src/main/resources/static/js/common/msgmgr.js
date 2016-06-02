@@ -33,7 +33,7 @@ define(['jquery', '_'], function ($, _) {
 
             let d = '<div class="' + clazz + '"> <strong>' + _.toUpper(level) + ': </strong>' + msg + '</div>';
             $("#alertList .pull-right").append(d);
-            $("#alertList .pull-right").find("div:last").delay(3000).slideUp(200).queue (function () {
+            $("#alertList .pull-right").find("div:last").delay(5000).slideUp(200).queue (function () {
                 $("#alertList .pull-right").find("div[style]").remove();
             });
         },
