@@ -4,7 +4,7 @@
 当前版本v1.0.1,详细见[RELEASE.md][1]。
 
 
-Conflab，一个集群式配置中心，实现了业务系统配置项的统一管理。配置项存于`zookeeper`，更新时消息通知对应客户端。客户端需要设置ZK地址，我们把它写入环境变量即可做到零配置。
+Conflab，一个集群式配置中心，统一管理您全部配置。 无需关心配置文件，不用关注配置同步，配置更改即时生效。业务代码`零配置`! 配置项存于`zookeeper`，更新时消息通知对应客户端。客户端需要设置ZK地址，我们把它写入环境变量即可做到零配置。
 
 服务端conflab-sever管理配置项并推送更新zookeeper；客户端conflab-client端监听`zookeeper`并更新配置项，业务系统从客户端缓存中获取最新配置项；演示模块conflab-demo是业务系统使用client的一个示例。
 
@@ -56,9 +56,6 @@ client端编译结果个jar包。server端编译完是一个可以解压运行�
 
 ## 服务端 conflab-server
 
-
-
-
 ###启动
 bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启动之后访问[http://localhost:8080/index.html][2]就进入了服务端的管理页面。
 
@@ -68,15 +65,15 @@ bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启
 
 ###配置
 因为配置数据都在zookeeper上，需要在服务端主机上配置zookeeper的环境变量，每个客户端也需要配置相同的环境变量。
-系统常用的配置项在根目录application.properties文件中。这里可以修改端口，数据库类型和数据库连接信息。
+系统常用的配置项在根目录application.properties文件中。这里可以修改端口，数据库类型和数据库连接信息。系统默认使用mysql。
 
->注意:使用默认数据库SQLite，当spring.jpa.hibernate.ddl-auto=`update` 时启动会报错，因此默认配置是`create`,也就是每次启动都会重新创建新表。建议首次启动表生成之后把这个配置注释掉。这个问题后续版本修改。
+> 注意:使用SQLite数据库时，当spring.jpa.hibernate.ddl-auto=`update` 时启动会报错，因此默认配置是`create`,也就是每次启动都会重新创建新表。建议首次启动表生成之后把这个配置注释掉。这个问题后续版本修改。
 
 
 ###工程介绍
 Server端负责更新维护`zookeeper`，可以通过浏览器快捷的管理更新配置，不直接与client端通信。(也就是说，只要数据结构正确，任何一个zookeeper管理工具都可以代替Server端，例如zooInspector。)
 
-工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc,spring data jpa，maven打包。数据库可用SpringDataJpa支持的所有类型，提供了mysql和SQLite配置，大型项目建议用mysql。默认使用SQLite，不用做任何配置。简单。
+工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc,spring data jpa，maven打包。数据库可用SpringDataJpa支持的所有类型，提供了mysql和SQLite配置，建议使用mysql。
 
 系统实现了对配置内容分应用分组管理。支持多系统，系统内按业务分组。以应用为单位更新到zookeeper，与该应用相关的客户端会都收到更新消息。
 
