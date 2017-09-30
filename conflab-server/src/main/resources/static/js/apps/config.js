@@ -1,4 +1,4 @@
-define(['jquery', '_', 'config', 'Data', 'msg', 'mockdata', "etab"], function ($, _, conf, Data, msg) {
+define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data, msg) {
     var self;
     return {
         init: function () {
@@ -13,7 +13,6 @@ define(['jquery', '_', 'config', 'Data', 'msg', 'mockdata', "etab"], function ($
             $.getJSON(url, function (datas) {
                 console.log(datas);
                 $.get("temp/conftab.html", function (temp) {
-                    console.log(temp);
                     var t = _.template(temp, {'variable': 'datas'});
                     var lr = t(datas);
                     $("#tabConfig tbody").html(lr);

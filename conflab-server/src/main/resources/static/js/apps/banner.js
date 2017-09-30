@@ -7,7 +7,7 @@ define(['jquery', '_', 'Data', 'app', 'mockdata'], function ($, _, Data, App) {
         },
         initView: function () {
             $("header input").keypress(function (e) {
-                if (e.keyCode == 13) {
+                if (e.keyCode === 13) {
                     self.search($("header input").val());
                 }
             })

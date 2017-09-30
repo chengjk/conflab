@@ -1,7 +1,7 @@
 define(['jquery', '_'], function ($, _) {
     return {
         init: function () {
-            var content = '<div id="alertList" class="col-md-12"> <div class="col-md-6 pull-right"> </div> </div>';
+            var content = '<div id="alertList" class="col-md-12"> <div class="col-md-4 pull-right"> </div> </div>';
             $("body").append(content);
         },
         success: function (msg) {

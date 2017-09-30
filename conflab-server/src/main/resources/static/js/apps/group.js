@@ -12,7 +12,6 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
             var url = "/group/app/" + appId;
             $.getJSON(url, function (datas) {
                 $.get("temp/grouptab.html", function (temp) {
-                    console.log(temp);
                     var t = _.template(temp, {'variable': 'datas'});
                     var lr = t(datas);
                     $("#tabGroup tbody").html(lr);

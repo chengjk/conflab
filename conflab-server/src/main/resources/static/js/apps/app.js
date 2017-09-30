@@ -23,7 +23,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
         },
         initView: function () {
             console.log("app init");
-            $(".list-group").delegate("a", "click", function (e) {
+            $(".list-group").delegate("a.pull-right", "click", function (e) {
                 e.stopPropagation();
                 var appId = $(this).parent().data("appid");
                 self.push(appId);
