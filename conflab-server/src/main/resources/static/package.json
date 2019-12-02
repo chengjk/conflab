@@ -13,9 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^3.2.0",
-    "jquery": "^2.1.4",
+    "jquery": "^3.4.0",
     "jquery-mockjax": "^1.6.2",
-    "lodash": ">=4.17.13",
+    "lodash": "^4.17.13",
     "requirejs": "^2.1.22"
   },
   "devDependencies": {}
