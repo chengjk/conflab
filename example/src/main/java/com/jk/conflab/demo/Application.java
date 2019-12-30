@@ -15,7 +15,6 @@ public class Application {
 
     @Bean
     public MyConfLabInit myConfLabInit() {
-        MyConfLabInit.isDev = false;
         return new MyConfLabInit();
     }
 
