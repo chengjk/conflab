@@ -16,8 +16,7 @@ public class ConfLabTest {
 
     @Before
     public void myConfLabInit() {
-        MyConfLabInit.appId="ConflabDemo";
-        MyConfLabInit.isDev=false;
+        MyConfLabInit.appId="test";
         new MyConfLabInit();
     }
 

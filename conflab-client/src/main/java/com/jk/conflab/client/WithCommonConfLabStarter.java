@@ -1,6 +1,7 @@
 package com.jk.conflab.client;
 
 
+import com.jk.conflab.ConfConstants;
 import com.jk.conflab.utils.StringUtils;
 import org.I0Itec.zkclient.IZkDataListener;
 
@@ -12,29 +13,17 @@ import java.util.Properties;
  */
 public abstract class WithCommonConfLabStarter extends DefaultConfLabStarter {
     //通用配置AppId
-    private final String COMMON_CONFIG_ID = "common";
+    private final String COMMON_CONFIG_ID = ConfConstants.COMMON;
 
     public WithCommonConfLabStarter() {
         super();
-        if (isDev) {
-            logger.info("is dev, appId:{}", getAppId());
-            Properties properties = getDevSetting();
-            //注册通用配置
-            String devCommonId = properties.getProperty(COMMON_CONFIG_ID);
-            if (StringUtils.hasText(devCommonId)) {
-                ConfLab.register(devCommonId, getListener());
-            } else {
-                logger.info("can not found dev common id,skip.");
-            }
+        //注册通用配置
+        if (StringUtils.hasText(COMMON_CONFIG_ID)) {
+            ConfLab.register(COMMON_CONFIG_ID, getListener());
         } else {
-            logger.info("not dev,appId:{}", getAppId());
-            //注册通用配置
-            if (StringUtils.hasText(COMMON_CONFIG_ID)) {
-                ConfLab.register(COMMON_CONFIG_ID, getListener());
-            } else {
-                logger.info("can not found prod common id,skip.");
-            }
+            logger.info("can not found prod common id,skip.");
         }
+
     }
 
     protected abstract String getAppId();

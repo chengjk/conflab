@@ -24,5 +24,9 @@ public class ConfConstants {
      * 开发环境下,ZK环境变量名。
      */
     public static final String DEV_ZK_ENV_VAR = "ZK_ADDRESS";
+    /**
+     * 通用配置，任何saas 上都能找到。
+     */
+    public static final String COMMON = "common";
 
 }
