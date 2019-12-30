@@ -1,9 +1,5 @@
 package com.jk.conflab;
 
-import com.alibaba.fastjson.JSON;
-import com.jk.conflab.model.App;
-import com.jk.conflab.model.ConfGroup;
-import com.jk.conflab.model.Config;
 import com.jk.conflab.utils.ZkUtils;
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.log4j.Logger;
@@ -12,11 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by jacky.cheng on 2015/9/25.
