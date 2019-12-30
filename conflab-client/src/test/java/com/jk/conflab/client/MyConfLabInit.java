@@ -5,9 +5,15 @@ package com.jk.conflab.client;
  */
 public class MyConfLabInit extends DefaultConfLabStarter {
     public static String appId;
+
     @Override
     protected String getAppId() {
         return appId;
+    }
+
+    @Override
+    protected String getZookeeper() {
+        return "172.30.30.17:2181";
     }
 
     @Override

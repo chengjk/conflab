@@ -1,11 +1,10 @@
 package com.jk.conflab.client;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.jk.conflab.client.utils.ConfConstants;
-import com.jk.conflab.client.utils.ZkUtils;
+import com.jk.conflab.ConfConstants;
 import com.jk.conflab.model.App;
 import com.jk.conflab.utils.StringUtils;
+import com.jk.conflab.utils.ZkUtils;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.slf4j.Logger;
@@ -20,12 +19,18 @@ import java.util.Map;
  */
 public class ConfLab {
     private static Logger logger = LoggerFactory.getLogger(ConfLab.class);
-    private static ZkClient zkClient = zkClient();
+    private static ZkClient zkClient;
     private static String zkConfigRoot = ConfConstants.ZK_CONFIG_ROOT;
     // app ,key:value
     private static Map<String, Map<String, Object>> appMap = new HashMap<String, Map<String, Object>>();
+    private static String zkHost;
 
     private ConfLab() {
+    }
+
+    public static void init(String zkHost) {
+        ConfLab.zkHost = zkHost;
+        zkClient = zkClient();
     }
 
     /**
@@ -73,8 +78,12 @@ public class ConfLab {
      * @param listener
      */
     public static void register(String app, IZkDataListener listener) {
-        update(app);
-        addConfigChangeEvent(app, listener);
+        if (zkClient != null) {
+            update(app);
+            addConfigChangeEvent(app, listener);
+        }else {
+            logger.error("请先init");
+        }
     }
 
     /**
@@ -87,12 +96,7 @@ public class ConfLab {
         List<String> children = zkClient.getChildren(zkConfigRoot);
         if (children.contains(app)) {
             String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
-            Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
-            });
-
             App fetched = JSON.parseObject(dataStr, App.class);
-
-
             ConfLab.appMap.put(app, fetched.toMap());
             logger.info("update success, appId:{};{}", app, JSON.toJSONString(appMap));
         } else {
@@ -161,17 +165,23 @@ public class ConfLab {
     }
 
     /**
-     * 环境变量中获取含端口的zk地址
+     * 优先使用环境变量配置的zk地址  host:port
      *
      * @return
      */
     private static String getZkAddress() {
         String zkAddress = System.getenv(ConfConstants.DEV_ZK_ENV_VAR);
-        if (!StringUtils.hasText(zkAddress)) {
-            logger.error("没有找到环境变量：{}，请配置后重试。", ConfConstants.DEV_ZK_ENV_VAR);
-            System.exit(-1);
-            return null;
+        if (StringUtils.hasText(zkAddress)) {
+            logger.info("找到可用环境变量：{}", ConfConstants.DEV_ZK_ENV_VAR);
+            return zkAddress;
         }
-        return zkAddress;
+        logger.warn("没有找到环境变量：{}，尝试注入变量。", ConfConstants.DEV_ZK_ENV_VAR);
+        if (StringUtils.hasText(zkHost)) {
+            logger.info("找到可用变量，zk server:{}", zkHost);
+            return zkHost;
+        }
+        logger.error("没有找到可用的zookeeper配置,请配置后重试。");
+        System.exit(-1);
+        return null;
     }
 }

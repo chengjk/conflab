@@ -1,6 +1,6 @@
 package com.jk.conflab.client;
 
-import com.jk.conflab.client.utils.ConfConstants;
+import com.jk.conflab.ConfConstants;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

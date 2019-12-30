@@ -35,7 +35,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
     @Bean
     public String zkRootPath() {
-        return "/conflab/config";
+        return ConfConstants.ZK_CONFIG_ROOT;
     }
 
     @Bean

@@ -1,7 +1,7 @@
 package com.jk.conflab.client;
 
 
-import com.jk.conflab.client.utils.ConfConstants;
+import com.jk.conflab.ConfConstants;
 import com.jk.conflab.utils.StringUtils;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.slf4j.Logger;
@@ -17,9 +17,10 @@ import java.util.Properties;
  */
 public abstract class DefaultConfLabStarter {
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    public static Boolean isDev = true;
+    public static Boolean isDev = false;
 
     public DefaultConfLabStarter() {
+        ConfLab.init(getZookeeper());
         if (isDev) {
             logger.info("is dev, appId:{}", getAppId());
             Properties properties = getDevSetting();
@@ -55,6 +56,7 @@ public abstract class DefaultConfLabStarter {
         return properties;
     }
 
+    protected abstract String getZookeeper();
     /**
      * 应用id
      *
