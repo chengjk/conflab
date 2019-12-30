@@ -8,12 +8,6 @@
         <version>v1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>conflab-client</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>com.jk</groupId>
-            <artifactId>conflab-common</artifactId>
-            <version>v1.0.1</version>
-        </dependency>
-    </dependencies>
+    <artifactId>conflab-common</artifactId>
+
 </project>

@@ -1,8 +1,8 @@
 <% _.forEach(datas, function(data) { %>
-<tr data-id=<%-data.id %> data-appid='<%-data.appId %>' data-groupid='<%-data.groupId %>'>
+<tr data-app='<%-data.app %>' data-group='<%-data.group %>' data-key='<%-data.key %>'>
     <td name="key"><%-data.key %></td>
     <td name="value"><%-data.value %></td>
-    <td name="descp"><%-data.descp %></td>
+    <td name="desc"><%-data.desc %></td>
     <th>
         <button class="btn btn-danger btn-xs">del</button>
     </th>

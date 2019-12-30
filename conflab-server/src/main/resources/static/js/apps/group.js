@@ -6,10 +6,10 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
             config.init();
             self.initView();
         },
-        loadGroups: function (appId) {
+        loadGroups: function (appName) {
             $("#tabGroup tbody").empty();
             console.log("loadGroup");
-            var url = "/group/app/" + appId;
+            var url = "/group/"+appName+"/all";
             $.getJSON(url, function (datas) {
                 $.get("temp/grouptab.html", function (temp) {
                     var t = _.template(temp, {'variable': 'datas'});
@@ -28,7 +28,7 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
                 g.name = $(this).data("name")
                 g.desc = $(this).data("desc")
                 Data.setGroup(g);
-                self.open(g.id);
+                self.open(g.name);
                 Breadcrumb.update();
             });
             $("#tabGroup").delegate("tr button", "click", function (e) {
@@ -36,7 +36,6 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
                 var text = $(this).text();
                 var tr = $(this).closest("tr");
                 var g = {};
-                g.id = tr.data("id");
                 g.name = tr.data("name");
                 g.desc = tr.data("desc");
                 Data.setGroup(g);
@@ -59,7 +58,7 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
                     });
                     $("#addAppModal").modal();
                 } else if ("del" == text) {
-                    self.del(tr.data("id"));
+                    self.del(tr.data("name"));
                 }
             });
             $("#tabGroup thead button").click(function () {
@@ -93,8 +92,8 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
         clear:function(){
             $("#tabGroup tbody").html("");
         },
-        open: function (groupId) {
-            config.loadConfigs(groupId);
+        open: function (groupName) {
+            config.loadConfigs(groupName);
         },
         add: function (name, desc) {
             if (Data.getApp() == null) {
@@ -102,10 +101,10 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
             } else {
                 $.ajax({
                     url: "/group/add",
-                    data: {'appId': Data.getApp().id, 'name': name, 'descp': desc},
+                    data: {'app': Data.getApp().name, 'name': name, 'desc': desc},
                     success: function () {
                         msg.success("add group success!");
-                        self.loadGroups(Data.getApp().id);
+                        self.loadGroups(Data.getApp().name);
                     },
                     error: function (req, status, err) {
                         msg.error(req.responseJSON.message);
@@ -116,7 +115,7 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
         edit: function (name, desc) {
             $.ajax({
                 url: "/group/update",
-                data: {'id': Data.getGroup().id, 'appId': Data.getApp().id, 'name': name, 'descp': desc},
+                data: {'srcName': Data.getGroup().name, 'app': Data.getApp().name, 'name': name, 'desc': desc},
                 success: function () {
                     msg.success("edit group success!");
                     self.loadGroups(Data.getApp().id);
@@ -126,10 +125,10 @@ define(['jquery', '_', 'config', 'Data', 'breadcrumb', 'msg', 'mockdata'], funct
                 }
             })
         },
-        del: function (groupId) {
-            if (confirm("删除不可恢复，确认要删除吗？" + groupId)) {
-                $.post("/group/del", {'id': groupId}, function (e) {
-                    $("#tabGroup tr[data-id='" + groupId + "']").remove();
+        del: function (groupName) {
+            if (confirm("删除不可恢复，确认要删除吗？" + groupName)) {
+                $.post("/group/del", {'app': Data.getApp().name,'group':groupName}, function (e) {
+                    $("#tabGroup tr[data-name='" + groupName + "']").remove();
                 });
             }
         }

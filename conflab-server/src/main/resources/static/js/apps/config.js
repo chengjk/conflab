@@ -5,12 +5,15 @@ define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data,
             self = this;
             self.initView();
         },
-        loadConfigs: function (groupId) {
+        loadConfigs: function (groupName) {
             $("#tabConfig tbody").empty()
             $("#tabConfig").parent().removeClass("hidden");
             $("#tabGroup").parent().addClass("hidden");
-            var url = "/conf/group/" + groupId;
-            $.getJSON(url, function (datas) {
+            var url = "/conf/group/all";
+            var data={app:Data.getApp().name,group:groupName}
+            $.ajax({url:url,
+                data:data,
+                success:function (datas) {
                 console.log(datas);
                 $.get("temp/conftab.html", function (temp) {
                     var t = _.template(temp, {'variable': 'datas'});
@@ -18,18 +21,32 @@ define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data,
                     $("#tabConfig tbody").html(lr);
                     $("#tabConfig").editableTableWidget();
                 });
-            });
+            }});
         },
         initView: function () {
+
+            $("#tabConfig").delegate("tbody td", "click", function () {
+                var tr = $(this).closest("tr");
+                var key = _.trim(tr.find("td[name='key']").html());
+                var value = _.trim(tr.find("td[name='value']").html());
+                var desc = _.trim(tr.find("td[name='desc']").html());
+                var c = {
+                    'app': Data.getApp().name, 'group': Data.getGroup().name,
+                    'key': key, 'value': value, 'desc': desc
+                };
+                Data.setConfig(c);
+            });
+
             $("#tabConfig").delegate("tbody td", "change", function () {
                 var tr = $(this).closest("tr");
                 var confId = tr.data("id");
                 var key = _.trim(tr.find("td[name='key']").html());
                 var value = _.trim(tr.find("td[name='value']").html());
-                var descp = _.trim(tr.find("td[name='descp']").html());
+                var desc = _.trim(tr.find("td[name='desc']").html());
                 var c = {
-                    'id': confId, 'appId': Data.getApp().id, 'groupId': Data.getGroup().id,
-                    'key': key, 'value': value, 'descp': descp
+                    'app': Data.getApp().name, 'group': Data.getGroup().name,
+                    'srcKey': Data.getConfig().key,
+                    'key': key, 'value': value, 'desc': desc
                 };
                 self.edit(c);
             });
@@ -48,8 +65,8 @@ define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data,
         add: function (form) {
             console.log("add config");
             if (Data.getApp() != null && Data.getGroup() != null) {
-                form.find("input[name=appId]").val(Data.getApp().id);
-                form.find("input[name=groupId]").val(Data.getGroup().id);
+                form.find("input[name=app]").val(Data.getApp().name);
+                form.find("input[name=group]").val(Data.getGroup().name);
 
                 $.ajax({
                     url: "/conf/add",
@@ -57,7 +74,7 @@ define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data,
                     success: function () {
                         msg.success("add config success!");
                         form.find("input").val("");
-                        self.loadConfigs(Data.getGroup().id);
+                        self.loadConfigs(Data.getGroup().name);
                     },
                     error: function (req, status, err) {
                         msg.error(req.responseJSON.message);
@@ -69,10 +86,11 @@ define(['jquery', '_', 'Data', 'msg', 'mockdata', "etab"], function ($, _, Data,
             }
         },
         del: function (tr) {
-            var confId = tr.data("id");
-            if (confirm("删除不可恢复，确认要删除吗？" + confId)) {
-                $.post("/conf/del", {'id': confId}, function (e) {
+            var key = tr.data("key");
+            if (confirm("删除不可恢复，确认要删除吗？" + key)) {
+                $.post("/conf/del", {'app': Data.getApp().name,'group':Data.getGroup().name,'key':key}, function (e) {
                     tr.remove();
+                    Data.setConfig(null)
                 })
             }
         },

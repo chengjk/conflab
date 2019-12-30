@@ -3,8 +3,9 @@ package com.jk.conflab.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.jk.conflab.client.utils.ConfConstants;
-import com.jk.conflab.client.utils.StringUtils;
 import com.jk.conflab.client.utils.ZkUtils;
+import com.jk.conflab.model.App;
+import com.jk.conflab.utils.StringUtils;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.slf4j.Logger;
@@ -22,9 +23,10 @@ public class ConfLab {
     private static ZkClient zkClient = zkClient();
     private static String zkConfigRoot = ConfConstants.ZK_CONFIG_ROOT;
     // app ,key:value
-    private static Map<String, Map<String, String>> appMap = new HashMap<String, Map<String, String>>();
+    private static Map<String, Map<String, Object>> appMap = new HashMap<String, Map<String, Object>>();
 
-    private ConfLab() { }
+    private ConfLab() {
+    }
 
     /**
      * 获取一个String值
@@ -33,47 +35,51 @@ public class ConfLab {
      * @return
      */
     public static String getString(String key) {
-        return getObject(key);
+        return getObject(key).toString();
     }
 
     /**
      * 获取一个Int值
+     *
      * @param key
      * @return
      */
     public static Integer getInteger(String key) {
-        String data = getObject(key);
+        Object data = getObject(key);
         if (data != null) {
-            return Integer.valueOf(data);
+            return (Integer) data;
         }
         return null;
     }
 
     /**
      * 获取一个Boolean值
+     *
      * @param key
      * @return
      */
     public static Boolean getBoolean(String key) {
-        String data = getObject(key);
+        Object data = getObject(key);
         if (data != null) {
-            return Boolean.valueOf(data);
+            return (Boolean) data;
         }
         return null;
     }
 
     /**
      * 注册app。
+     *
      * @param app
      * @param listener
      */
-    public static void register(String app,IZkDataListener listener) {
+    public static void register(String app, IZkDataListener listener) {
         update(app);
         addConfigChangeEvent(app, listener);
     }
 
     /**
      * 更新配置
+     *
      * @param app
      */
     public static void update(String app) {
@@ -83,7 +89,11 @@ public class ConfLab {
             String dataStr = zkClient.readData(zkConfigRoot + "/" + app);
             Map<String, String> appMap = JSON.parseObject(dataStr, new TypeReference<Map<String, String>>() {
             });
-            ConfLab.appMap.put(app,appMap);
+
+            App fetched = JSON.parseObject(dataStr, App.class);
+
+
+            ConfLab.appMap.put(app, fetched.toMap());
             logger.info("update success, appId:{};{}", app, JSON.toJSONString(appMap));
         } else {
             logger.error(" update failed ,ZK path is null:{}", zkConfigRoot + "/" + app);
@@ -97,6 +107,7 @@ public class ConfLab {
         appMap.remove(app);
         logger.info("delete config! appId:{}", app);
     }
+
     /**
      * 增加更新监控
      *
@@ -113,12 +124,12 @@ public class ConfLab {
      * @param key
      * @return
      */
-    private static String getObject(String key) {
+    private static Object getObject(String key) {
         if (key == null) {
             return null;
         }
         //jvm环境变量
-        String value = System.getProperty(key);
+        Object value = System.getProperty(key);
         if (value != null) {
             return value;
         }
@@ -128,7 +139,7 @@ public class ConfLab {
             return value;
         }
         //配置中心
-        for (Map<String, String> configMap : appMap.values()) {
+        for (Map<String, Object> configMap : appMap.values()) {
             value = configMap.get(key);
             if (value != null) break;
         }
@@ -140,22 +151,24 @@ public class ConfLab {
 
     /**
      * 初始化zk客户端
+     *
      * @return
      */
-    private static ZkClient zkClient(){
-        ZkClient client = new ZkClient(getZkAddress(), 30000);
+    private static ZkClient zkClient() {
+        ZkClient client = new ZkClient(getZkAddress(), 3000);
         client.setZkSerializer(new ZkUtils.StringSerializer("UTF-8"));
         return client;
     }
 
     /**
      * 环境变量中获取含端口的zk地址
+     *
      * @return
      */
-    private static String getZkAddress(){
+    private static String getZkAddress() {
         String zkAddress = System.getenv(ConfConstants.DEV_ZK_ENV_VAR);
         if (!StringUtils.hasText(zkAddress)) {
-            logger.error("没有找到环境变量：{}，请配置后重试。",ConfConstants.DEV_ZK_ENV_VAR);
+            logger.error("没有找到环境变量：{}，请配置后重试。", ConfConstants.DEV_ZK_ENV_VAR);
             System.exit(-1);
             return null;
         }

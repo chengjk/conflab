@@ -25,7 +25,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             console.log("app init");
             $(".list-group").delegate("a.pull-right", "click", function (e) {
                 e.stopPropagation();
-                var appId = $(this).parent().data("appid");
+                var appId = $(this).parent().data("appname");
                 self.push(appId);
             });
             $(".list-group").delegate(".list-group-item", "click", function () {
@@ -34,12 +34,11 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
                 $("#tabConfig").parent().addClass("hidden");
                 $("#tabGroup").parent().removeClass("hidden");
                 var app = {};
-                app.id = $(this).data("appid");
                 app.name = $(this).data("appname");
                 app.desc = $(this).data("desc");
                 Data.setApp(app);
                 Breadcrumb.update();
-                self.open(app.id);
+                self.open(app.name);
             });
             $(".btn-toolbar button").click(function (e) {
                 if ($(this).hasClass("btn-add")) {
@@ -114,14 +113,14 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
 
             console.log("app init ok")
         },
-        open: function (appId) {
-            group.loadGroups(appId);
+        open: function (appName) {
+            group.loadGroups(appName);
         },
-        push: function (appId) {
+        push: function (appName) {
             if (confirm("推送可能导致对应应用重启，确认要推送配置吗？")) {
-                $.post("/app/push", {'appId': appId}, function (e) {
-                    console.log("push success," + appId);
-                    msg.success("push " + Data.getApp().name + " success!");
+                $.post("/app/push", {'appName': appName}, function (e) {
+                    console.log("push success," + appName);
+                    msg.success("push " + appName + " success!");
 
                 })
             }
@@ -133,7 +132,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             } else {
                 $.ajax({
                     url: "/app/add",
-                    data: {'name': name, 'descp': desc},
+                    data: {'name': name, 'desc': desc},
                     success: function () {
                         msg.success("add app success!");
                         self.loadApps();
@@ -165,7 +164,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             } else {
                 $.ajax({
                     url: "/app/update",
-                    data: {'id': Data.getApp().id, 'name': name, 'descp': desc},
+                    data: {'appName': Data.getApp().name, 'name': name, 'desc': desc},
                     success: function () {
                         msg.success("update app success!");
                         self.loadApps();
@@ -185,7 +184,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
         },
         del: function (app) {
             if (confirm("删除不可恢复，确认要删除吗？")) {
-                $.post("/app/del", {'appId': app.id}, function (e) {
+                $.post("/app/del", {'appName': app.name}, function (e) {
                     $(".list-group .active").remove();
                     Data.setApp(null);
                     group.clear();
@@ -193,7 +192,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             }
         },
         doExport: function () {
-            $.get("/app/export/" + Data.getApp().id, function (d) {
+            $.get("/app/" + Data.getApp().name, function (d) {
                 $("#modalExport .modal-body textarea").val(JSON.stringify(d));
                 $("#modalExport").modal("show");
             })

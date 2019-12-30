@@ -1,7 +1,6 @@
 package com.jk.conflab.web;
 
 import com.jk.conflab.model.App;
-import com.jk.conflab.repository.AppRepository;
 import com.jk.conflab.service.AppService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +25,15 @@ public class AppController {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     AppService appService;
-    @Autowired
-    AppRepository appRepository;
 
     @RequestMapping("/all")
     Iterable<App> findAll() {
         return appService.findAll();
     }
 
-    @RequestMapping("/{id}")
-    App findOne(@PathVariable Long id) {
-        return appRepository.findOne(id);
+    @RequestMapping("/{app}")
+    App findOne(@PathVariable String app) {
+        return appService.exportOne(app);
     }
 
     @RequestMapping("/key/{key}")
@@ -44,7 +41,7 @@ public class AppController {
         if (key == null | "".equals(key) || "null".equals(key) || "undefined".equals(key)) {
             return findAll();
         }
-        return appRepository.findByNameLike(key);
+        return appService.findByName(key);
     }
 
     @RequestMapping("/add")
@@ -59,37 +56,27 @@ public class AppController {
     }
 
     @RequestMapping("/update")
-    App update(App o, HttpServletResponse resp) throws IOException {
-        if (o.getId() != null) {
+    App update(App o,String appName, HttpServletResponse resp) throws IOException {
+        if (appName != null) {
             try {
-                return appService.update(o);
+                return appService.update(appName,o);
             } catch (Exception e) {
                 resp.sendError(500, e.getMessage());
             }
         } else {
             logger.error("试图更新不正确的App。");
         }
-        return  null;
+        return null;
     }
 
     @RequestMapping("/del")
-    boolean del(Long appId) {
-        return appService.del(appId);
+    boolean del(String appName) {
+        return appService.del(appName);
     }
 
     @RequestMapping("/cp")
-    App copy(Long srcId, String tarName) throws Exception {
-        return appService.copy(srcId, tarName);
-    }
-
-    @RequestMapping("/export/{id}")
-    App export(@PathVariable Long id) {
-        return appService.exportOne(id);
-    }
-
-    @RequestMapping("/export/key/{key}")
-    Iterable<App> export(@PathVariable String key) {
-        return appService.exportByKey(key);
+    App copy(String srcName, String tarName) throws Exception {
+        return appService.copy(srcName, tarName);
     }
 
     @RequestMapping("/importAll")
@@ -108,8 +95,8 @@ public class AppController {
     }
 
     @RequestMapping("/push")
-    boolean push(Long appId, String appName) {
-        return appService.push(appId, appName);
+    boolean push(String appName) {
+        return appService.push(appName);
     }
 
     @RequestMapping("/pushAll")

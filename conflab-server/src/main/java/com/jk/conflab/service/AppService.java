@@ -1,6 +1,7 @@
 package com.jk.conflab.service;
 
 import com.jk.conflab.model.App;
+import com.jk.conflab.model.ConfGroup;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.List;
@@ -11,21 +12,27 @@ import java.util.List;
 public interface AppService {
     Iterable<App> findAll();
     Iterable<App> findByName(String name);
-    App copy(Long srcId, String tarName) throws Exception;
+    App copy(String srcName, String tarName) throws Exception;
 
     App save(App app) throws Exception;
-    boolean del(Long id);
+    boolean del(String name);
 
-    boolean push(Long appId, String appName);
+    boolean push(String appName);
 
     boolean pushAll(String key);
 
-    App exportOne(Long id);
+    App exportOne(String appName);
 
     Iterable<App> exportByKey(String key);
 
     boolean importApps(List<App> apps) throws Exception;
     boolean importApp(App app) throws Exception;
 
-    App update(App o);
+    App update(String srcName, App o) throws Exception;
+
+    void addGroup(String appName, List<ConfGroup> groups) throws Exception ;
+
+    boolean delGroup(String appName, String groupName);
+
+    void updateGroup(String appName, ConfGroup group);
 }

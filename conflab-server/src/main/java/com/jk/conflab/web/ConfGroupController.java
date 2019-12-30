@@ -1,8 +1,9 @@
 package com.jk.conflab.web;
 
 import com.jk.conflab.model.ConfGroup;
-import com.jk.conflab.repository.ConfGroupRepository;
-import com.jk.conflab.service.ConfGroupService;
+import com.jk.conflab.service.AppService;
+import com.jk.conflab.service.MemCache;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,74 +18,55 @@ import java.util.List;
 /**
  * Created by jacky.cheng on 2015/11/11.
  */
+@Slf4j
 @RestController
 @RequestMapping("/group")
 public class ConfGroupController {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    ConfGroupService confGroupService;
+    private AppService appService;
 
-    @Autowired
-    ConfGroupRepository confGroupRepository;
 
-    @RequestMapping("/app/{appId}")
-    List<ConfGroup> findByAppId(@PathVariable Long appId) {
-        return confGroupService.findByAppId(appId);
+    @RequestMapping("/{app}/{group}")
+    ConfGroup findId(@PathVariable String app, @PathVariable String group) {
+        List<ConfGroup> groups = appService.exportOne(app).getGroups();
+        return groups.stream().filter(f -> f.getName().equals(group)).findFirst().orElse(null);
     }
 
-    @RequestMapping("/{id}")
-    ConfGroup findId(@PathVariable Long id) {
-        return confGroupRepository.findOne(id);
-    }
-
-    @RequestMapping("/all")
-    Iterable<ConfGroup> findAll() {
-        return confGroupRepository.findAll();
+    @RequestMapping("/{app}/all")
+    Iterable<ConfGroup> findAll(@PathVariable String app) {
+        return appService.exportOne(app).getGroups();
     }
 
     @RequestMapping("/add")
     ConfGroup add(ConfGroup o, HttpServletResponse resp) throws IOException {
-        try {
-            return confGroupService.save(o);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            resp.sendError(500, e.getMessage());
-        }
-        return null;
+        MemCache.add(o);
+        return o;
     }
-
-
-    @RequestMapping("/export/{id}")
-    ConfGroup export(@PathVariable Long id) {
-        return confGroupService.exportOne(id);
-    }
-
 
     @RequestMapping("/import")
-    boolean importGroup(Long appId, List<ConfGroup> groups) {
-        return confGroupService.importGroups(appId, groups);
+    boolean importGroup(String appName, List<ConfGroup> groups) throws Exception {
+        appService.addGroup(appName, groups);
+        return true;
     }
 
+    /**
+     *
+     * @param srcName
+     * @param o  appName 不会变
+     * @param resp
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/update")
-    ConfGroup update(ConfGroup o, HttpServletResponse resp) throws IOException {
-        if (o.getId() != null) {
-            try {
-                return confGroupService.update(o);
-            } catch (Exception e) {
-                logger.error(e.getMessage(), e);
-                resp.sendError(500, e.getMessage());
-                return null;
-            }
-        } else {
-            logger.error("试图更新不正确的Group。");
-            return null;
-        }
+    ConfGroup update(String srcName,ConfGroup o, HttpServletResponse resp) throws IOException {
+        appService.updateGroup(srcName, o);
+        return o;
     }
 
     @RequestMapping("/del")
-    boolean del(Long id) {
-        return confGroupService.del(id);
+    boolean del(String app,String group) {
+        return appService.delGroup(app,group);
     }
 
 

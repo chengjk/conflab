@@ -10,8 +10,9 @@
     <version>v1.0.1</version>
     <modules>
         <module>conflab-client</module>
+        <module>conflab-common</module>
         <module>conflab-server</module>
-        <module>conflab-demo</module>
+        <module>example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -43,6 +44,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
         </dependency>
     </dependencies>
 
