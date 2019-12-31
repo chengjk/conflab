@@ -192,7 +192,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             }
         },
         doExport: function () {
-            $.get("/app/" + Data.getApp().name, function (d) {
+            $.get("/app/show/" + Data.getApp().name, function (d) {
                 $("#modalExport .modal-body textarea").val(JSON.stringify(d));
                 $("#modalExport").modal("show");
             })

@@ -31,7 +31,7 @@ public class AppController {
         return appService.findAll();
     }
 
-    @RequestMapping("/{app}")
+    @RequestMapping("/show/{app}")
     App findOne(@PathVariable String app) {
         return appService.exportOne(app);
     }
