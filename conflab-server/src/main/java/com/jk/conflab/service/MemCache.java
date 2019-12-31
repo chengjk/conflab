@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by jacky. 2019/12/27 3:07 PM
@@ -26,7 +27,10 @@ public class MemCache {
     }
 
     public static List<App> findNameLike(String name) {
-        return null;
+        return localCache.keySet().stream()
+                .filter(f -> f.contains(name))
+                .map(k -> localCache.get(k))
+                .collect(Collectors.toList());
     }
 
     public static void add(App app) throws Exception {
