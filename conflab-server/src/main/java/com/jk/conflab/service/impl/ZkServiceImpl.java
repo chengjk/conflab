@@ -1,7 +1,6 @@
 package com.jk.conflab.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.jk.conflab.model.App;
 import com.jk.conflab.service.ZkService;
 import com.jk.conflab.utils.ZkUtils;

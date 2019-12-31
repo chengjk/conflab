@@ -3,7 +3,6 @@ package com.jk.conflab.service;
 import com.jk.conflab.model.App;
 import com.jk.conflab.model.ConfGroup;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.List;
 
 /**

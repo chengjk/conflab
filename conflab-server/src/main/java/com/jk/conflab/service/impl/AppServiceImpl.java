@@ -9,7 +9,6 @@ import com.jk.conflab.service.ZkService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -56,7 +55,6 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @Transactional
     public boolean del(String name) {
         MemCache.delApp(name);
         zkService.delete(name);

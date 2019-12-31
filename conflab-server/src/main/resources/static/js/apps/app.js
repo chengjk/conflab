@@ -150,7 +150,7 @@ define(['jquery', '_', 'group', 'Data', 'breadcrumb', 'msg', 'mockdata'], functi
             if (_.isEmpty(name)) {
                 msg.info("Invalid name,try again!");
             } else {
-                $.post("/app/cp", {'srcId': Data.getApp().id, 'tarName': name}, function (e) {
+                $.post("/app/cp", {'srcName': Data.getApp().name, 'tarName': name}, function (e) {
                     msg.success("copy app success!");
                     self.loadApps();
                 })
