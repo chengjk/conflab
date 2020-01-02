@@ -21,9 +21,9 @@ public class ConfConstants {
     public static final String DEV_CONFIG_ENV_VAR = "CONFIG_HOME";
 
     /**
-     * 开发环境下,ZK环境变量名。
+     * ZK环境变量名。host:port
      */
-    public static final String DEV_ZK_ENV_VAR = "ZK_ADDRESS";
+    public static final String ZK_ENV_VAR = "ZK_ADDRESS";
     /**
      * 通用配置，任何saas 上都能找到。
      */

@@ -21,10 +21,10 @@ public class App implements Serializable {
     private String name;
     private SaasType type = SaasType.Normal;
     private String desc;
-    private List<ConfGroup> groups = new ArrayList<ConfGroup>();
+    private List<ConfGroup> groups = new ArrayList<>();
 
-    public HashMap<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<String, Object>();
+    public HashMap<String, String> toMap() {
+        HashMap<String, String> result = new HashMap<>();
         for (ConfGroup group : groups) {
             for (Config config : group.getConfigs()) {
                 result.put(config.getKey(), config.getValue());

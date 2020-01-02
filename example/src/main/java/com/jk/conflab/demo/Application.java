@@ -18,7 +18,5 @@ public class Application {
         return new MyConfLabInit();
     }
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
-    }
+
 }

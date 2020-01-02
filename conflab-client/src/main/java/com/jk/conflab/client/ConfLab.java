@@ -22,7 +22,7 @@ public class ConfLab {
     private static ZkClient zkClient;
     private static String zkConfigRoot = ConfConstants.ZK_CONFIG_ROOT;
     // app ,key:value
-    private static Map<String, Map<String, Object>> appMap = new HashMap<String, Map<String, Object>>();
+    private static Map<String, Map<String, String>> appMap = new HashMap<>();
     private static String zkHost;
 
     private ConfLab() {
@@ -37,38 +37,64 @@ public class ConfLab {
      * 获取一个String值
      *
      * @param key
+     * @param defaultValue
      * @return
      */
+    public static String getString(String key,String defaultValue) {
+        String data = getObject(key);
+        return data != null ? data : defaultValue;
+    }
+
     public static String getString(String key) {
-        return getObject(key).toString();
+        return getString(key, null);
     }
 
     /**
      * 获取一个Int值
      *
      * @param key
+     * @param defaultValue
      * @return
      */
-    public static Integer getInteger(String key) {
-        Object data = getObject(key);
-        if (data != null) {
-            return (Integer) data;
-        }
-        return null;
+    public static Integer getInteger(String key,Integer defaultValue) {
+        String data = getObject(key);
+        return data != null ? Integer.valueOf(data) : defaultValue;
+    }
+
+    public static Integer getInteger(String key){
+        return getInteger(key, null);
     }
 
     /**
      * 获取一个Boolean值
      *
      * @param key
+     * @param defaultValue
      * @return
      */
-    public static Boolean getBoolean(String key) {
-        Object data = getObject(key);
+    public static Boolean getBoolean(String key,Boolean defaultValue) {
+        String data = getObject(key);
+        return data != null ? Boolean.valueOf(data) : defaultValue;
+    }
+
+
+    /**
+     * 获取Long值
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static Long getLong(String key,Long defaultValue) {
+        String data = getObject(key);
         if (data != null) {
-            return (Boolean) data;
+            return Long.valueOf(data);
+        }else {
+            return defaultValue;
         }
-        return null;
+    }
+
+    public static Long getLong(String key){
+        return getLong(key, null);
     }
 
     /**
@@ -81,7 +107,7 @@ public class ConfLab {
         if (zkClient != null) {
             update(app);
             addConfigChangeEvent(app, listener);
-        }else {
+        } else {
             logger.error("请先init");
         }
     }
@@ -128,12 +154,12 @@ public class ConfLab {
      * @param key
      * @return
      */
-    private static Object getObject(String key) {
+    private static String getObject(String key) {
         if (key == null) {
             return null;
         }
         //jvm环境变量
-        Object value = System.getProperty(key);
+        String value = System.getProperty(key);
         if (value != null) {
             return value;
         }
@@ -143,7 +169,7 @@ public class ConfLab {
             return value;
         }
         //配置中心
-        for (Map<String, Object> configMap : appMap.values()) {
+        for (Map<String, String> configMap : appMap.values()) {
             value = configMap.get(key);
             if (value != null) break;
         }
@@ -170,12 +196,12 @@ public class ConfLab {
      * @return
      */
     private static String getZkAddress() {
-        String zkAddress = System.getenv(ConfConstants.DEV_ZK_ENV_VAR);
+        String zkAddress = System.getenv(ConfConstants.ZK_ENV_VAR);
         if (StringUtils.hasText(zkAddress)) {
-            logger.info("找到可用环境变量：{}", ConfConstants.DEV_ZK_ENV_VAR);
+            logger.info("找到可用环境变量：{}", ConfConstants.ZK_ENV_VAR);
             return zkAddress;
         }
-        logger.warn("没有找到环境变量：{}，尝试注入变量。", ConfConstants.DEV_ZK_ENV_VAR);
+        logger.warn("没有找到环境变量：{}，尝试注入变量。", ConfConstants.ZK_ENV_VAR);
         if (StringUtils.hasText(zkHost)) {
             logger.info("找到可用变量，zk server:{}", zkHost);
             return zkHost;
