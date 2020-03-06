@@ -54,7 +54,7 @@ server端编译完是一个可以解压运行的zip，解压后运行`./bin/star
 
 
 ## 结构
-服务端数据存在数据库，推送到zookeeper。客户端接受zookeeper通知更新本地缓存。
+服务端数据存在zookeeper。数据更新时客户端收到zookeeper通知，更新各自本地缓存。
 
 ![`系统结构图`](./assets/struct.png)
 
