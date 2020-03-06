@@ -56,7 +56,7 @@ server端编译完是一个可以解压运行的zip，解压后运行`./bin/star
 ## 结构
 服务端数据存在数据库，推送到zookeeper。客户端接受zookeeper通知更新本地缓存。
 
-![`系统结构图`](./assets/chart.jpg)
+![`系统结构图`](./assets/struct.png)
 
 ## 服务端 conflab-server
 
@@ -77,7 +77,7 @@ bin目录下有start.sh供linux下启动，start.cmd则在windows下启动。启
 ### 工程介绍
 Server端负责更新维护`zookeeper`，可以通过浏览器快捷的管理更新配置，不直接与client端通信。(也就是说，只要数据结构正确，任何一个zookeeper管理工具都可以代替Server端，例如zooInspector。)
 
-工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc,spring data jpa，maven打包。数据库可用SpringDataJpa支持的所有类型，提供了mysql和SQLite配置，大型项目建议用mysql。默认使用SQLite，不用做任何配置。简单。
+工程前后端分离，前端是最常见的html+js静态页面，毕竟是小工具，越简单越好。后端使用spring boot,spring mvc，maven打包。
 
 系统实现了对配置内容分应用分组管理。支持多系统，系统内按业务分组。以应用为单位更新到zookeeper，与该应用相关的客户端会都收到更新消息。
 

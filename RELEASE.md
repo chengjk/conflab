@@ -1,9 +1,10 @@
 # Release Note
 ## TODO
-- [X] App支持导入导出。
-- [X] App支持通用配置，作用域为全部子项目。
 - [ ] 全局查询支持查找config（目前只查App）。
 - [ ] 支持打包成war。
+
+## v1.0.4
+删除mysql数据源。不再需要数据源支持，数据直接持久存储到zookeeper;初始化时也从zookeeper读取数据。
 
 ## v1.0.3
 增加golang客户端[conflab-client-go][https://github.com/chengjk/conflab-client-go].
